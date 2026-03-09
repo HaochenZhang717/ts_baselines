@@ -1,0 +1,24 @@
+# python
+__pycache__/
+*.pyc
+
+# data
+data/
+datasets/
+*.npy
+*.npz
+*.csv
+
+# checkpoints
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+
+# logs
+logs/
+wandb/
+runs/
+
+# system
+.DS_Store
