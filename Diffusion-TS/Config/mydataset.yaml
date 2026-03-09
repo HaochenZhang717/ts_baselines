@@ -45,7 +45,7 @@ dataloader:
     target: Utils.Data_utils.npy_datasets.PreSplitNPYDataset
     params:
       name: mydataset
-      data_root: ./Data/mydataset
+      data_root: ../datasets/synthetic_u
       window: 128
       period: train
       split: train
@@ -55,7 +55,7 @@ dataloader:
     target: Utils.Data_utils.npy_datasets.PreSplitNPYDataset
     params:
       name: mydataset
-      data_root: ./Data/mydataset
+      data_root: ../datasets/synthetic_u
       window: 128
       period: test
       split: test

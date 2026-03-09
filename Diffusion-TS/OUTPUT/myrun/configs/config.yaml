@@ -5,7 +5,7 @@ dataloader:
   test_dataset:
     coefficient: 0.01
     params:
-      data_root: ./Data/mydataset
+      data_root: ../datasets/synthetic_u
       distribution: geometric
       name: mydataset
       period: test
@@ -18,7 +18,7 @@ dataloader:
     target: Utils.Data_utils.npy_datasets.PreSplitNPYDataset
   train_dataset:
     params:
-      data_root: ./Data/mydataset
+      data_root: ../datasets/synthetic_u
       name: mydataset
       period: train
       seed: 123
