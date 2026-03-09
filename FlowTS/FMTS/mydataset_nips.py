@@ -8,44 +8,58 @@ warnings.filterwarnings("ignore")
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, PROJECT_ROOT)
 
-print("PROJECT_ROOT =", PROJECT_ROOT)
-print("sys.path[0] =", sys.path[0])
-
 from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import MinMaxScaler
 
 from engine.solver import Trainer
 from Utils.io_utils import load_yaml_config, instantiate_from_config
-
+from Models.interpretable_diffusion.model_utils import (
+    normalize_to_neg_one_to_one,
+    unnormalize_to_zero_to_one
+)
 
 # =========================
-# 1. 修改成你的数据路径
+# 1. 数据路径
 # =========================
-DATA_ROOT = '../../datasets/synthetic_u'   # 改成你的目录
+DATA_ROOT = '../../datasets/synthetic_u'
 TRAIN_PATH = os.path.join(DATA_ROOT, 'train_ts.npy')
 VALID_PATH = os.path.join(DATA_ROOT, 'valid_ts.npy')
 TEST_PATH  = os.path.join(DATA_ROOT, 'test_ts.npy')
 
+train_raw = np.load(TRAIN_PATH).astype(np.float32)   # (24000,128,1)
+valid_raw = np.load(VALID_PATH).astype(np.float32)
+test_raw  = np.load(TEST_PATH).astype(np.float32)
+
+print("train_raw shape:", train_raw.shape)
+print("valid_raw shape:", valid_raw.shape)
+print("test_raw  shape:", test_raw.shape)
+
+assert train_raw.ndim == 3 and valid_raw.ndim == 3 and test_raw.ndim == 3
 
 # =========================
-# 2. 读取数据
-# shape: (N, L, D)
+# 2. 用 train 拟合 scaler，再把数据映射到 [-1,1]
 # =========================
-train = np.load(TRAIN_PATH).astype(np.float32)
-valid = np.load(VALID_PATH).astype(np.float32)
-test  = np.load(TEST_PATH).astype(np.float32)
+feat_num = train_raw.shape[-1]
+scaler = MinMaxScaler()
+scaler.fit(train_raw.reshape(-1, feat_num))
 
-print("train shape:", train.shape)
-print("valid shape:", valid.shape)
-print("test  shape:", test.shape)
+def to_neg_one_one(x):
+    x01 = scaler.transform(x.reshape(-1, feat_num)).reshape(x.shape)
+    x11 = normalize_to_neg_one_to_one(x01)
+    return x11.astype(np.float32)
 
-assert train.ndim == 3 and valid.ndim == 3 and test.ndim == 3
-assert train.shape[1] == valid.shape[1] == test.shape[1]
-assert train.shape[2] == valid.shape[2] == test.shape[2]
+def from_neg_one_one(x):
+    x01 = unnormalize_to_zero_to_one(x.reshape(-1, feat_num)).reshape(x.shape)
+    raw = scaler.inverse_transform(x01.reshape(-1, feat_num)).reshape(x.shape)
+    return raw
 
+train = to_neg_one_one(train_raw)
+valid = to_neg_one_one(valid_raw)
+test  = to_neg_one_one(test_raw)
 
 # =========================
-# 3. 数据集类
+# 3. Dataset
 # =========================
 class MyDataset(Dataset):
     def __init__(self, data, regular=True, pred_length=24):
@@ -67,29 +81,25 @@ class MyDataset(Dataset):
     def __len__(self):
         return self.sample_num
 
-
 # =========================
-# 4. 训练集 dataloader
+# 4. 训练 dataloader
 # =========================
 train_dataset = MyDataset(train, regular=True)
-
 dataloader = DataLoader(
     train_dataset,
-    batch_size=64,     # 可调
+    batch_size=64,
     shuffle=True,
-    num_workers=8,
+    num_workers=4,
     drop_last=False,
-    pin_memory=True,
-    sampler=None
+    pin_memory=True
 )
 
-
 # =========================
-# 5. 载入配置
+# 5. 配置与模型
 # =========================
 class Args_Example:
     def __init__(self) -> None:
-        self.config_path = './Config/mydataset.yaml'   # 你自己的 FlowTS config
+        self.config_path = './Config/mydataset.yaml'
         self.gpu = 0
 
 args = Args_Example()
@@ -100,57 +110,50 @@ device = torch.device(f'cuda:{args.gpu}' if torch.cuda.is_available() else 'cpu'
 model = instantiate_from_config(configs['model']).to(device)
 trainer = Trainer(config=configs, args=args, model=model, dataloader={'dataloader': dataloader})
 
-
 # =========================
 # 6. 训练
 # =========================
 trainer.train()
-# trainer.load(10)   # 如果已经训好就注释 train，改用 load
-
+# trainer.load(1000)
 
 # =========================
 # 7. forecasting 测试
 # =========================
 _, seq_length, feat_num = test.shape
-pred_length = 24   # 可改成 12 / 24 / 48 等
+pred_length = 24
 
 test_dataset = MyDataset(test, regular=False, pred_length=pred_length)
-
-real = test.copy()
+real = test_raw.copy()
 
 test_dataloader = DataLoader(
     test_dataset,
-    batch_size=test.shape[0],   # 一次全测；如果显存不够可以改小
+    batch_size=64,   # 不要一次 4000，容易 OOM
     shuffle=False,
     num_workers=0,
-    pin_memory=True,
-    sampler=None
+    pin_memory=True
 )
 
-# conditional sampling / restore
 sample, *_ = trainer.restore(test_dataloader, shape=[seq_length, feat_num])
+sample = from_neg_one_one(sample)
 
 mask = test_dataset.mask
 mse = mean_squared_error(sample[~mask], real[~mask])
 
 print(f"Forecasting MSE: {mse:.6f}")
 
-# 保存 log
 log_str_pre = 'mydataset_forecasting ' + ' '.join(
     f"{k}={v}" for k, v in os.environ.items() if 'hucfg' in k
 )
 with open('log.txt', 'a') as f:
     f.write(log_str_pre + f" mse={mse}\n")
 
-
 # =========================
 # 8. 可视化
-# 单变量数据只画 1 条
 # =========================
 import matplotlib.pyplot as plt
 plt.rcParams["font.size"] = 12
 
-num_plot = min(2, test.shape[0])   # 画前两个样本
+num_plot = min(2, test.shape[0])
 for idx in range(num_plot):
     plt.figure(figsize=(15, 3))
     plt.plot(
@@ -174,8 +177,7 @@ for idx in range(num_plot):
         linestyle='solid',
         label='Prediction'
     )
-    plt.tick_params('both', labelsize=15)
-    plt.subplots_adjust(bottom=0.1, left=0.05, right=0.99, top=0.95)
     plt.legend()
+    plt.tight_layout()
     plt.savefig(f'./mydataset_forecast_{idx}.png')
     plt.close()
