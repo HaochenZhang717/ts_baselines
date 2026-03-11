@@ -127,7 +127,7 @@ real = test_raw.copy()
 
 test_dataloader = DataLoader(
     test_dataset,
-    batch_size=64,   # 不要一次 4000，容易 OOM
+    batch_size=64,
     shuffle=False,
     num_workers=0,
     pin_memory=True
