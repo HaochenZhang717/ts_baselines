@@ -181,9 +181,9 @@ def gen_dataloader(args):
         return train_loader, test_loader
 
     elif args.dataset in ['mydataset']:
-        train_path = './data/mydataset/train_ts.npy'
-        valid_path = './data/mydataset/valid_ts.npy'
-        test_path  = './data/mydataset/test_ts.npy'
+        train_path = '/playpen/haochenz/LitsDatasets/128_len_ts/synthetic_u/train_ts.npy'
+        valid_path = '/playpen/haochenz/LitsDatasets/128_len_ts/synthetic_u/valid_ts.npy'
+        test_path  = '/playpen/haochenz/LitsDatasets/128_len_ts/synthetic_u/test_ts.npy'
 
         train_data = np.load(train_path).astype(np.float32)
         valid_data = np.load(valid_path).astype(np.float32)
