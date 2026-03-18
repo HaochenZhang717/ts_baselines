@@ -40,7 +40,7 @@ def parse_args_uncond():
     # --- data ---:
     parser.add_argument('--dataset',
                         choices=['kdd_cup', 'traffic_hourly', 'solar_weekly', 'temperature_rain',
-                                'nn5_daily', 'fred_md', 'sine', 'energy', 'mujoco', 'stocks', 'mydataset'], help='training dataset')
+                                'nn5_daily', 'fred_md', 'sine', 'energy', 'mujoco', 'stocks', 'synth_u'], help='training dataset')
 
     parser.add_argument('--seq_len', type=int,
                         help='input sequence length,'

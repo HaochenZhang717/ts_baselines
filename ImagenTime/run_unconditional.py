@@ -72,6 +72,8 @@ def main(args):
                     for key, value in to_log.items():
                         logger.log(f'train/{key}', value, epoch)
 
+
+                breakpoint()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
                 optimizer.step()
