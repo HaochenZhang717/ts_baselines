@@ -180,10 +180,10 @@ def gen_dataloader(args):
         test_data, test_loader = data_provider(args, flag='test')
         return train_loader, test_loader
 
-    elif args.dataset in ['mydataset']:
-        train_path = '/playpen/haochenz/LitsDatasets/128_len_ts/synthetic_u/train_ts.npy'
-        valid_path = '/playpen/haochenz/LitsDatasets/128_len_ts/synthetic_u/valid_ts.npy'
-        test_path  = '/playpen/haochenz/LitsDatasets/128_len_ts/synthetic_u/test_ts.npy'
+    elif args.dataset in ['synth_u']:
+        train_path = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_u/train_ts.npy'
+        valid_path = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_u/valid_ts.npy'
+        test_path  = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_u/test_ts.npy'
 
         train_data = np.load(train_path).astype(np.float32)
         valid_data = np.load(valid_path).astype(np.float32)
