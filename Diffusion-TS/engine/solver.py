@@ -83,6 +83,7 @@ class Trainer(object):
                 step += 1
                 self.update_ema()
             train_loss_avg = train_loss_avg / len(self.train_dataloader)
+            print(f"Epoch {epoch}: Train Loss: {train_loss_avg:.6f}, Val Loss: {val_loss_avg:.6f}, Time: {toc - tic:.2f}s")
 
             if epoch % 100 == 0:
                 val_loss_avg = 0.0
@@ -94,7 +95,6 @@ class Trainer(object):
                     val_loss_avg += loss.item()
                 val_loss_avg = val_loss_avg / len(self.valid_dataloader)
                 toc = time.time()
-                print(f"Epoch {epoch}: Train Loss: {train_loss_avg:.6f}, Val Loss: {val_loss_avg:.6f}, Time: {toc - tic:.2f}s")
                 if val_loss_avg < best_val_loss:
                     best_val_loss = val_loss_avg
                     self.save("best")
