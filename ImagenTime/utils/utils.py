@@ -87,7 +87,7 @@ def save_checkpoint(ckpt_dir, state, epoch, ema_model=None):
     }
     if ema_model is not None:
         saved_state['ema_model'] = ema_model.state_dict()
-    torch.save(saved_state, f"{ckpt_dir}/{epoch}.pth")
+    torch.save(saved_state, f"{ckpt_dir}/ckpt_epoch_{epoch}.pth")
 
 
 def restore_checkpoint(ckpt_dir, state, device='cuda:0', ema_model=None):

@@ -56,7 +56,7 @@ def main(args):
         # --- train model ---
         logging.info(f"Continuing training loop from epoch {init_epoch}.")
         best_score = float('inf')  # marginal score for long-range metrics, dice score for short-range metrics
-        for epoch in range(init_epoch, args.epochs):
+        for epoch in tqdm(range(init_epoch, args.epochs)):
             model.train()
             model.epoch = epoch
             logger.log_name_params('train/epoch', epoch)
@@ -81,46 +81,49 @@ def main(args):
             logger.log(f'train/loss', train_loss_avg, epoch)
 
 
-            ema_model = model.model_ema if args.ema else None
-            save_checkpoint(args.log_dir, state, epoch, ema_model)
-            breakpoint()
             # --- evaluation loop ---
             if epoch % args.logging_iter == 0:
+                gen_sig = []
+                real_sig = []
+                model.eval()
+                with torch.no_grad():
+                    with model.ema_scope():
+                        process = DiffusionProcess(args, model.net,
+                                                   (args.input_channels, args.img_resolution, args.img_resolution))
+                        for data in tqdm(test_loader):
+                            # sample from the model
+                            x_img_sampled = process.sampling(sampling_number=data[0].shape[0])
+                            # --- convert to time series --
+                            x_ts = model.img_to_ts(x_img_sampled)
+
+                            # special case for temperature_rain dataset
+                            if args.dataset in ['temperature_rain']:
+                                x_ts = torch.clamp(x_ts, 0, 1)
+
+                            gen_sig.append(x_ts.detach().cpu().numpy())
+                            real_sig.append(data[0].detach().cpu().numpy())
+
+                gen_sig = np.vstack(gen_sig)
+                real_sig = np.vstack(real_sig)
+                scores = evaluate_model_uncond(real_sig, gen_sig, args)
+                for key, value in scores.items():
+                    logger.log(f'test/{key}', value, epoch)
+
+                save_path = os.path.join(args.log_dir, f"samples_epoch_{epoch}.pt")
+                torch.save({
+                    "gen_ts": torch.from_numpy(gen_sig),  # (N, T, D)
+                    "real_ts": torch.from_numpy(real_sig)  # (N, T, D)
+                }, save_path)
+                print(f"[Saved] samples to {save_path}")
                 ema_model = model.model_ema if args.ema else None
                 save_checkpoint(args.log_dir, state, epoch, ema_model)
-            # if epoch % args.logging_iter == 0:
-            #     gen_sig = []
-            #     real_sig = []
-            #     model.eval()
-            #     with torch.no_grad():
-            #         with model.ema_scope():
-            #             process = DiffusionProcess(args, model.net,
-            #                                        (args.input_channels, args.img_resolution, args.img_resolution))
-            #             for data in tqdm(test_loader):
-            #                 # sample from the model
-            #                 x_img_sampled = process.sampling(sampling_number=data[0].shape[0])
-            #                 # --- convert to time series --
-            #                 x_ts = model.img_to_ts(x_img_sampled)
-            #
-            #                 # special case for temperature_rain dataset
-            #                 if args.dataset in ['temperature_rain']:
-            #                     x_ts = torch.clamp(x_ts, 0, 1)
-            #
-            #                 gen_sig.append(x_ts.detach().cpu().numpy())
-            #                 real_sig.append(data[0].detach().cpu().numpy())
-            #
-            #     gen_sig = np.vstack(gen_sig)
-            #     real_sig = np.vstack(real_sig)
-            #     scores = evaluate_model_uncond(real_sig, gen_sig, args)
-            #     for key, value in scores.items():
-            #         logger.log(f'test/{key}', value, epoch)
-            #
-            #     # --- save checkpoint ---
-            #     curr_score = scores['marginal_score_mean'] if 'marginal_score_mean' in scores else scores['disc_mean']
-            #     if curr_score < best_score:
-            #         best_score = curr_score
-            #         ema_model = model.model_ema if args.ema else None
-            #         save_checkpoint(args.log_dir, state, epoch , ema_model)
+
+                # --- save checkpoint ---
+                # curr_score = scores['marginal_score_mean'] if 'marginal_score_mean' in scores else scores['disc_mean']
+                # if curr_score < best_score:
+                #     best_score = curr_score
+                #     ema_model = model.model_ema if args.ema else None
+                #     save_checkpoint(args.log_dir, state, epoch , ema_model)
 
         logging.info("Training is complete")
 

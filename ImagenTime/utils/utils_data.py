@@ -216,6 +216,82 @@ def gen_dataloader(args):
         )
         return train_loader, test_loader
 
+    elif args.dataset in ['synth_m']:
+        train_path = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_m/train_ts.npy'
+        valid_path = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_m/valid_ts.npy'
+        test_path  = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_m/test_ts.npy'
+
+        train_data = np.load(train_path).astype(np.float32)
+        valid_data = np.load(valid_path).astype(np.float32)
+        test_data  = np.load(test_path).astype(np.float32)
+
+        # 你的数据已经是 (N, L, D)
+        assert train_data.ndim == 3, f"Expected train_data shape (N,L,D), got {train_data.shape}"
+        assert valid_data.ndim == 3, f"Expected valid_data shape (N,L,D), got {valid_data.shape}"
+        assert test_data.ndim == 3, f"Expected test_data shape (N,L,D), got {test_data.shape}"
+
+        # 若 config 里 seq_len 和真实不一致，强制同步
+        args.seq_len = train_data.shape[1]
+        args.input_channels = train_data.shape[2]
+        args.input_size = args.input_channels
+
+        train_set = Data.TensorDataset(torch.Tensor(train_data))
+        test_set = Data.TensorDataset(torch.Tensor(test_data))
+
+        train_loader = Data.DataLoader(
+            dataset=train_set,
+            batch_size=args.batch_size,
+            shuffle=True,
+            num_workers=args.num_workers
+        )
+        test_loader = Data.DataLoader(
+            dataset=test_set,
+            batch_size=args.batch_size,
+            shuffle=False,
+            num_workers=args.num_workers
+        )
+        return train_loader, test_loader
+
+    elif args.dataset in ['istanbul_traffic']:
+        train_path = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/istanbul_traffic/train_ts.npy'
+        valid_path = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/istanbul_traffic/valid_ts.npy'
+        test_path  = '/playpen-shared/haochenz/LitsDatasets/128_len_ts/istanbul_traffic/test_ts.npy'
+
+        train_data = np.load(train_path).astype(np.float32)
+        valid_data = np.load(valid_path).astype(np.float32)
+        test_data  = np.load(test_path).astype(np.float32)
+
+        # 你的数据已经是 (N, L, D)
+        assert train_data.ndim == 3, f"Expected train_data shape (N,L,D), got {train_data.shape}"
+        assert valid_data.ndim == 3, f"Expected valid_data shape (N,L,D), got {valid_data.shape}"
+        assert test_data.ndim == 3, f"Expected test_data shape (N,L,D), got {test_data.shape}"
+
+        # 若 config 里 seq_len 和真实不一致，强制同步
+        args.seq_len = train_data.shape[1]
+        args.input_channels = train_data.shape[2]
+        args.input_size = args.input_channels
+
+        train_set = Data.TensorDataset(torch.Tensor(train_data))
+        test_set = Data.TensorDataset(torch.Tensor(test_data))
+
+        train_loader = Data.DataLoader(
+            dataset=train_set,
+            batch_size=args.batch_size,
+            shuffle=True,
+            num_workers=args.num_workers
+        )
+        test_loader = Data.DataLoader(
+            dataset=test_set,
+            batch_size=args.batch_size,
+            shuffle=False,
+            num_workers=args.num_workers
+        )
+        return train_loader, test_loader
+
+
+
+
+
     train_loader = Data.DataLoader(dataset=train_set, batch_size=args.batch_size, shuffle=True,
                                    num_workers=args.num_workers)
 
