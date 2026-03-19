@@ -4,21 +4,31 @@ from Utils.io_utils import instantiate_from_config
 
 def build_dataloader(config, args=None):
     batch_size = config['dataloader']['batch_size']
-    jud = config['dataloader']['shuffle']
     config['dataloader']['train_dataset']['params']['output_dir'] = args.save_dir
-    dataset = instantiate_from_config(config['dataloader']['train_dataset'])
+    train_dataset = instantiate_from_config(config['dataloader']['train_dataset'])
+    valid_dataset = instantiate_from_config(config['dataloader']['valid_dataset'])
 
-    dataloader = torch.utils.data.DataLoader(dataset,
+    train_dataloader = torch.utils.data.DataLoader(train_dataset,
                                              batch_size=batch_size,
-                                             shuffle=jud,
+                                             shuffle=True,
                                              num_workers=0,
                                              pin_memory=True,
                                              sampler=None,
-                                             drop_last=jud)
+                                             drop_last=True)
+
+    valid_dataloader = torch.utils.data.DataLoader(valid_dataset,
+                                                   batch_size=batch_size,
+                                                   shuffle=False,
+                                                   num_workers=0,
+                                                   pin_memory=True,
+                                                   sampler=None,
+                                                   drop_last=False)
 
     dataload_info = {
-        'dataloader': dataloader,
-        'dataset': dataset
+        'train_dataloader': train_dataloader,
+        'train_dataset': train_dataset,
+        'valid_dataloader': valid_dataloader,
+        'valid_dataset': valid_dataset,
     }
 
     return dataload_info

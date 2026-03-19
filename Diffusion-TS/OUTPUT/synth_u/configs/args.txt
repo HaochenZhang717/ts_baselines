@@ -1,0 +1,204 @@
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
+==> torch version: 2.9.1
+==> cudnn version: None
+==> Cmd:
+['main.py', '--name', 'synth_u', '--config_file', 'config/synth_u.yaml', '--gpu', '0', '--train']
+==> args:
+  config_file: config/synth_u.yaml
+  cudnn_deterministic: False
+  gpu: 0
+  milestone: 10
+  name: synth_u
+  opts: []
+  output: OUTPUT
+  sample: 0
+  save_dir: OUTPUT/synth_u
+  seed: 12345
+  tensorboard: False
+  train: True
