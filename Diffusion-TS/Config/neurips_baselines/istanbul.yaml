@@ -20,8 +20,8 @@ model:
 
 solver:
   base_lr: 1.0e-5
-  max_epochs: 18000
-  results_folder: ./results/synth_u
+  max_epochs: 3000
+  results_folder: ./results/istanbul
   
 
 dataloader:

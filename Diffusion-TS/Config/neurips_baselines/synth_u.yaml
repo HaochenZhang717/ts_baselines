@@ -20,8 +20,8 @@ model:
 
 solver:
   base_lr: 1.0e-5
-#  max_epochs: 18000
-  max_epochs: 10
+  max_epochs: 3000
+#  max_epochs: 10
   results_folder: ./results/synth_u
   
 
