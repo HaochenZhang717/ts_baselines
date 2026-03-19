@@ -62,57 +62,63 @@ def main(args):
             logger.log_name_params('train/epoch', epoch)
 
             # --- train loop ---
+            train_loss_avg = 0.0
             for i, data in enumerate(train_loader, 1):
                 x_ts = data[0].to(args.device)
                 x_img = model.ts_to_img(x_ts)
                 optimizer.zero_grad()
                 loss = model.loss_fn(x_img)
-                if len(loss) == 2:
-                    loss, to_log = loss
-                    for key, value in to_log.items():
-                        logger.log(f'train/{key}', value, epoch)
-
-
-                breakpoint()
+                # if len(loss) == 2:
+                #     loss, to_log = loss
+                #     for key, value in to_log.items():
+                #         logger.log(f'train/{key}', value, epoch)
+                train_loss_avg += loss.item()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
                 optimizer.step()
                 model.on_train_batch_end()
+            train_loss_avg = train_loss_avg / len(train_loader)
+            logger.log(f'train/loss', train_loss_avg, epoch)
 
+            save_checkpoint(args.log_dir, state, epoch, ema_model)
+            breakpoint()
             # --- evaluation loop ---
             if epoch % args.logging_iter == 0:
-                gen_sig = []
-                real_sig = []
-                model.eval()
-                with torch.no_grad():
-                    with model.ema_scope():
-                        process = DiffusionProcess(args, model.net,
-                                                   (args.input_channels, args.img_resolution, args.img_resolution))
-                        for data in tqdm(test_loader):
-                            # sample from the model
-                            x_img_sampled = process.sampling(sampling_number=data[0].shape[0])
-                            # --- convert to time series --
-                            x_ts = model.img_to_ts(x_img_sampled)
-
-                            # special case for temperature_rain dataset
-                            if args.dataset in ['temperature_rain']:
-                                x_ts = torch.clamp(x_ts, 0, 1)
-
-                            gen_sig.append(x_ts.detach().cpu().numpy())
-                            real_sig.append(data[0].detach().cpu().numpy())
-
-                gen_sig = np.vstack(gen_sig)
-                real_sig = np.vstack(real_sig)
-                scores = evaluate_model_uncond(real_sig, gen_sig, args)
-                for key, value in scores.items():
-                    logger.log(f'test/{key}', value, epoch)
-
-                # --- save checkpoint ---
-                curr_score = scores['marginal_score_mean'] if 'marginal_score_mean' in scores else scores['disc_mean']
-                if curr_score < best_score:
-                    best_score = curr_score
-                    ema_model = model.model_ema if args.ema else None
-                    save_checkpoint(args.log_dir, state, epoch , ema_model)
+                ema_model = model.model_ema if args.ema else None
+                save_checkpoint(args.log_dir, state, epoch, ema_model)
+            # if epoch % args.logging_iter == 0:
+            #     gen_sig = []
+            #     real_sig = []
+            #     model.eval()
+            #     with torch.no_grad():
+            #         with model.ema_scope():
+            #             process = DiffusionProcess(args, model.net,
+            #                                        (args.input_channels, args.img_resolution, args.img_resolution))
+            #             for data in tqdm(test_loader):
+            #                 # sample from the model
+            #                 x_img_sampled = process.sampling(sampling_number=data[0].shape[0])
+            #                 # --- convert to time series --
+            #                 x_ts = model.img_to_ts(x_img_sampled)
+            #
+            #                 # special case for temperature_rain dataset
+            #                 if args.dataset in ['temperature_rain']:
+            #                     x_ts = torch.clamp(x_ts, 0, 1)
+            #
+            #                 gen_sig.append(x_ts.detach().cpu().numpy())
+            #                 real_sig.append(data[0].detach().cpu().numpy())
+            #
+            #     gen_sig = np.vstack(gen_sig)
+            #     real_sig = np.vstack(real_sig)
+            #     scores = evaluate_model_uncond(real_sig, gen_sig, args)
+            #     for key, value in scores.items():
+            #         logger.log(f'test/{key}', value, epoch)
+            #
+            #     # --- save checkpoint ---
+            #     curr_score = scores['marginal_score_mean'] if 'marginal_score_mean' in scores else scores['disc_mean']
+            #     if curr_score < best_score:
+            #         best_score = curr_score
+            #         ema_model = model.model_ema if args.ema else None
+            #         save_checkpoint(args.log_dir, state, epoch , ema_model)
 
         logging.info("Training is complete")
 
