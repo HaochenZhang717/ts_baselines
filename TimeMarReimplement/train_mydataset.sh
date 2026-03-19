@@ -1,21 +1,21 @@
-DATANAMES=("mydataset")
+DATANAMES=("synth_u")
 
-VQVAEDIR="./dual_vqvae_save_dir_mydataset"
+VQVAEDIR="./dual_vqvae_save_dir_synth_u"
 for DATA in "${DATANAMES[@]}"
 do
-  VARDIR="./var_save_dir_mydataset/var_${DATA}"
+  VARDIR="./var_save_dir_synth_u/var_${DATA}"
   VQVAECONFIG="configs/train_vq_${DATA}.yaml"
   VARCONFIG="configs/train_var_${DATA}.yaml"
   VQVAECKPT="${VQVAEDIR}/vq_${DATA}/checkpoints/latest.pt"
 
-  CUDA_VISIBLE_DEVICES=0 python train_dual_vqvae.py \
+  python train_dual_vqvae.py \
     --data ${DATA} \
     --config ${VQVAECONFIG} \
     --max_epochs 5 \
     --val_every 100 \
     --save_dir ${VQVAEDIR}
 
-  CUDA_VISIBLE_DEVICES=0 python train_ar.py \
+  python train_ar.py \
     --data ${DATA} \
     --vqvae_path ${VQVAECKPT} \
     --config ${VARCONFIG} \

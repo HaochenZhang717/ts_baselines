@@ -35,7 +35,7 @@ lr_decay_rate: 0.5
 dataloader:
   target: Utils.npy_datasets.PreSplitNPYDataset
   params:
-    name: mydataset
+    name: synth_u
     data_root: ../datasets/synthetic_u
     window: 128
     save2npy: True
