@@ -117,6 +117,7 @@ def train_one_epoch(model, vqvae, loader, optimizer, device, loss_weight):
 
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         optimizer.step()
 
         total_loss += loss.item()
