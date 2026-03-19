@@ -93,7 +93,8 @@ def main():
     trainer.train()
     trainer.load(args.milestone)
     dataset = dataloader_info['valid_dataset']
-    samples = trainer.sample(num=len(dataset), size_every=2001, shape=[dataset.window, dataset.var_num])
+    window, var_num = dataset[0]
+    samples = trainer.sample(num=len(dataset), size_every=2001, shape=[window, var_num])
     if dataset.auto_norm:
         samples = unnormalize_to_zero_to_one(samples)
         # samples = dataset.scaler.inverse_transform(samples.reshape(-1, samples.shape[-1])).reshape(samples.shape)
