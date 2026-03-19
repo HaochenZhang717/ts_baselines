@@ -68,8 +68,8 @@ def main(args):
                 x_img = model.ts_to_img(x_ts)
                 optimizer.zero_grad()
                 loss = model.loss_fn(x_img)
-                # if len(loss) == 2:
-                #     loss, to_log = loss
+                if len(loss) == 2:
+                    loss, to_log = loss
                 #     for key, value in to_log.items():
                 #         logger.log(f'train/{key}', value, epoch)
                 train_loss_avg += loss.item()
