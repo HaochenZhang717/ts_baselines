@@ -224,10 +224,10 @@ def gen_dataloader(args):
         train_data = np.load(train_path).astype(np.float32)
         valid_data = np.load(valid_path).astype(np.float32)
         test_data  = np.load(test_path).astype(np.float32)
-        print(f"train shape: {train_data.shape}")
-        print(f"valid shape: {valid_data.shape}")
-        print(f"test shape: {test_data.shape}")
-        breakpoint()
+        # print(f"train shape: {train_data.shape}")
+        # print(f"valid shape: {valid_data.shape}")
+        # print(f"test shape: {test_data.shape}")
+        # breakpoint()
         # 你的数据已经是 (N, L, D)
         assert train_data.ndim == 3, f"Expected train_data shape (N,L,D), got {train_data.shape}"
         assert valid_data.ndim == 3, f"Expected valid_data shape (N,L,D), got {valid_data.shape}"
