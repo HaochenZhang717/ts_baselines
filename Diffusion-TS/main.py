@@ -44,7 +44,7 @@ def parse_args():
 
     args = parser.parse_args()
     # args.save_dir = os.path.join(args.output, f'{args.name}')
-
+    args.save_dir = args.config['solver']['results_folder']
     return args
 
 def main():
