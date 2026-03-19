@@ -4,8 +4,8 @@ VQVAEDIR="./dual_vqvae_save_dir_synth_u"
 for DATA in "${DATANAMES[@]}"
 do
   VARDIR="./var_save_dir_synth_u/var_${DATA}"
-  VQVAECONFIG="configs/train_vq_${DATA}.yaml"
-  VARCONFIG="configs/train_var_${DATA}.yaml"
+  VQVAECONFIG="configs/neurips_baselines/train_vq_${DATA}.yaml"
+  VARCONFIG="configs/neurips_baselines/train_var_${DATA}.yaml"
   VQVAECKPT="${VQVAEDIR}/vq_${DATA}/checkpoints/latest.pt"
 
   python train_dual_vqvae.py \
