@@ -80,6 +80,8 @@ def main(args):
             train_loss_avg = train_loss_avg / len(train_loader)
             logger.log(f'train/loss', train_loss_avg, epoch)
 
+
+            ema_model = model.model_ema if args.ema else None
             save_checkpoint(args.log_dir, state, epoch, ema_model)
             breakpoint()
             # --- evaluation loop ---
