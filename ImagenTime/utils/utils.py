@@ -113,22 +113,51 @@ def log_config_and_tags(args, logger, name):
     logger.add_tags([args.dataset])
 
 
+# def create_model_name_and_dir(args):
+#     name = (f'conditional-'
+#             f'bs={args.batch_size}-'
+#             f'-lr={args.learning_rate:.4f}-'
+#             f'ch_mult={args.ch_mult}-'
+#             f'attn_res={args.attn_resolution}-'
+#             f'unet_ch={args.unet_channels}'
+#             )
+#     if args.use_stft:
+#         assert (args.n_fft is not None and args.hop_length is not None)
+#         name += f'-stft={args.n_fft}-{args.hop_length}'
+#     else:
+#         assert (args.delay is not None and args.embedding is not None)
+#         name += f'-delay={args.delay}-{args.embedding}'
+#     args.log_dir = '%s/%s/%s' % (args.log_dir, args.dataset, name)
+#     os.makedirs(os.path.dirname(args.log_dir), exist_ok=True)
+#     return name
+
+
 def create_model_name_and_dir(args):
-    name = (f'conditional-'
-            f'bs={args.batch_size}-'
-            f'-lr={args.learning_rate:.4f}-'
-            f'ch_mult={args.ch_mult}-'
-            f'attn_res={args.attn_resolution}-'
-            f'unet_ch={args.unet_channels}'
-            )
+
+    def format_list(x):
+        if isinstance(x, (list, tuple)):
+            return "-".join(map(str, x))
+        return str(x)
+
+    name = (
+        f'conditional-'
+        f'bs={args.batch_size}-'
+        f'lr={args.learning_rate:.4f}-'
+        f'ch_mult={format_list(args.ch_mult)}-'
+        f'attn_res={format_list(args.attn_resolution)}-'
+        f'unet_ch={args.unet_channels}'
+    )
+
     if args.use_stft:
         assert (args.n_fft is not None and args.hop_length is not None)
         name += f'-stft={args.n_fft}-{args.hop_length}'
     else:
         assert (args.delay is not None and args.embedding is not None)
         name += f'-delay={args.delay}-{args.embedding}'
-    args.log_dir = '%s/%s/%s' % (args.log_dir, args.dataset, name)
-    os.makedirs(os.path.dirname(args.log_dir), exist_ok=True)
+
+    args.log_dir = f'{args.log_dir}/{args.dataset}/{name}'
+    os.makedirs(args.log_dir, exist_ok=True)
+
     return name
 
 
