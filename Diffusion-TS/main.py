@@ -93,7 +93,7 @@ def main():
     trainer.train()
     trainer.load(args.milestone)
     dataset = dataloader_info['valid_dataset']
-    window, var_num = dataset[0]
+    window, var_num = dataset[0].shape
     samples = trainer.sample(num=len(dataset), size_every=2001, shape=[window, var_num])
     if dataset.auto_norm:
         samples = unnormalize_to_zero_to_one(samples)
