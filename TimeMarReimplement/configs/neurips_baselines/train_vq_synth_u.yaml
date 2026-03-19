@@ -36,7 +36,7 @@ dataloader:
   target: Utils.npy_datasets.PreSplitNPYDataset
   params:
     name: synth_u
-    data_root: ../datasets/synthetic_u
+    data_root: ../data/synthetic_u
     window: 128
     save2npy: True
     neg_one_to_one: True
