@@ -181,9 +181,9 @@ def gen_dataloader(args):
         return train_loader, test_loader
 
     elif args.dataset in ['synth_u']:
-        train_path = './data/synthetic_u/train_ts.npy'
-        valid_path = './data/synthetic_u/valid_ts.npy'
-        test_path  = './data/synthetic_u/test_ts.npy'
+        train_path = '../data/synthetic_u/train_ts.npy'
+        valid_path = '../data/synthetic_u/valid_ts.npy'
+        test_path  = '../data/synthetic_u/test_ts.npy'
 
         train_data = np.load(train_path).astype(np.float32)
         valid_data = np.load(valid_path).astype(np.float32)
@@ -217,9 +217,9 @@ def gen_dataloader(args):
         return train_loader, test_loader
 
     elif args.dataset in ['synth_m']:
-        train_path = './data/synthetic_m/train_ts.npy'
-        valid_path = './data/synthetic_m/valid_ts.npy'
-        test_path  = './data/synthetic_m/test_ts.npy'
+        train_path = '../data/synthetic_m/train_ts.npy'
+        valid_path = '../data/synthetic_m/valid_ts.npy'
+        test_path  = '../data/synthetic_m/test_ts.npy'
 
         train_data = np.load(train_path).astype(np.float32)
         valid_data = np.load(valid_path).astype(np.float32)
@@ -256,9 +256,9 @@ def gen_dataloader(args):
         return train_loader, test_loader
 
     elif args.dataset in ['istanbul_traffic']:
-        train_path = './data/istanbul_traffic/train_ts.npy'
-        valid_path = './data/istanbul_traffic/valid_ts.npy'
-        test_path  = './data/istanbul_traffic/test_ts.npy'
+        train_path = '../data/istanbul_traffic/train_ts.npy'
+        valid_path = '../data/istanbul_traffic/valid_ts.npy'
+        test_path  = '../data/istanbul_traffic/test_ts.npy'
 
         train_data = np.load(train_path).astype(np.float32)
         valid_data = np.load(valid_path).astype(np.float32)
