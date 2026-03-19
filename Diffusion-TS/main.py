@@ -89,6 +89,7 @@ def main():
     #         # samples = dataset.scaler.inverse_transform(samples.reshape(-1, samples.shape[-1])).reshape(samples.shape)
     #     np.save(os.path.join(args.save_dir, f'ddpm_fake_{args.name}.npy'), samples)
 
+    save_dir = config['solver']['results_folder']
     trainer.train()
     trainer.load(args.milestone)
     dataset = dataloader_info['valid_dataset']
@@ -96,7 +97,7 @@ def main():
     if dataset.auto_norm:
         samples = unnormalize_to_zero_to_one(samples)
         # samples = dataset.scaler.inverse_transform(samples.reshape(-1, samples.shape[-1])).reshape(samples.shape)
-    np.save(os.path.join(args.save_dir, f'ddpm_fake_{args.name}.npy'), samples)
+    np.save(os.path.join(save_dir, f'ddpm_fake_{args.name}.npy'), samples)
 
 
 if __name__ == '__main__':
