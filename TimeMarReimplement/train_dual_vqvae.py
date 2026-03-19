@@ -317,7 +317,8 @@ def main():
             # save best by fid
             if stats["eval/fid"] < best_fid:
                 best_fid = stats["eval/fid"]
-                best_path = os.path.join(ckpt_dir, f"best_epoch{epoch:04d}_fid{best_fid:.6f}.pt")
+                # best_path = os.path.join(ckpt_dir, f"best_epoch{epoch:04d}_fid{best_fid:.6f}.pt")
+                best_path = os.path.join(ckpt_dir, f"best.pt")
                 save_ckpt(best_path, model, optimizer, scheduler, epoch, best_fid, config_dict=vars(config))
                 print("Saved best:", best_path)
 
