@@ -1,4 +1,4 @@
-DATANAMES=("synth_u")
+DATANAMES=("istanbul")
 
 
 for DATA in "${DATANAMES[@]}"
