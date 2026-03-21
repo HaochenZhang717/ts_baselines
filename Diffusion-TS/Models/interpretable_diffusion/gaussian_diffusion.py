@@ -153,7 +153,8 @@ class Diffusion_TS(nn.Module):
         if padding_masks is None:
             padding_masks = torch.ones(x.shape[0], self.seq_length, dtype=bool, device=x.device)
 
-        maybe_clip = partial(torch.clamp, min=-1., max=1.) if clip_x_start else identity
+        # maybe_clip = partial(torch.clamp, min=-1., max=1.) if clip_x_start else identity
+        maybe_clip = identity
         x_start = self.output(x, t, padding_masks)
         x_start = maybe_clip(x_start)
         pred_noise = self.predict_noise_from_start(x, t, x_start)
@@ -161,8 +162,8 @@ class Diffusion_TS(nn.Module):
 
     def p_mean_variance(self, x, t, clip_denoised=True):
         _, x_start = self.model_predictions(x, t)
-        if clip_denoised:
-            x_start.clamp_(-1., 1.)
+        # if clip_denoised:
+        #     x_start.clamp_(-1., 1.)
         model_mean, posterior_variance, posterior_log_variance = \
             self.q_posterior(x_start=x_start, x_t=x, t=t)
         return model_mean, posterior_variance, posterior_log_variance, x_start
