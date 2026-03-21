@@ -49,7 +49,7 @@ class PreSplitNPYDataset(Dataset):
         path = os.path.join(data_root, file_map[split])
         self.samples = np.load(path).astype(np.float32)
         self.samples = torch.from_numpy(self.samples)
-
+        print(self.samples.shape)
         assert self.samples.ndim == 3, f"Expected (N,L,D), got {self.samples.shape}"
         # assert self.samples.shape[1] == window, (
         #     f"Window mismatch: got {self.samples.shape[1]}, expected {window}"

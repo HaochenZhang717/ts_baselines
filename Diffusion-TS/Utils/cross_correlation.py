@@ -50,3 +50,6 @@ class CrossCorrelLoss(Loss):
         cross_correl_fake = cacf_torch(self.transform(x_fake), 1).mean(0)[0]
         loss = self.norm_foo(cross_correl_fake - self.cross_correl_real.to(x_fake.device))
         return loss / 10.
+
+
+
