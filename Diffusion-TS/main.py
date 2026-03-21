@@ -89,7 +89,7 @@ def main():
     #     np.save(os.path.join(args.save_dir, f'ddpm_fake_{args.name}.npy'), samples)
 
     save_dir = config['solver']['results_folder']
-    trainer.train()
+    # trainer.train()
     trainer.load(args.milestone)
     dataset = dataloader_info['valid_dataset']
     window, var_num = dataset[0].shape
