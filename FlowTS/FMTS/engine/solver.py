@@ -40,7 +40,7 @@ class Trainer:
         wandb.init(
             project="FlowTS-Neurips-Baseline",  # 你可以改名字
             name=os.getenv("WANDB_NAME", "no_name"),  # 自动用实验名
-            config=self.configs
+            config=self.config
         )
 
 
