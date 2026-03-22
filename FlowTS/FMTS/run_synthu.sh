@@ -30,6 +30,6 @@ echo "hucfg_t_sampling=${hucfg_t_sampling}"
 echo "results_folder=${results_folder}"
 echo "========================================"
 
-python mydataset_nips.py
+python synthu.py
 done
 done

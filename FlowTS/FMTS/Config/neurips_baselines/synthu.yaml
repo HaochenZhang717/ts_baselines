@@ -17,7 +17,7 @@ solver:
   base_lr: 1.0e-4
   batch_size: 128
   max_epochs: 1000
-  results_folder: ./Checkpoints_mydataset_flows
+  results_folder: ./results_neurips_baselines/synthu
 #  gradient_accumulate_every: 1
 #  save_cycle: 100
 

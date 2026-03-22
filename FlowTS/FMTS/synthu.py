@@ -22,7 +22,7 @@ from Models.interpretable_diffusion.model_utils import (
 # =========================
 # 1. 数据路径
 # =========================
-DATA_ROOT = '../../data/synthetic_u'
+DATA_ROOT = '../../../data/synthetic_u'
 TRAIN_PATH = os.path.join(DATA_ROOT, 'train_ts.npy')
 VALID_PATH = os.path.join(DATA_ROOT, 'valid_ts.npy')
 TEST_PATH  = os.path.join(DATA_ROOT, 'test_ts.npy')
@@ -81,7 +81,7 @@ class MyDataset(Dataset):
 # =========================
 class Args_Example:
     def __init__(self) -> None:
-        self.config_path = './Config/neurips_baselines/mydataset.yaml'
+        self.config_path = './Config/neurips_baselines/synthu.yaml'
         self.gpu = 0
 
 args = Args_Example()
