@@ -100,7 +100,7 @@ class Trainer:
                 for batch in self.valid_dataloader:
                     batch = batch.to(self.device)
                     with torch.no_grad():
-                        loss = self.ema_model(batch, target=batch)
+                        loss = self.ema_model(batch)
                     val_loss_avg += loss.item()
                 val_loss_avg = val_loss_avg / len(self.valid_dataloader)
 
