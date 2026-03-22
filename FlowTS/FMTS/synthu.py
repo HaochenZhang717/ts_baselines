@@ -96,7 +96,7 @@ train_dataloader = DataLoader(
     train_dataset,
     batch_size=configs['solver']['batch_size'],
     shuffle=True,
-    num_workers=-1,
+    num_workers=16,
     drop_last=False,
     pin_memory=True
 )
@@ -107,7 +107,7 @@ valid_dataloader = DataLoader(
     valid_dataset,
     batch_size=configs['solver']['batch_size'],
     shuffle=False,
-    num_workers=0,
+    num_workers=16,
     drop_last=False,
     pin_memory=True
 )
