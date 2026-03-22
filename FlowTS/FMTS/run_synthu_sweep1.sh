@@ -28,6 +28,10 @@ echo "hucfg_Kscale=${hucfg_Kscale}"
 echo "hucfg_t_sampling=${hucfg_t_sampling}"
 echo "========================================"
 
-python synthu.py --lr 1e-4 --batch_size 128
+LR=1e-4
+BS=128
+export WANDB_NAME="synth_u_lr${LR}_bs${BS}"
+python synthu.py --lr ${LR} --batch_size ${BS}
+
 done
 done
