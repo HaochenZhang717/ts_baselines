@@ -22,7 +22,7 @@ from Models.interpretable_diffusion.model_utils import (
 # =========================
 # 1. 数据路径
 # =========================
-DATA_ROOT = '../../datasets/synthetic_u'
+DATA_ROOT = '../../data/synthetic_u'
 TRAIN_PATH = os.path.join(DATA_ROOT, 'train_ts.npy')
 VALID_PATH = os.path.join(DATA_ROOT, 'valid_ts.npy')
 TEST_PATH  = os.path.join(DATA_ROOT, 'test_ts.npy')
@@ -62,53 +62,64 @@ test  = to_neg_one_one(test_raw)
 # 3. Dataset
 # =========================
 class MyDataset(Dataset):
-    def __init__(self, data, regular=True, pred_length=24):
+    def __init__(self, data):
         super().__init__()
         self.samples = data
         self.sample_num = data.shape[0]
-        self.regular = regular
-
-        self.mask = np.ones_like(data, dtype=bool)
-        self.mask[:, -pred_length:, :] = 0
 
     def __getitem__(self, ind):
         x = self.samples[ind, :, :]
-        if self.regular:
-            return torch.from_numpy(x).float()
-        mask = self.mask[ind, :, :]
-        return torch.from_numpy(x).float(), torch.from_numpy(mask)
+        return torch.from_numpy(x).float()
 
     def __len__(self):
         return self.sample_num
 
-# =========================
-# 4. 训练 dataloader
-# =========================
-train_dataset = MyDataset(train, regular=True)
-dataloader = DataLoader(
-    train_dataset,
-    batch_size=64,
-    shuffle=True,
-    num_workers=4,
-    drop_last=False,
-    pin_memory=True
-)
+
 
 # =========================
 # 5. 配置与模型
 # =========================
 class Args_Example:
     def __init__(self) -> None:
-        self.config_path = './Config/mydataset.yaml'
+        self.config_path = './Config/neurips_baselines/mydataset.yaml'
         self.gpu = 0
 
 args = Args_Example()
 configs = load_yaml_config(args.config_path)
 
+
+# =========================
+# 4. 训练 dataloader
+# =========================
+train_dataset = MyDataset(train)
+train_dataloader = DataLoader(
+    train_dataset,
+    batch_size=configs['solver']['batch_size'],
+    shuffle=True,
+    num_workers=0,
+    drop_last=False,
+    pin_memory=True
+)
+
+
+valid_dataset = MyDataset(valid)
+valid_dataloader = DataLoader(
+    valid_dataset,
+    batch_size=configs['solver']['batch_size'],
+    shuffle=False,
+    num_workers=0,
+    drop_last=False,
+    pin_memory=True
+)
+
 device = torch.device(f'cuda:{args.gpu}' if torch.cuda.is_available() else 'cpu')
 
 model = instantiate_from_config(configs['model']).to(device)
-trainer = Trainer(config=configs, args=args, model=model, dataloader={'dataloader': dataloader})
+trainer = Trainer(
+    config=configs, args=args, model=model,
+    dataloader={'train_dataloader': train_dataloader,
+                'valid_dataloader': valid_dataloader},
+)
 
 # =========================
 # 6. 训练
@@ -122,62 +133,21 @@ trainer.train()
 _, seq_length, feat_num = test.shape
 pred_length = 24
 
-test_dataset = MyDataset(test, regular=False, pred_length=pred_length)
+test_dataset = MyDataset(test)
 real = test_raw.copy()
 
 test_dataloader = DataLoader(
     test_dataset,
-    batch_size=64,
+    batch_size=512,
     shuffle=False,
     num_workers=0,
     pin_memory=True
 )
+save_dir = configs['solver']['results_folder']
 
-sample, *_ = trainer.restore(test_dataloader, shape=[seq_length, feat_num])
-sample = from_neg_one_one(sample)
-
-mask = test_dataset.mask
-mse = mean_squared_error(sample[~mask], real[~mask])
-
-print(f"Forecasting MSE: {mse:.6f}")
-
-log_str_pre = 'mydataset_forecasting ' + ' '.join(
-    f"{k}={v}" for k, v in os.environ.items() if 'hucfg' in k
-)
-with open('log.txt', 'a') as f:
-    f.write(log_str_pre + f" mse={mse}\n")
-
-# =========================
-# 8. 可视化
-# =========================
-import matplotlib.pyplot as plt
-plt.rcParams["font.size"] = 12
-
-num_plot = min(2, test.shape[0])
-for idx in range(num_plot):
-    plt.figure(figsize=(15, 3))
-    plt.plot(
-        range(0, seq_length - pred_length),
-        real[idx, :(seq_length - pred_length), 0],
-        color='c',
-        linestyle='solid',
-        label='History'
-    )
-    plt.plot(
-        range(seq_length - pred_length - 1, seq_length),
-        real[idx, -pred_length - 1:, 0],
-        color='g',
-        linestyle='solid',
-        label='Ground Truth'
-    )
-    plt.plot(
-        range(seq_length - pred_length - 1, seq_length),
-        sample[idx, -pred_length - 1:, 0],
-        color='r',
-        linestyle='solid',
-        label='Prediction'
-    )
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(f'./mydataset_forecast_{idx}.png')
-    plt.close()
+trainer.load("best")
+window = configs["model"]["params"]["seq_length"]
+var_num = configs["model"]["params"]["feature_size"]
+samples = trainer.sample(num=len(test_dataset), size_every=2001, shape=[var_num, window])
+sample = from_neg_one_one(samples)
+np.save(os.path.join(save_dir, f'flowts_samples_best.npy'), samples)

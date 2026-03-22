@@ -2,8 +2,8 @@
 set -e
 
 ## environment setting
-export PATH="$HOME/.conda/envs/tsgen1/bin:$PATH"   ## change this to your conda env path
-# or: conda activate your_env_name
+#export PATH="$HOME/.conda/envs/tsgen1/bin:$PATH"   ## change this to your conda env path
+#conda activate vlm
 
 export CUDA_VISIBLE_DEVICES=0
 

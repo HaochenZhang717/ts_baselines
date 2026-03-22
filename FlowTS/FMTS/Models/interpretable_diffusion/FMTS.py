@@ -68,15 +68,9 @@ class FM_TS(nn.Module):
 
         return zt 
 
-
-
-
     def generate_mts(self, batch_size=16):
         feature_size, seq_length = self.feature_size, self.seq_length
         return self.sample((batch_size, seq_length, feature_size))
-
-
-
 
     def _train_loss(self, x_start):
         

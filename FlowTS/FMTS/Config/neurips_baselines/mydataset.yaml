@@ -14,12 +14,13 @@ model:
     padding_size: 0
 
 solver:
-  base_lr: 1.0e-5
+  base_lr: 1.0e-4
+  batch_size: 128
   max_epochs: 1000
-  # results_folder: ./Checkpoints_mydataset_flows
-  gradient_accumulate_every: 2
-  save_cycle: 100
+  results_folder: ./Checkpoints_mydataset_flows
+#  gradient_accumulate_every: 1
+#  save_cycle: 100
 
-  ema:
-    decay: 0.95
-    update_interval: 10
+#  ema:
+#    decay: 0.95
+#    update_interval: 10
