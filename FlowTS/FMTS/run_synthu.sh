@@ -19,7 +19,6 @@ export hucfg_lr=3e-4
 export hucfg_num_steps=${hucfg_num_steps}
 export hucfg_Kscale=${hucfg_Kscale}
 export hucfg_t_sampling=logitnorm
-export results_folder=./Checkpoints_mydataset_flows
 
 echo "========================================"
 echo "hucfg_attention_rope_use=${hucfg_attention_rope_use}"
@@ -27,7 +26,6 @@ echo "hucfg_lr=${hucfg_lr}"
 echo "hucfg_num_steps=${hucfg_num_steps}"
 echo "hucfg_Kscale=${hucfg_Kscale}"
 echo "hucfg_t_sampling=${hucfg_t_sampling}"
-echo "results_folder=${results_folder}"
 echo "========================================"
 
 python synthu.py
