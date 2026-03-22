@@ -12,6 +12,7 @@ from torch.optim import Adam
 from torch.nn.utils import clip_grad_norm_
 from Utils.io_utils import instantiate_from_config, get_model_parameters_info
 import copy
+import wandb
 
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
@@ -39,6 +40,12 @@ class Trainer(object):
         self.ema_model = copy.deepcopy(self.model).to(self.device)
         self.ema_model.eval()
 
+        wandb.init(
+            project="DiffusionTS-Neurips-Baseline",  # 你可以改名字
+            name=os.getenv("WANDB_NAME", "no_name"),  # 自动用实验名
+            config=self.config
+        )
+
     def save(self, milestone):
         data = {
             'step': self.step,
@@ -53,9 +60,7 @@ class Trainer(object):
             for ema_p, p in zip(self.ema_model.parameters(), self.model.parameters()):
                 ema_p.data.mul_(self.ema_decay).add_(p.data, alpha=1 - self.ema_decay)
 
-    def load(self, milestone, verbose=False):
-        # if self.logger is not None and verbose:
-        #     self.logger.log_info('Resume from {}'.format(str(self.results_folder / f'checkpoint-{milestone}.pt')))
+    def load(self, milestone):
         device = self.device
         data = torch.load(str(self.results_folder / f'checkpoint-{milestone}.pt'), map_location=device)
         self.model.load_state_dict(data['model'])
@@ -85,7 +90,11 @@ class Trainer(object):
             train_loss_avg = train_loss_avg / len(self.train_dataloader)
             toc = time.time()
             print(f"Epoch {epoch}: Train Loss: {train_loss_avg:.6f}, Time: {toc - tic:.2f}s")
-
+            wandb.log({
+                "train/epoch_loss": train_loss_avg,
+                "train/learning_rate": self.opt.param_groups[0]['lr'],
+                "epoch": epoch
+            })
             if epoch % 100 == 0:
                 val_loss_avg = 0.0
                 self.ema_model.eval()
@@ -98,7 +107,10 @@ class Trainer(object):
 
                 print(
                     f"Epoch {epoch}: Train Loss: {train_loss_avg:.6f}, Val Loss: {val_loss_avg:.6f}, Time: {toc - tic:.2f}s")
-
+                wandb.log({
+                    "valid/loss": val_loss_avg,
+                    "epoch": epoch
+                })
                 if val_loss_avg < best_val_loss:
                     best_val_loss = val_loss_avg
                     self.save("best")

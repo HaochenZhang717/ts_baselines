@@ -19,9 +19,11 @@ def parse_args():
                         help='directory to save the results')
     parser.add_argument('--tensorboard', action='store_true', 
                         help='use tensorboard for logging')
+    # training parameters
+    parser.add_argument('--lr', type=float, required=True)
+    parser.add_argument('--batch_size', type=int, required=True)
 
     # args for random
-
     parser.add_argument('--cudnn_deterministic', action='store_true', default=False,
                         help='set cudnn.deterministic True')
     parser.add_argument('--seed', type=int, default=12345, 
@@ -39,7 +41,9 @@ def parse_args():
 
     # args for modify config
     parser.add_argument('opts', help='Modify config options using the command-line',
-                        default=None, nargs=argparse.REMAINDER)  
+                        default=None, nargs=argparse.REMAINDER)
+
+
 
     args = parser.parse_args()
     # args.save_dir = os.path.join(args.output, f'{args.name}')
@@ -55,6 +59,8 @@ def main():
     config = load_yaml_config(args.config_file)
     config = merge_opts_to_config(config, args.opts)
     args.save_dir = config['solver']['results_folder']
+    config["solver"]["base_lr"] = args.lr
+    config["dataloader"]["batch_size"] = args.batch_size
 
     logger = Logger(args)
     logger.save_config(config)
