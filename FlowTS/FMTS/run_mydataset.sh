@@ -5,7 +5,7 @@ set -e
 #export PATH="$HOME/.conda/envs/tsgen1/bin:$PATH"   ## change this to your conda env path
 #conda activate vlm
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=2
 
 echo "Running FlowTS on mydataset..."
 echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}"
