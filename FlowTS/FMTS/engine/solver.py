@@ -51,7 +51,7 @@ class Trainer:
             'ema': self.ema_model.state_dict(),
             'opt': self.opt.state_dict(),
         }
-        torch.save(data, str(self.results_folder / f'checkpoint-{milestone}.pt'))
+        torch.save(data, f'{self.results_folder}/checkpoint-{milestone}.pt')
 
     def update_ema(self):
         with torch.no_grad():
@@ -60,7 +60,7 @@ class Trainer:
 
     def load(self, milestone):
         device = self.device
-        data = torch.load(str(self.results_folder / f'checkpoint-{milestone}.pt'), map_location=device)
+        data = torch.load(f'{self.results_folder}/checkpoint-{milestone}.pt', map_location=device)
         self.model.load_state_dict(data['model'])
         self.step = data['step']
         self.opt.load_state_dict(data['opt'])
