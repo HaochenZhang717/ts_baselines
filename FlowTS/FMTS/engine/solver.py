@@ -74,7 +74,7 @@ class Trainer:
             train_loss_avg = 0.0
             tic = time.time()
             self.model.train()
-            for batch in self.train_dataloader:
+            for batch in tqdm(self.train_dataloader):
                 batch = batch.to(self.device)
                 loss = self.model(batch)
                 train_loss_avg += loss.item()
