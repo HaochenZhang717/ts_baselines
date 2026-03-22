@@ -25,10 +25,7 @@ class Trainer:
         self.max_epochs = config["solver"]["max_epochs"]
         # self.save_cycle = config["solver"]["save_cycle"]
 
-        self.results_folder = os.environ.get(
-            "results_folder",
-            config["solver"].get("results_folder", "./Checkpoints_default")
-        )
+        self.results_folder = config["solver"]["results_folder"]
         os.makedirs(self.results_folder, exist_ok=True)
 
         self.opt = torch.optim.Adam(self.model.parameters(), lr=self.base_lr)
