@@ -18,6 +18,7 @@ from Models.interpretable_diffusion.model_utils import (
     normalize_to_neg_one_to_one,
     unnormalize_to_zero_to_one
 )
+import argparse
 
 # =========================
 # 1. 数据路径
@@ -79,15 +80,27 @@ class MyDataset(Dataset):
 # =========================
 # 5. 配置与模型
 # =========================
-class Args_Example:
-    def __init__(self) -> None:
-        self.config_path = './Config/neurips_baselines/synthu.yaml'
-        self.gpu = 0
+def parse_args():
+    parser = argparse.ArgumentParser()
 
-args = Args_Example()
+    parser.add_argument('--config_path', type=str,
+                        default='./Config/neurips_baselines/synthu.yaml')
+
+    parser.add_argument('--data_root', type=str,
+                        default='../../data/synthetic_u')
+
+    parser.add_argument('--gpu', type=int, default=0)
+
+    parser.add_argument('--lr', type=float, required=True)
+    parser.add_argument('--batch_size', type=int, required=True)
+
+    return parser.parse_args()
+
+args = parse_args()
 configs = load_yaml_config(args.config_path)
-
-
+configs['solver']['base_lr'] = args.lr
+configs['solver']['batch_size'] = args.batch_size
+configs['solver']['results_folder'] = f"{configs['solver']['results_folder']}/LR{configs['solver']['base_lr']}-BS${configs['solver']['batch_size']}"
 # =========================
 # 4. 训练 dataloader
 # =========================
