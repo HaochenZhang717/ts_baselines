@@ -61,6 +61,7 @@ def main():
     args.save_dir = config['solver']['results_folder']
     config["solver"]["base_lr"] = args.lr
     config["dataloader"]["batch_size"] = args.batch_size
+    config['solver']['results_folder'] = f"{config['solver']['results_folder']}/LR{config['solver']['base_lr']}-BS{config['dataloader']['batch_size']}"
 
     logger = Logger(args)
     logger.save_config(config)
