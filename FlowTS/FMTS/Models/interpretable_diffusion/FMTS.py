@@ -61,7 +61,7 @@ class FM_TS(nn.Module):
         t_shifted = 1-(self.alpha * timesteps) / (1 + (self.alpha - 1) * timesteps)
         t_shifted = t_shifted.flip(0)
 
-        for t_curr, t_prev in zip(t_shifted[:-1], t_shifted[1:]):
+        for t_curr, t_prev in tqdm(zip(t_shifted[:-1], t_shifted[1:])):
             step = t_prev - t_curr
             v = self.output(zt.clone(), torch.tensor([t_curr*self.time_scalar]).unsqueeze(0).repeat(zt.shape[0], 1).cuda().squeeze(), padding_masks=None)                  
             zt = zt.clone() + step * v 
