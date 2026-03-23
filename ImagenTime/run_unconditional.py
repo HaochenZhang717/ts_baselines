@@ -37,6 +37,8 @@ def main(args):
         logging.info(args.dataset + ' dataset is ready.')
 
         model = ImagenTime(args=args, device=args.device).to(args.device)
+        total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+        print(f"Trainable parameters: {total_params}")
         if args.use_stft:
             model.init_stft_embedder(train_loader)
 
