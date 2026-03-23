@@ -119,10 +119,7 @@ class Trainer:
         tic = time.time()
         for _ in range(num_cycle):
             sample = self.ema_model.generate_mts(batch_size=size_every)
-            print("samples shape:", samples.shape)
-            print("new sample shape:", sample.shape)
-            breakpoint()
-            samples = np.row_stack([samples, sample.detach().cpu().numpy()])
+            samples = np.row_stack([samples, sample.permute(0,2,1).detach().cpu().numpy()])
             torch.cuda.empty_cache()
         print('Sampling done, time: {:.2f}'.format(time.time() - tic))
         return samples
