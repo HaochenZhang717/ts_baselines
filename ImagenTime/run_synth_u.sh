@@ -1,4 +1,4 @@
-#export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=4
 #python run_unconditional.py \
 #  --config ./configs/neurips_baseline/synth_u.yaml
 
