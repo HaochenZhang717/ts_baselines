@@ -124,7 +124,7 @@ def main(args):
                 scores = evaluate_model_uncond(real_sig, gen_sig, args)
                 for key, value in scores.items():
                     logger.log(f'test/{key}', value, epoch)
-
+                breakpoint()
                 save_path = os.path.join(args.log_dir, f"samples_epoch_{epoch}.pt")
                 torch.save({
                     "gen_ts": torch.from_numpy(gen_sig),  # (N, T, D)
