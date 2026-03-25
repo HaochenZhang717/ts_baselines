@@ -106,7 +106,7 @@ def main(args):
                                                    (args.input_channels, args.img_resolution, args.img_resolution))
                         for data in tqdm(test_loader):
                             # sample from the model
-                            xT_for_sample = torch.randn_like(data[0]).to(model.device)
+                            xT_for_sample = torch.randn_like(data[0].permute(0,2,1)).to(model.device)
                             x_img_sampled = process.sampling(xT=xT_for_sample)
                             # --- convert to time series --
                             x_ts = x_img_sampled
@@ -114,7 +114,7 @@ def main(args):
                             # special case for temperature_rain dataset
                             if args.dataset in ['temperature_rain']:
                                 x_ts = torch.clamp(x_ts, 0, 1)
-                            breakpoint()
+                            x_ts = x_ts.permute(0,2,1)
                             gen_sig.append(x_ts.detach().cpu().numpy())
                             real_sig.append(data[0].detach().cpu().numpy())
 
