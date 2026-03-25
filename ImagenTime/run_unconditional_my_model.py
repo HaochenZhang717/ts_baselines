@@ -96,7 +96,7 @@ def main(args):
             })
 
             # --- evaluation loop ---
-            if epoch % args.logging_iter == 0:
+            if epoch % args.logging_iter == 0 and epoch > 0:
                 gen_sig = []
                 real_sig = []
                 model.eval()
