@@ -104,7 +104,7 @@ def parse_args_cond():
     parser.add_argument('--num_workers', default=4, type=int,
                         help='Number of workers to use for dataloader')
     parser.add_argument('--resume', type=bool, default=False, help='resume from checkpoint')
-    parser.add_argument('--log_dir', default='./logs', help='path to save logs')
+    parser.add_argument('--log_dir', default='./logs_verbal_ts_uncond_edm', help='path to save logs')
     parser.add_argument('--neptune', type=bool, default=False, help='use neptune logger')
     parser.add_argument('--tags', type=str, default=['karras', 'conditional'],
                         help='tags for neptune logger', nargs='+')
