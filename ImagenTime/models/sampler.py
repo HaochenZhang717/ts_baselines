@@ -49,7 +49,7 @@ class DiffusionProcess():
         x_next = latents.to(torch.float64) * t_steps[0]
         for i, (t_cur, t_next) in enumerate(zip(t_steps[:-1], t_steps[1:])):  # 0, ..., N-1
             x_cur = x_next
-
+            breakpoint()
             # Increase noise temporarily.
             gamma = min(self.S_churn / self.num_steps, np.sqrt(2) - 1) if self.S_min <= t_cur <= self.S_max else 0
             t_hat = self.net.round_sigma(t_cur + gamma * t_cur)
@@ -57,6 +57,7 @@ class DiffusionProcess():
 
             # Euler step.
             denoised = self.net(x_hat, t_hat, class_labels).to(torch.float64)
+
             d_cur = (x_hat - denoised) / t_hat
             x_next = x_hat + (t_next - t_hat) * d_cur
 
