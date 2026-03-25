@@ -155,6 +155,7 @@ class DiffusionProcess():
 
     @torch.no_grad()
     def sampling(self, sampling_number=16, impute=False, xT=None):
+        breakpoint()
         if xT is None:
             xT = torch.randn([sampling_number, *self.shape]).to(device=self.device)
         return self.sample(xT)
