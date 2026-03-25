@@ -106,9 +106,10 @@ def main(args):
                                                    (args.input_channels, args.img_resolution, args.img_resolution))
                         for data in tqdm(test_loader):
                             # sample from the model
-                            x_img_sampled = process.sampling(sampling_number=data[0].shape[0])
+                            xT_for_sample = torch.randn([data[0].shape[0], 1, 128]).to(device=model.device)
+                            x_img_sampled = process.sampling(xT=xT_for_sample)
                             # --- convert to time series --
-                            x_ts = model.img_to_ts(x_img_sampled)
+                            x_ts = x_img_sampled
 
                             # special case for temperature_rain dataset
                             if args.dataset in ['temperature_rain']:
