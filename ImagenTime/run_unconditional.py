@@ -12,6 +12,7 @@ from utils.utils import save_checkpoint, restore_state, create_model_name_and_di
     log_config_and_tags
 from utils.utils_data import gen_dataloader
 from utils.utils_args import parse_args_uncond
+import wandb
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 torch.multiprocessing.set_sharing_strategy('file_system')
@@ -23,7 +24,11 @@ def main(args):
 
     # log args
     logging.info(args)
-
+    wandb.init(
+        project=os.getenv("WANDB_PROJECT", "no_project_name"),  # 你可以改名字
+        name=os.getenv("WANDB_NAME", "no_run_name"),  # 自动用实验名
+        config=args
+    )
     # set-up neptune logger. switch to your desired logger
     with CompositeLogger([NeptuneLogger()]) if args.neptune \
             else PrintLogger() as logger:
@@ -82,7 +87,11 @@ def main(args):
                 model.on_train_batch_end()
             train_loss_avg = train_loss_avg / len(train_loader)
             logger.log(f'train/loss', train_loss_avg, epoch)
-
+            wandb.log({
+                "train/epoch_loss": train_loss_avg,
+                "train/learning_rate": optimizer.param_groups[0]['lr'],
+                "epoch": epoch
+            })
 
             # --- evaluation loop ---
             if epoch % args.logging_iter == 0:
