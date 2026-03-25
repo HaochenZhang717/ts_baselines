@@ -6,12 +6,14 @@ import logging
 from tqdm import tqdm
 from metrics import evaluate_model_uncond
 from utils.loggers import NeptuneLogger, PrintLogger, CompositeLogger
-from models.model import ImagenTime
+from models.model_1d.verbalts import Model1D
 from models.sampler import DiffusionProcess
 from utils.utils import save_checkpoint, restore_state, create_model_name_and_dir, print_model_params, \
     log_config_and_tags
 from utils.utils_data import gen_dataloader
 from utils.utils_args import parse_args_uncond
+import wandb
+
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 torch.multiprocessing.set_sharing_strategy('file_system')
@@ -23,6 +25,11 @@ def main(args):
 
     # log args
     logging.info(args)
+    wandb.init(
+        project=os.getenv("WANDB_PROJECT", "no_project_name"),  # 你可以改名字
+        name=os.getenv("WANDB_NAME", "no_run_name"),  # 自动用实验名
+        config=args
+    )
 
     # set-up neptune logger. switch to your desired logger
     with CompositeLogger([NeptuneLogger()]) if args.neptune \
@@ -36,7 +43,8 @@ def main(args):
         train_loader, test_loader = gen_dataloader(args)
         logging.info(args.dataset + ' dataset is ready.')
 
-        model = ImagenTime(args=args, device=args.device).to(args.device)
+        model = Model1D(args=args, device=args.device).to(args.device)
+
         total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
         print(f"Trainable parameters: {total_params}")
         if args.use_stft:
@@ -67,22 +75,26 @@ def main(args):
             train_loss_avg = 0.0
             for i, data in enumerate(train_loader, 1):
                 x_ts = data[0].to(args.device)
-                x_img = model.ts_to_img(x_ts)
-                breakpoint()
+                x_ts = x_ts.permute(0,2,1)
                 optimizer.zero_grad()
-                loss = model.loss_fn(x_img)
+                loss = model.loss_fn(x_ts)
                 if len(loss) == 2:
                     loss, to_log = loss
                 #     for key, value in to_log.items():
                 #         logger.log(f'train/{key}', value, epoch)
                 train_loss_avg += loss.item()
+                breakpoint()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
                 optimizer.step()
                 model.on_train_batch_end()
             train_loss_avg = train_loss_avg / len(train_loader)
             logger.log(f'train/loss', train_loss_avg, epoch)
-
+            wandb.log({
+                "train/epoch_loss": train_loss_avg,
+                "train/learning_rate": optimizer.param_groups[0]['lr'],
+                "epoch": epoch
+            })
 
             # --- evaluation loop ---
             if epoch % args.logging_iter == 0:
@@ -109,10 +121,10 @@ def main(args):
                 gen_sig = np.vstack(gen_sig)
                 real_sig = np.vstack(real_sig)
                 # print(f"gen_sig: {gen_sig.shape}, real_sig: {real_sig.shape}")
-                # breakpoint()
-                # scores = evaluate_model_uncond(real_sig, gen_sig, args)
-                # for key, value in scores.items():
-                #     logger.log(f'test/{key}', value, epoch)
+                breakpoint()
+                scores = evaluate_model_uncond(real_sig, gen_sig, args)
+                for key, value in scores.items():
+                    logger.log(f'test/{key}', value, epoch)
 
                 save_path = os.path.join(args.log_dir, f"samples_epoch_{epoch}.pt")
                 torch.save({

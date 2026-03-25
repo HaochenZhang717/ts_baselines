@@ -106,7 +106,6 @@ class ImagenTime(nn.Module):
 
         return loss, to_log
 
-
     def forward(self, x, labels=None, augment_pipe=None):
 
         rnd_normal = torch.randn([x.shape[0], 1, 1, 1], device=x.device)
@@ -114,6 +113,7 @@ class ImagenTime(nn.Module):
         weight = (sigma ** 2 + self.sigma_data ** 2) / (sigma * self.sigma_data) ** 2
         y, augment_labels = augment_pipe(x) if augment_pipe is not None else (x, None)
         n = torch.randn_like(y) * sigma
+        breakpoint()
         D_yn = self.net(y + n, sigma, labels, augment_labels=augment_labels)
         return D_yn, weight
 
