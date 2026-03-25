@@ -73,7 +73,7 @@ def main(args):
             for i, data in enumerate(train_loader, 1):
                 x_ts = data[0].to(args.device)
                 x_img = model.ts_to_img(x_ts)
-                breakpoint()
+
                 optimizer.zero_grad()
                 loss = model.loss_fn(x_img)
                 if len(loss) == 2:
