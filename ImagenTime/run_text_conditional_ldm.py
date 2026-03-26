@@ -75,18 +75,23 @@ def main(args):
                 text_embed = data[1].to(args.device)
                 text_embed = text_embed.unsqueeze(1)
 
+                torch.cuda.synchronize()
                 tic = time()
                 x_img = model.ts_to_img(x_ts)
+                torch.cuda.synchronize()
                 toc = time()
                 print(f"ts to img: {toc - tic}")
 
 
                 optimizer.zero_grad()
+                torch.cuda.synchronize()
                 tic = time()
                 loss = model.loss_fn(x_img, text_embed)
+                torch.cuda.synchronize()
                 toc = time()
                 print(f"forward  time: {toc - tic}")
 
+                torch.cuda.synchronize()
                 tic = time()
                 if len(loss) == 2:
                     loss, to_log = loss
@@ -97,6 +102,7 @@ def main(args):
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
                 optimizer.step()
                 model.on_train_batch_end()
+                torch.cuda.synchronize()
                 toc = time()
                 print(f"backward time: {toc - tic}")
                 print("="*20)
