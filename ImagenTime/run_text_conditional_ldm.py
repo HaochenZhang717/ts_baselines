@@ -13,7 +13,7 @@ from utils.utils import save_checkpoint, restore_state, create_model_name_and_di
 from utils.utils_data import gen_dataloader
 from utils.utils_args import parse_args_uncond
 import wandb
-
+from time import time
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 torch.multiprocessing.set_sharing_strategy('file_system')
 
@@ -74,11 +74,20 @@ def main(args):
                 x_ts = data[0].to(args.device)
                 text_embed = data[1].to(args.device)
                 text_embed = text_embed.unsqueeze(1)
+
+                tic = time()
                 x_img = model.ts_to_img(x_ts)
+                toc = time()
+                print(f"ts to img: {toc - tic}")
+
 
                 optimizer.zero_grad()
+                tic = time()
                 loss = model.loss_fn(x_img, text_embed)
+                toc = time()
+                print(f"forward  time: {toc - tic}")
 
+                tic = time()
                 if len(loss) == 2:
                     loss, to_log = loss
                 #     for key, value in to_log.items():
@@ -88,6 +97,9 @@ def main(args):
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
                 optimizer.step()
                 model.on_train_batch_end()
+                toc = time()
+                print(f"backward time: {toc - tic}")
+
             train_loss_avg = train_loss_avg / len(train_loader)
             logger.log(f'train/loss', train_loss_avg, epoch)
             wandb.log({
