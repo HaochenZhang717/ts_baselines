@@ -57,6 +57,8 @@ def parse_args_uncond():
                         help='embedding for the delay embedding transformation, only needed if using delay embedding')
 
     # --- model--- :
+    parser.add_argument('--fid_vae_ckpt_path', type=str, help='ckpt of a vae to calculate fid')
+    parser.add_argument('--model_type', type=str, help='diffusion model\'s architecture type')
     parser.add_argument('--img_resolution', type=int, help='image resolution')
     parser.add_argument('--input_channels', type=int,
                         help='number of image channels, 2 if stft is used, 1 for delay embedding')

@@ -1,0 +1,36 @@
+# training:
+epochs: 2000
+batch_size: 128
+learning_rate: 0.0001
+weight_decay: 0.00001
+
+# data:
+dataset: synth_u_text
+seq_len: 128
+use_stft: false
+
+# transform:
+delay: 4
+embedding: 32
+
+# model:
+label_dim: 1024
+img_resolution: 32
+input_channels: 1
+
+output_channels: 1
+unet_channels: 64
+num_res_blocks: 2
+attn_resolution: [2, 4, 8]
+dropout: 0.1
+ch_mult: [1, 2]
+num_heads_channels: 64
+use_scale_shift_norm: True
+use_spatial_transformer: True
+
+
+ema: true
+ema_warmup: 100
+
+# logging:
+logging_iter: 100

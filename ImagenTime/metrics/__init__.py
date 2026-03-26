@@ -2,6 +2,9 @@ from metrics.metrics_long_range import compute_all_metrics, setup_optimizer
 import numpy as np
 import torch
 
+from metrics.metrics_long_range import FIDVAE, extract_embeddings, compute_fid_given_embeds
+
+
 def evaluate_model_uncond(real_sig,gen_sig,args):
     """
     Args:
@@ -41,10 +44,34 @@ def evaluate_model_uncond(real_sig,gen_sig,args):
         # proceed with long term evaluation
         # conversion to meet benchmark requirements:
         real_sig,gen_sig = torch.Tensor(real_sig).float(),torch.Tensor(gen_sig).float()
-        scores = compute_all_metrics(real_sig, gen_sig, setup_optimizer,
-                                     torch.nn.Sigmoid() if args.dataset == 'temperature_rain' else torch.nn.Identity(),
-                                     args.device)
+        # scores = compute_all_metrics(real_sig, gen_sig, setup_optimizer,
+        #                              torch.nn.Sigmoid() if args.dataset == 'temperature_rain' else torch.nn.Identity(),
+        #                              args.device)
+
+        scores = compute_fid(real_sig, gen_sig)
         return scores
 
 
+def compute_fid(x_real, gens, ckpt_path):
+    x_real = x_real.permute(0, 2, 1)
+    gens = gens.permute(0, 2, 1)
+    assert ckpt_path is not None
+    C, T = x_real.shape
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = FIDVAE(
+        input_dim=C,
+        output_dim=C,
+        seq_len=T,
+        hidden_size=128,
+        num_layers=2,
+        num_heads=8,
+        latent_dim=64,
+    ).to(device).eval()
 
+    model.load_state_dict(torch.load(ckpt_path, map_location=device))
+
+    real_embeddings = extract_embeddings(model, x_real, device)
+    gen_embeddings = extract_embeddings(model, gens, device)
+    fid = compute_fid_given_embeds(real_embeddings, gen_embeddings)
+
+    return {'fid': fid}
