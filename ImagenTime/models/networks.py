@@ -796,19 +796,15 @@ class EDMPrecondLDM(torch.nn.Module):
         )
 
     def forward(self, x, sigma, context, force_fp32=False, **model_kwargs):
-
-        x = x.to(torch.float32)
-        sigma = sigma.to(torch.float32).reshape(-1, 1, 1, 1)
-        context = None if self.context_dim == 0 else torch.zeros([1, self.label_dim], device=x.device) if context is None else context.to(torch.float32)
-        dtype = torch.float16 if (self.use_fp16 and not force_fp32 and x.device.type == 'cuda') else torch.float32
-
+        sigma = sigma.reshape(-1, 1, 1, 1)
         c_skip = self.sigma_data ** 2 / (sigma ** 2 + self.sigma_data ** 2)
         c_out = sigma * self.sigma_data / (sigma ** 2 + self.sigma_data ** 2).sqrt()
         c_in = 1 / (self.sigma_data ** 2 + sigma ** 2).sqrt()
         c_noise = sigma.log() / 4
-        F_x = self.model((c_in * x).to(dtype), c_noise.flatten(), context=context, **model_kwargs)
-        assert F_x.dtype == dtype
-        D_x = c_skip * x + c_out * F_x.to(torch.float32)
+        # F_x = self.model((c_in * x).to(dtype), c_noise.flatten(), context=context, **model_kwargs)
+        F_x = self.model(c_in * x, c_noise.flatten(), context=context, **model_kwargs)
+        # assert F_x.dtype == dtype
+        D_x = c_skip * x + c_out * F_x
         return D_x
 
     def round_sigma(self, sigma):
