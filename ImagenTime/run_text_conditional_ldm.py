@@ -99,6 +99,7 @@ def main(args):
                 model.on_train_batch_end()
                 toc = time()
                 print(f"backward time: {toc - tic}")
+                print("="*20)
 
             train_loss_avg = train_loss_avg / len(train_loader)
             logger.log(f'train/loss', train_loss_avg, epoch)
