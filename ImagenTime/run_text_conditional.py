@@ -6,7 +6,7 @@ import logging
 from tqdm import tqdm
 from metrics import evaluate_model_uncond
 from utils.loggers import NeptuneLogger, PrintLogger, CompositeLogger
-from models.model import ImagenTime
+from models.model import TextImagenTime
 from models.sampler import DiffusionProcess
 from utils.utils import save_checkpoint, restore_state, create_model_name_and_dir, print_model_params, \
     log_config_and_tags
@@ -25,7 +25,7 @@ def main(args):
     # log args
     logging.info(args)
     wandb.init(
-        project=os.getenv("WANDB_PROJECT", "text_conditional"),  # 你可以改名字
+        project=os.getenv("WANDB_PROJECT", "no_project_name"),  # 你可以改名字
         name=os.getenv("WANDB_NAME", "no_run_name"),  # 自动用实验名
         config=args
     )
@@ -41,7 +41,7 @@ def main(args):
         train_loader, test_loader = gen_dataloader(args)
         logging.info(args.dataset + ' dataset is ready.')
 
-        model = ImagenTime(args=args, device=args.device).to(args.device)
+        model = TextImagenTime(args=args, device=args.device).to(args.device)
         total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
         print(f"Trainable parameters: {total_params}")
         if args.use_stft:
@@ -72,11 +72,11 @@ def main(args):
             train_loss_avg = 0.0
             for i, data in enumerate(train_loader, 1):
                 x_ts = data[0].to(args.device)
-                breakpoint()
+                text_embed = data[1].to(args.device)
                 x_img = model.ts_to_img(x_ts)
 
                 optimizer.zero_grad()
-                loss = model.loss_fn(x_img)
+                loss = model.loss_fn(x_img, text_embed)
                 if len(loss) == 2:
                     loss, to_log = loss
                 #     for key, value in to_log.items():

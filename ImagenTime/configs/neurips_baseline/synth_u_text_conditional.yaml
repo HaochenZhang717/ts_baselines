@@ -5,7 +5,7 @@ learning_rate: 0.0001
 weight_decay: 0.00001
 
 # data:
-dataset: synth_u
+dataset: synth_u_text
 seq_len: 128
 use_stft: false
 
@@ -14,6 +14,7 @@ delay: 4
 embedding: 32
 
 # model:
+label_dim: 1024
 img_resolution: 32
 input_channels: 1
 unet_channels: 64
