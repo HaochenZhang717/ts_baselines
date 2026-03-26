@@ -316,7 +316,6 @@ class TextImagenTime(nn.Module):
         weight = (sigma ** 2 + self.sigma_data ** 2) / (sigma * self.sigma_data) ** 2
         y, augment_labels = augment_pipe(x) if augment_pipe is not None else (x, None)
         n = torch.randn_like(y) * sigma
-        breakpoint()
         D_yn = self.net(y + n, sigma, text_embed, augment_labels=augment_labels)
         return D_yn, weight
 
