@@ -440,7 +440,6 @@ class DhariwalUNet(torch.nn.Module):
         emb = silu(self.map_layer0(emb))
         emb = self.map_layer1(emb)
         if self.map_label is not None:
-            breakpoint()
             tmp = class_labels
             if self.training and self.label_dropout:
                 tmp = tmp * (torch.rand([x.shape[0], 1], device=x.device) >= self.label_dropout).to(tmp.dtype)
