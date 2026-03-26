@@ -78,7 +78,7 @@ def main(args):
 
                 optimizer.zero_grad()
                 loss = model.loss_fn(x_img, text_embed)
-                breakpoint()
+
                 if len(loss) == 2:
                     loss, to_log = loss
                 #     for key, value in to_log.items():

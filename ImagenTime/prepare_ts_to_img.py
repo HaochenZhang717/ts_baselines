@@ -69,7 +69,6 @@ def main(args):
     all_ts_img = []
     for i, data in enumerate(train_loader, 1):
         x_ts = data[0].to(args.device)
-        breakpoint()
         x_img = model.ts_to_img(x_ts)
         all_ts_img.append(x_img)
     all_ts_img = torch.stack(all_ts_img)
