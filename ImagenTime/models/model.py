@@ -228,7 +228,7 @@ class MultimodalImagenTime(nn.Module):
             self.delay = args.delay
             self.embedding = args.embedding
             self.seq_len = args.seq_len
-
+            breakpoint()
             # NOTE: added this
             self.ts_img = DelayEmbedder(self.device, args.seq_len, args.delay, args.embedding)
         else:
