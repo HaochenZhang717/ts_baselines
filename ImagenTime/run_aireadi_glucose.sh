@@ -4,7 +4,8 @@ export WANDB_PROJECT="aireadi_prediction"
 export WANDB_NAME="glucose"
 
 python run_prediction.py \
-  --config ./configs/extrapolation/aireadi_glucose.yaml
+  --config ./configs/extrapolation/aireadi_glucose.yaml \
+  --logdir ./results_aireadi/glucose
 
 
 
