@@ -67,7 +67,6 @@ def main(args):
                 x_ts_img = model.ts_to_img(x_ts)
                 mask_ts_img = model.ts_to_img(mask_ts,pad_val=1)
                 optimizer.zero_grad()
-                breakpoint()
                 loss = model.loss_fn_impute(x_ts_img, mask_ts_img, context_ts)
                 if len(loss) == 2:
                     loss, to_log = loss
