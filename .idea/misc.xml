@@ -3,4 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.9 (LSTMAD12)" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="moment_ts" project-jdk-type="Python SDK" />
 </project>
