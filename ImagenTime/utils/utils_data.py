@@ -383,8 +383,10 @@ def gen_dataloader(args):
             glucose_path="/playpen-shared/haochenz/AI-READI-Dataset/AI-READI-processed/glucose_valid.parquet",
             window_size=512,
             predict_length=128,
-            stride=10,
+            stride=1,
         )
+        print(f"Train set size: {len(train_set)}")
+        print(f"Test set size: {len(test_set)}")
         train_datum = train_set[0][0]
         args.seq_len = train_datum.shape[0]
         args.input_channels = train_datum.shape[1]
