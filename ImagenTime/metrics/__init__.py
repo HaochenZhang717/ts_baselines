@@ -72,7 +72,6 @@ def compute_fid(x_real, gens, ckpt_path):
 
     real_embeddings = extract_embeddings(model, x_real, device)
     gen_embeddings = extract_embeddings(model, gens, device)
-    breakpoint()
     fid = compute_fid_given_embeds(real_embeddings, gen_embeddings)
 
     return {'fid': fid}
