@@ -233,6 +233,7 @@ class DiffusionProcessLDM():
             x_hat = x_cur + (t_hat ** 2 - t_cur ** 2).sqrt() * self.S_noise * torch.randn_like(x_cur)
 
             # Euler step.
+            breakpoint()
             denoised = self.net(x_hat, t_hat, context, pad_mask).to(torch.float64)
 
             d_cur = (x_hat - denoised) / t_hat
@@ -331,8 +332,8 @@ class DiffusionProcessLDM():
 
 
     @torch.no_grad()
-    def sampling(self, xT, context, pad_mask):
-        return self.sample(xT, context, pad_mask)
+    def sampling(self, xT, context, context_pad_mask):
+        return self.sample(xT, context, context_pad_mask)
 
     @torch.no_grad()
     def interpolate(self, x, mask, xT=None):
