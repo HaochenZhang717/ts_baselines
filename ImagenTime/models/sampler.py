@@ -233,7 +233,8 @@ class DiffusionProcessLDM():
             x_hat = x_cur + (t_hat ** 2 - t_cur ** 2).sqrt() * self.S_noise * torch.randn_like(x_cur)
 
             # Euler step.
-            denoised = self.net(x_hat.float(), t_hat.float(), context, pad_mask).to(torch.float64)
+            with torch.no_grad():
+                denoised = self.net(x_hat.float(), t_hat.float(), context, pad_mask).to(torch.float64)
 
             d_cur = (x_hat - denoised) / t_hat
             x_next = x_hat + (t_next - t_hat) * d_cur
