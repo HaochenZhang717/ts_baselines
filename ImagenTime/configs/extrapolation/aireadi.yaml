@@ -19,11 +19,11 @@ max_t: 5 #subsample in [0, max_t]
 cut_tp: null
 # transform:
 use_stft: false
-delay: 42
-embedding: 48
+delay: 8
+embedding: 64
 # model:
-img_resolution: 48
-input_channels: 41
+img_resolution: 64
+input_channels: 1
 unet_channels: 128
 ch_mult: [1,2,4,4]
 attn_resolution: [32,16,8]
