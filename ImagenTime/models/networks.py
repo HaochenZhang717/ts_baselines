@@ -690,7 +690,7 @@ class MultimodalDhariwalUNet(torch.nn.Module):
         if self.map_context is not None:
             # here I did not use context dropout
             emb = emb + self.map_context(context)
-        breakpoint()
+
         emb = silu(emb)
         # Encoder.
         skips = []
