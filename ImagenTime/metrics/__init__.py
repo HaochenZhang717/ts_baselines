@@ -56,7 +56,7 @@ def compute_fid(x_real, gens, ckpt_path):
     x_real = x_real.permute(0, 2, 1)
     gens = gens.permute(0, 2, 1)
     assert ckpt_path is not None
-    C, T = x_real.shape
+    _, C, T = x_real.shape
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = FIDVAE(
         input_dim=C,
