@@ -220,7 +220,6 @@ class MultimodalImagenTime(nn.Module):
         self.T = args.diffusion_steps
 
         self.device = device
-        breakpoint()
         self.net = MultimodalEDMPrecond(
             args.img_resolution,
             args.input_channels,
