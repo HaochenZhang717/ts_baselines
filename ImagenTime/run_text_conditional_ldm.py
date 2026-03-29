@@ -39,6 +39,14 @@ def main(args):
         # set-up data and device
         args.device = "cuda" if torch.cuda.is_available() else "cpu"
         train_loader, test_loader = gen_dataloader(args)
+
+        if args.dataset in ['synth_u_text_ldm']:
+            train_text_embeds = torch.load("/playpen-shared/haochenz/LitsDatasets/128_len_ts/synth_u/train_embeds_qwen_all_last_hidden_0324.pt", map_location=args.device)
+            test_text_embeds = torch.load("/playpen-shared/haochenz/LitsDatasets/128_len_ts/synth_u/test_embeds_qwen_all_last_hidden_0324.pt", map_location=args.device)
+        else:
+            train_text_embeds = None
+            test_text_embeds = None
+
         logging.info(args.dataset + ' dataset is ready.')
 
         model = TextLDM(args=args, device=args.device).to(args.device)
@@ -71,56 +79,23 @@ def main(args):
             # --- train loop ---
             train_loss_avg = 0.0
             for i, data in enumerate(train_loader, 1):
-                x_ts = data[0].to(args.device)
-                text_embed = data[1].to(args.device)
-                text_embed = text_embed.unsqueeze(1)
+                indices = data[0]
+                x_ts = data[1].to(args.device)
+                if train_text_embeds is not None:
+                    text_embeds_batch = train_text_embeds[indices]
 
-                torch.cuda.synchronize()
-                tic = time()
                 x_img = model.ts_to_img(x_ts)
-                torch.cuda.synchronize()
-                toc = time()
-                print(f"ts to img: {toc - tic}")
-
 
                 optimizer.zero_grad()
-                torch.cuda.synchronize()
-                tic = time()
-                loss = model.loss_fn(x_img, text_embed)
-                torch.cuda.synchronize()
-                toc = time()
-                print(f"forward  time: {toc - tic}")
+                loss = model.loss_fn(x_img, text_embeds_batch)
 
-                torch.cuda.synchronize()
-                tic = time()
                 if len(loss) == 2:
                     loss, to_log = loss
-                #     for key, value in to_log.items():
-                #         logger.log(f'train/{key}', value, epoch)
                 train_loss_avg += loss.item()
                 loss.backward()
-                torch.cuda.synchronize()
-                toc = time()
-                print(f"backward time: {toc - tic}")
-
-                tic = time()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
-                torch.cuda.synchronize()
-                toc = time()
-                print(f"clip grad time: {toc - tic}")
-
-                tic = time()
                 optimizer.step()
-                torch.cuda.synchronize()
-                toc = time()
-                print(f"optimizer step time: {toc - tic}")
-
-                tic = time()
                 model.on_train_batch_end()
-                torch.cuda.synchronize()
-                toc = time()
-                print(f"on_train_batch_end time: {toc - tic}")
-                print("="*20)
 
             train_loss_avg = train_loss_avg / len(train_loader)
             logger.log(f'train/loss', train_loss_avg, epoch)
@@ -143,13 +118,14 @@ def main(args):
                         )
                         for data in tqdm(test_loader):
                             # sample from the model
-                            x_ts = data[0].to(args.device)
-                            text_embed = data[1].to(args.device)
-                            text_embed = text_embed.unsqueeze(1)
+                            indices = data[0]
+                            x_ts = data[1].to(args.device)
+                            if test_text_embeds is not None:
+                                text_embeds_batch = test_text_embeds[indices]
 
                             x_img_sampled = process.sampling(
                                 xT=torch.randn_like(x_ts),
-                                context=text_embed
+                                context=text_embeds_batch
                             )
 
                             # --- convert to time series --

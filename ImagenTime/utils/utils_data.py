@@ -291,7 +291,6 @@ def gen_dataloader(args):
         )
         return train_loader, test_loader
 
-
     elif args.dataset in ['synth_u_text']:
         train_path = '../data/synthetic_u/train_ts.npy'
         valid_path = '../data/synthetic_u/valid_ts.npy'
@@ -317,6 +316,42 @@ def gen_dataloader(args):
 
         train_set = Data.TensorDataset(torch.Tensor(train_data), train_text_embed)
         test_set = Data.TensorDataset(torch.Tensor(test_data), test_text_embed)
+
+        train_loader = Data.DataLoader(
+            dataset=train_set,
+            batch_size=args.batch_size,
+            shuffle=True,
+            num_workers=args.num_workers
+        )
+        test_loader = Data.DataLoader(
+            dataset=test_set,
+            batch_size=args.batch_size,
+            shuffle=False,
+            num_workers=args.num_workers
+        )
+        return train_loader, test_loader
+
+    elif args.dataset in ['synth_u_text_ldm']:
+        train_path = '../data/synthetic_u/train_ts.npy'
+        valid_path = '../data/synthetic_u/valid_ts.npy'
+        test_path = '../data/synthetic_u/test_ts.npy'
+
+        train_data = np.load(train_path).astype(np.float32)
+        valid_data = np.load(valid_path).astype(np.float32)
+        test_data = np.load(test_path).astype(np.float32)
+
+        # 你的数据已经是 (N, L, D)
+        assert train_data.ndim == 3, f"Expected train_data shape (N,L,D), got {train_data.shape}"
+        assert valid_data.ndim == 3, f"Expected valid_data shape (N,L,D), got {valid_data.shape}"
+        assert test_data.ndim == 3, f"Expected test_data shape (N,L,D), got {test_data.shape}"
+
+        # 若 config 里 seq_len 和真实不一致，强制同步
+        args.seq_len = train_data.shape[1]
+        args.input_channels = train_data.shape[2]
+        args.input_size = args.input_channels
+
+        train_set = DatasetForPrecomputedEmbed(train_data)
+        test_set = DatasetForPrecomputedEmbed(test_data)
 
         train_loader = Data.DataLoader(
             dataset=train_set,
@@ -376,6 +411,18 @@ def load_data(dir):
 def save_data(dir, **tensors):
     for tensor_name, tensor_value in tensors.items():
         torch.save(tensor_value, str(dir / tensor_name) + '.pt')
+
+
+
+class DatasetForPrecomputedEmbed(torch.utils.data.Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        return index, self.data[index]
 
 
 class MujocoDataset(torch.utils.data.Dataset):
