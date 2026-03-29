@@ -416,7 +416,7 @@ def save_data(dir, **tensors):
 
 class DatasetForPrecomputedEmbed(torch.utils.data.Dataset):
     def __init__(self, data):
-        self.data = data
+        self.data = data.float()
 
     def __len__(self):
         return len(self.data)
