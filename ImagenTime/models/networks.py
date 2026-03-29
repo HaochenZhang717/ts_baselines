@@ -12,7 +12,147 @@ import numpy as np
 import torch
 from utils import persistence
 from torch.nn.functional import silu
-from models.ldm.openaimodels import LDMUNetModel
+from models.ldm.openaimodels import LDMUNetModel, MultiModalLDMUNetModel
+from torch import nn
+import torch.nn.functional as F
+
+
+class NormCausalAttention(nn.Module):
+    def __init__(
+        self,
+        dim: int,
+        num_heads: int,
+        qkv_bias: bool = False,
+        qk_norm: bool = False,
+        attn_drop: float = 0.,
+        proj_drop: float = 0.,
+        norm_layer: nn.Module = nn.LayerNorm,
+    ) -> None:
+        super().__init__()
+        assert dim % num_heads == 0, "dim should be divisible by num_heads"
+
+        self.num_heads = num_heads
+        self.head_dim = dim // num_heads
+
+        self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
+        self.q_norm = norm_layer(self.head_dim) if qk_norm else nn.Identity()
+        self.k_norm = norm_layer(self.head_dim) if qk_norm else nn.Identity()
+        self.attn_drop = nn.Dropout(attn_drop)
+        self.proj = nn.Linear(dim, dim)
+        self.proj_drop = nn.Dropout(proj_drop)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # x: (B, N, C)
+        B, N, C = x.shape
+        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, self.head_dim)
+        qkv = qkv.permute(2, 0, 3, 1, 4)
+        q, k, v = qkv.unbind(0)
+
+        q, k = self.q_norm(q), self.k_norm(k)
+        q = q.to(v.dtype)
+        k = k.to(v.dtype)
+
+        x = F.scaled_dot_product_attention(
+            q, k, v,
+            dropout_p=self.attn_drop.p if self.training else 0.
+        )
+        x = x.transpose(1, 2).reshape(B, N, C)
+        x = self.proj(x)
+        x = self.proj_drop(x)
+        return x
+
+
+class SwiGLUFFN(nn.Module):
+    def __init__(
+        self,
+        in_features: int,
+        hidden_features: int,
+        out_features: int,
+        bias: bool = True,
+    ) -> None:
+        super().__init__()
+        self.w12 = nn.Linear(in_features, 2 * hidden_features, bias=bias)
+        self.w3 = nn.Linear(hidden_features, out_features, bias=bias)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x12 = self.w12(x)
+        x1, x2 = x12.chunk(2, dim=-1)
+        hidden = F.silu(x1) * x2
+        return self.w3(hidden)
+
+
+class EncoderLayer(nn.Module):
+    def __init__(self, hidden_size, num_heads):
+        super().__init__()
+        mlp_ratio = 4.0
+
+        self.norm1 = nn.LayerNorm(hidden_size, elementwise_affine=False, eps=1e-6)
+        self.norm2 = nn.LayerNorm(hidden_size, elementwise_affine=False, eps=1e-6)
+
+        self.attn = NormCausalAttention(hidden_size, num_heads=num_heads)
+
+        mlp_hidden_dim = int(hidden_size * mlp_ratio)
+        self.mlp = SwiGLUFFN(
+            hidden_size,
+            int(2 / 3 * mlp_hidden_dim),
+            hidden_size
+        )
+
+    def forward(self, x):
+        x = x + self.attn(self.norm1(x))
+        x = x + self.mlp(self.norm2(x))
+        return x
+
+
+class ContextEncoder(nn.Module):
+    def __init__(
+        self,
+        input_dim,
+        hidden_size=128,
+        num_layers=4,
+        num_heads=4,
+        latent_dim=64,
+    ):
+        super().__init__()
+
+        self.conv = nn.Sequential(
+            nn.Conv1d(input_dim, hidden_size // 2, kernel_size=3, stride=2, padding=1),
+            nn.ReLU(),
+            nn.Conv1d(hidden_size // 2, hidden_size, kernel_size=3, stride=2, padding=1),
+            nn.ReLU(),
+        )
+
+        self.layers = nn.ModuleList([
+            EncoderLayer(hidden_size, num_heads)
+            for _ in range(num_layers)
+        ])
+
+        self.final_norm = nn.LayerNorm(hidden_size)
+        self.to_mu = nn.Linear(hidden_size, latent_dim)
+
+    def forward(self, x):
+        """
+        x: (B, T, C)
+        return:
+            mu:     (B, latent_dim)
+            logvar: (B, latent_dim)
+        """
+        x = x.permute(0, 2, 1)
+        x = self.conv(x)              # (B, hidden, T')
+        x = x.permute(0, 2, 1)        # (B, T', hidden)
+
+        for layer in self.layers:
+            x = layer(x)
+
+        x = self.final_norm(x)
+
+        # global pooling over time
+        x = x.mean(dim=1)             # (B, hidden)
+
+        mu = self.to_mu(x)            # (B, latent_dim)
+
+        return mu
+
 
 #----------------------------------------------------------------------------
 # Unified routine for initializing weights and biases.
@@ -463,7 +603,7 @@ class DhariwalUNet(torch.nn.Module):
 
 
 @persistence.persistent_class
-class TextlUNet(torch.nn.Module):
+class MultimodalDhariwalUNet(torch.nn.Module):
     def __init__(self,
         img_resolution,                     # Image resolution at input/output.
         in_channels,                        # Number of color channels at input.
@@ -491,7 +631,15 @@ class TextlUNet(torch.nn.Module):
         self.map_augment = Linear(in_features=augment_dim, out_features=model_channels, bias=False, **init_zero) if augment_dim else None
         self.map_layer0 = Linear(in_features=model_channels, out_features=emb_channels, **init)
         self.map_layer1 = Linear(in_features=emb_channels, out_features=emb_channels, **init)
-        self.map_label = Linear(in_features=label_dim, out_features=emb_channels, bias=False, init_mode='kaiming_normal', init_weight=np.sqrt(label_dim)) if label_dim else None
+
+        #
+        self.map_context = ContextEncoder(
+            input_dim=label_dim,
+            hidden_size=64,
+            num_layers=2,
+            num_heads=4,
+            latent_dim=emb_channels,
+        ) if label_dim else None
 
         # Encoder.
         self.enc = torch.nn.ModuleDict()
@@ -503,11 +651,11 @@ class TextlUNet(torch.nn.Module):
                 cout = model_channels * mult
                 self.enc[f'{res}x{res}_conv'] = Conv2d(in_channels=cin, out_channels=cout, kernel=3, **init)
             else:
-                self.enc[f'{res}x{res}_down'] = UNetBlockCrossAttention(in_channels=cout, out_channels=cout, down=True, **block_kwargs)
+                self.enc[f'{res}x{res}_down'] = UNetBlock(in_channels=cout, out_channels=cout, down=True, **block_kwargs)
             for idx in range(num_blocks):
                 cin = cout
                 cout = model_channels * mult
-                self.enc[f'{res}x{res}_block{idx}'] = UNetBlockCrossAttention(in_channels=cin, out_channels=cout, attention=(res in attn_resolutions), **block_kwargs)
+                self.enc[f'{res}x{res}_block{idx}'] = UNetBlock(in_channels=cin, out_channels=cout, attention=(res in attn_resolutions), **block_kwargs)
         skips = [block.out_channels for block in self.enc.values()]
 
         # Decoder.
@@ -515,29 +663,35 @@ class TextlUNet(torch.nn.Module):
         for level, mult in reversed(list(enumerate(channel_mult))):
             res = img_resolution >> level
             if level == len(channel_mult) - 1:
-                self.dec[f'{res}x{res}_in0'] = UNetBlockCrossAttention(in_channels=cout, out_channels=cout, attention=True, **block_kwargs)
-                self.dec[f'{res}x{res}_in1'] = UNetBlockCrossAttention(in_channels=cout, out_channels=cout, **block_kwargs)
+                self.dec[f'{res}x{res}_in0'] = UNetBlock(in_channels=cout, out_channels=cout, attention=True, **block_kwargs)
+                self.dec[f'{res}x{res}_in1'] = UNetBlock(in_channels=cout, out_channels=cout, **block_kwargs)
             else:
-                self.dec[f'{res}x{res}_up'] = UNetBlockCrossAttention(in_channels=cout, out_channels=cout, up=True, **block_kwargs)
+                self.dec[f'{res}x{res}_up'] = UNetBlock(in_channels=cout, out_channels=cout, up=True, **block_kwargs)
             for idx in range(num_blocks + 1):
                 cin = cout + skips.pop()
                 cout = model_channels * mult
-                self.dec[f'{res}x{res}_block{idx}'] = UNetBlockCrossAttention(in_channels=cin, out_channels=cout, attention=(res in attn_resolutions), **block_kwargs)
+                self.dec[f'{res}x{res}_block{idx}'] = UNetBlock(in_channels=cin, out_channels=cout, attention=(res in attn_resolutions), **block_kwargs)
         self.out_norm = GroupNorm(num_channels=cout)
         self.out_conv = Conv2d(in_channels=cout, out_channels=out_channels, kernel=3, **init_zero)
 
-    def forward(self, x, noise_labels, class_labels, augment_labels=None):
+    def forward(self, x, noise_labels, context, augment_labels=None):
         # Mapping.
-        emb = self.map_noise(noise_labels)
+        emb = self.map_noise(noise_labels) # (batch_size)
         if self.map_augment is not None and augment_labels is not None:
             emb = emb + self.map_augment(augment_labels)
         emb = silu(self.map_layer0(emb))
         emb = self.map_layer1(emb)
-        if self.map_label is not None:
-            tmp = class_labels
-            if self.training and self.label_dropout:
-                tmp = tmp * (torch.rand([x.shape[0], 1], device=x.device) >= self.label_dropout).to(tmp.dtype)
-            emb = emb + self.map_label(tmp)
+        # if self.map_label is not None:
+        #     tmp = class_labels
+        #     if self.training and self.label_dropout:
+        #         tmp = tmp * (torch.rand([x.shape[0], 1], device=x.device) >= self.label_dropout).to(tmp.dtype)
+        #     emb = emb + self.map_label(tmp)
+
+        if self.map_context is not None:
+            tmp = context
+            # here I did not use context dropout
+            emb = emb + self.map_context(tmp)
+
         emb = silu(emb)
 
         # Encoder.
@@ -757,6 +911,55 @@ class EDMPrecond(torch.nn.Module):
         c_noise = sigma.log() / 4
 
         F_x = self.model((c_in * x).to(dtype), c_noise.flatten(), class_labels=class_labels, **model_kwargs)
+        assert F_x.dtype == dtype
+        D_x = c_skip * x + c_out * F_x.to(torch.float32)
+        return D_x
+
+    def round_sigma(self, sigma):
+        return torch.as_tensor(sigma)
+
+
+@persistence.persistent_class
+class MultimodalEDMPrecond(torch.nn.Module):
+    def __init__(self,
+        img_resolution,                     # Image resolution.
+        img_channels,                       # Number of color channels.
+        label_dim       = 0,                # Number of class labels, 0 = unconditional.
+        use_fp16        = False,            # Execute the underlying model at FP16 precision?
+        sigma_min       = 0,                # Minimum supported noise level.
+        sigma_max       = float('inf'),     # Maximum supported noise level.
+        sigma_data      = 0.5,              # Expected standard deviation of the training data.
+        model_type      = 'DhariwalUNet',   # Class name of the underlying model.
+        **model_kwargs,                     # Keyword arguments for the underlying model.
+    ):
+        super().__init__()
+        self.img_resolution = img_resolution
+        self.img_channels = img_channels
+        self.label_dim = label_dim
+        self.use_fp16 = use_fp16
+        self.sigma_min = sigma_min
+        self.sigma_max = sigma_max
+        self.sigma_data = sigma_data
+        self.model = MultimodalDhariwalUNet(
+            img_resolution=img_resolution,
+            in_channels=img_channels,
+            out_channels=img_channels,
+            label_dim=label_dim,
+            **model_kwargs
+        )
+
+    def forward(self, x, sigma, context, force_fp32=False, **model_kwargs):
+        x = x.to(torch.float32)
+        sigma = sigma.to(torch.float32).reshape(-1, 1, 1, 1)
+        context = None if self.label_dim == 0 else torch.zeros([1, self.label_dim], device=x.device) if context is None else context.to(torch.float32).reshape(-1, self.label_dim)
+        dtype = torch.float16 if (self.use_fp16 and not force_fp32 and x.device.type == 'cuda') else torch.float32
+
+        c_skip = self.sigma_data ** 2 / (sigma ** 2 + self.sigma_data ** 2)
+        c_out = sigma * self.sigma_data / (sigma ** 2 + self.sigma_data ** 2).sqrt()
+        c_in = 1 / (self.sigma_data ** 2 + sigma ** 2).sqrt()
+        c_noise = sigma.log() / 4
+
+        F_x = self.model((c_in * x).to(dtype), c_noise.flatten(), context=context, **model_kwargs)
         assert F_x.dtype == dtype
         D_x = c_skip * x + c_out * F_x.to(torch.float32)
         return D_x

@@ -9,7 +9,7 @@ import logging
 import torch.nn.functional as F
 
 from utils.loggers import NeptuneLogger, PrintLogger, CompositeLogger
-from models.model import ImagenTime
+from models.model import MultimodalImagenTime
 from models.sampler import DiffusionProcess
 from utils.utils import save_checkpoint, restore_state, create_model_name_and_dir, print_model_params, \
     log_config_and_tags, get_x_and_mask
@@ -38,7 +38,7 @@ def main(args):
         train_loader, test_loader = gen_dataloader(args)
         logging.info(args.dataset + ' dataset is ready.')
 
-        model = ImagenTime(args=args, device=args.device).to(args.device)
+        model = MultimodalImagenTime(args=args, device=args.device).to(args.device)
 
         # optimizer
         optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)
@@ -63,15 +63,12 @@ def main(args):
             logger.log_name_params('train/epoch', epoch)
 
             # --- train loop ---
-            for i, x_ts, mask_ts in enumerate(train_loader, 1):
-                # mask_ts, x_ts = get_x_and_mask(args, data)
-                # transform to image
+            for i, x_ts, mask_ts, context_ts in enumerate(train_loader, 1):
                 x_ts_img = model.ts_to_img(x_ts)
-                # pad mask with 1
                 mask_ts_img = model.ts_to_img(mask_ts,pad_val=1)
                 optimizer.zero_grad()
                 breakpoint()
-                loss = model.loss_fn_impute(x_ts_img, mask_ts_img)
+                loss = model.loss_fn_impute(x_ts_img, mask_ts_img, context_ts)
                 if len(loss) == 2:
                     loss, to_log = loss
                     for key, value in to_log.items():

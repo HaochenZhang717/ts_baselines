@@ -384,8 +384,7 @@ def gen_dataloader(args):
             predict_length=128,
             stride=10,
         )
-        train_datum = train_set[0]
-        breakpoint()
+        train_datum = train_set[0][0]
         args.seq_len = train_datum.shape[1]
         args.input_channels = train_datum.shape[2]
         args.input_size = args.input_channels
@@ -588,13 +587,14 @@ class AIREADIDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         s = self.samples[idx]
 
-        glucose = torch.tensor(s["glucose"], dtype=torch.float32)
-        calorie = torch.tensor(s["calorie"], dtype=torch.float32)
+        glucose = torch.from_numpy(s["glucose"]).unsqueeze(-1).float()
 
-        all_modalities = torch.cat([glucose.unsqueeze(-1), calorie.unsqueeze(-1)], dim=-1)
-        mask_ts = torch.ones_like(all_modalities)
+        mask_ts = torch.ones_like(glucose)
         mask_ts[-self.pred_length:] = 0
-        return all_modalities, mask_ts
+
+        calorie = torch.from_numpy(s["calorie"]).unsqueeze(-1).float()
+        context = calorie[-self.pred_length:]
+        return glucose, mask_ts, context
 
 
 
