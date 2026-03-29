@@ -16,6 +16,7 @@ from utils.utils import save_checkpoint, restore_state, create_model_name_and_di
 from utils.utils_data import gen_dataloader
 from utils.utils_args import parse_args_cond
 import wandb
+from tqdm import tqdm
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 
@@ -65,7 +66,7 @@ def main(args):
             logger.log_name_params('train/epoch', epoch)
 
             # --- train loop ---
-            for i, (x_ts, mask_ts, context_ts) in enumerate(train_loader, 1):
+            for i, (x_ts, mask_ts, context_ts) in tqdm(enumerate(train_loader, 1)):
                 x_ts = x_ts.to(args.device)
                 mask_ts = mask_ts.to(args.device)
                 context_ts = context_ts.to(args.device)
@@ -76,8 +77,8 @@ def main(args):
                 loss = model.loss_fn_impute(x_ts_img, mask_ts_img, context_ts)
                 if len(loss) == 2:
                     loss, to_log = loss
-                    for key, value in to_log.items():
-                        logger.log(f'train/{key}', value, epoch)
+                    # for key, value in to_log.items():
+                        # logger.log(f'train/{key}', value, epoch)
 
                 train_loss_avg += loss.item()
                 loss.backward()
