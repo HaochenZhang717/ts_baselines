@@ -349,7 +349,7 @@ def gen_dataloader(args):
         args.seq_len = train_data.shape[1]
         args.input_channels = train_data.shape[2]
         args.input_size = args.input_channels
-        breakpoint()
+
         train_set = DatasetForPrecomputedEmbed(train_data)
         test_set = DatasetForPrecomputedEmbed(test_data)
 
