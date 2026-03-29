@@ -70,8 +70,9 @@ def compute_fid(x_real, gens, ckpt_path):
 
     model.load_state_dict(torch.load(ckpt_path, map_location=device))
 
-    real_embeddings = extract_embeddings(model, x_real, device).detach().cpu().numpy()
-    gen_embeddings = extract_embeddings(model, gens, device).detach().cpu().numpy()
+    real_embeddings = extract_embeddings(model, x_real, device)
+    gen_embeddings = extract_embeddings(model, gens, device)
+    breakpoint()
     fid = compute_fid_given_embeds(real_embeddings, gen_embeddings)
 
     return {'fid': fid}
