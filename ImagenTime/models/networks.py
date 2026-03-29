@@ -951,7 +951,7 @@ class MultimodalEDMPrecond(torch.nn.Module):
     def forward(self, x, sigma, context, force_fp32=False, **model_kwargs):
         x = x.to(torch.float32)
         sigma = sigma.to(torch.float32).reshape(-1, 1, 1, 1)
-        context = None if self.context_dim == 0 else torch.zeros([1, self.context_dim], device=x.device) if context is None else context.to(torch.float32).reshape(-1, self.context_dim)
+        context = None if self.context_dim == 0 else context
         dtype = torch.float16 if (self.use_fp16 and not force_fp32 and x.device.type == 'cuda') else torch.float32
 
         c_skip = self.sigma_data ** 2 / (sigma ** 2 + self.sigma_data ** 2)
