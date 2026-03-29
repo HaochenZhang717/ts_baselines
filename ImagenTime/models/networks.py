@@ -693,7 +693,6 @@ class MultimodalDhariwalUNet(torch.nn.Module):
             emb = emb + self.map_context(tmp)
 
         emb = silu(emb)
-        breakpoint()
         # Encoder.
         skips = []
         for block in self.enc.values():
