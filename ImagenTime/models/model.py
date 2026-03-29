@@ -227,7 +227,7 @@ class MultimodalImagenTime(nn.Module):
             channel_mult=args.ch_mult,
             model_channels=args.unet_channels,
             attn_resolutions=args.attn_resolution,
-            label_dim=args.context_dim
+            context_dim=args.context_dim
         )
 
         # delay embedding is used
