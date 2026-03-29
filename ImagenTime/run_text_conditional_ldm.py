@@ -81,9 +81,9 @@ def main(args):
             for i, data in enumerate(train_loader, 1):
                 indices = data[0]
                 x_ts = data[1].to(args.device)
+                breakpoint()
                 if train_text_embeds is not None:
                     text_embeds_batch = train_text_embeds[indices]
-                breakpoint()
                 x_img = model.ts_to_img(x_ts)
 
                 optimizer.zero_grad()
