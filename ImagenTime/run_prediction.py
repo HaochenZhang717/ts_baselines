@@ -15,6 +15,7 @@ from utils.utils import save_checkpoint, restore_state, create_model_name_and_di
     log_config_and_tags, get_x_and_mask
 from utils.utils_data import gen_dataloader
 from utils.utils_args import parse_args_cond
+import wandb
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 
@@ -55,6 +56,7 @@ def main(args):
         print_model_params(logger, model)
 
         # --- train model ---
+        train_loss_avg = 0.0
         logging.info(f"Continuing training loop from epoch {init_epoch}.")
         best_score = float('inf')  # marginal score for long-range metrics, dice score for short-range metrics
         for epoch in range(init_epoch, args.epochs):
@@ -77,11 +79,18 @@ def main(args):
                     for key, value in to_log.items():
                         logger.log(f'train/{key}', value, epoch)
 
+                train_loss_avg += loss.item()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
                 optimizer.step()
                 model.on_train_batch_end()
 
+            train_loss_avg = train_loss_avg / len(train_loader)
+            wandb.log({
+                "train/epoch_loss": train_loss_avg,
+                "train/learning_rate": optimizer.param_groups[0]['lr'],
+                "epoch": epoch
+            })
             # --- evaluation loop ---
             if epoch % args.logging_iter == 0:
                 mse = 0
@@ -117,6 +126,13 @@ def main(args):
                 for key, value in scores.items():
                     logger.log(f'test/{key}', value, epoch)
 
+                wandb.log(
+                    {
+                        "test/mse": scores['mse'],
+                        "test/mae": scores['mae'],
+                        "epoch": epoch
+                    }
+                )
                 # --- save checkpoint ---
                 curr_score = scores['mse']
                 if curr_score < best_score:
