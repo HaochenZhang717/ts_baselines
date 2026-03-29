@@ -63,7 +63,7 @@ def main(args):
             logger.log_name_params('train/epoch', epoch)
 
             # --- train loop ---
-            for i, x_ts, mask_ts, context_ts in enumerate(train_loader, 1):
+            for i, (x_ts, mask_ts, context_ts) in enumerate(train_loader, 1):
                 x_ts_img = model.ts_to_img(x_ts)
                 mask_ts_img = model.ts_to_img(mask_ts,pad_val=1)
                 optimizer.zero_grad()
