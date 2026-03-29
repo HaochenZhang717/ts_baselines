@@ -461,7 +461,7 @@ class AIREADIDataset(torch.utils.data.Dataset):
         predict_length=64,
         stride=64,
     ):
-
+        self.window_size = window_size
         self.pred_length = predict_length
 
         self.calorie_df = pd.read_parquet(calorie_path)
@@ -583,29 +583,32 @@ class AIREADIDataset(torch.utils.data.Dataset):
                 })
 
         # ========= compute normalization stats =========
-        all_glu = []
-        all_cal = []
+        # all_glu = []
+        # all_cal = []
+        #
+        # for s in self.samples:
+        #     all_glu.append(s["glucose"])
+        #     all_cal.append(s["calorie"])
+        #
+        # all_glu = np.concatenate(all_glu)
+        # all_cal = np.concatenate(all_cal)
+        #
+        # self.glu_min = all_glu.min()
+        # self.glu_max = all_glu.max()
+        #
+        # self.cal_min = all_cal.min()
+        # self.cal_max = all_cal.max()
+        #
+        # print("Glucose min/max:", self.glu_min, self.glu_max)
+        # print("Calorie min/max:", self.cal_min, self.cal_max)
 
-        for s in self.samples:
-            all_glu.append(s["glucose"])
-            all_cal.append(s["calorie"])
+        self.glu_min = 40.0
+        self.glu_max = 401.0
+        self.cal_min = 0.0
+        self.cal_max = 4841.48
 
-        all_glu = np.concatenate(all_glu)
-        all_cal = np.concatenate(all_cal)
-
-        self.glu_min = all_glu.min()
-        self.glu_max = all_glu.max()
-
-        self.cal_min = all_cal.min()
-        self.cal_max = all_cal.max()
-
-        print("Glucose min/max:", self.glu_min, self.glu_max)
-        print("Calorie min/max:", self.cal_min, self.cal_max)
-
-        def normalize(self, x, x_min, x_max):
-            return 2 * (x - x_min) / (x_max - x_min + 1e-8) - 1
-
-
+    def normalize(self, x, x_min, x_max):
+        return 2 * (x - x_min) / (x_max - x_min + 1e-8) - 1
 
     def __len__(self):
         return len(self.samples)
@@ -614,12 +617,17 @@ class AIREADIDataset(torch.utils.data.Dataset):
         s = self.samples[idx]
 
         glucose = torch.from_numpy(s["glucose"]).unsqueeze(-1).float()
+        glucose = self.normalize(glucose, self.cal_min, self.cal_max)
 
         mask_ts = torch.ones_like(glucose)
         mask_ts[-self.pred_length:] = 0
 
         calorie = torch.from_numpy(s["calorie"]).unsqueeze(-1).float()
-        context = calorie[-self.pred_length:]
+        calorie = self.normalize(calorie, self.cal_min, self.cal_max)
+
+        context = calorie[: self.window_size - self.pred_length]
+
+
         return glucose, mask_ts, context
 
 
