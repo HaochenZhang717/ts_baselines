@@ -121,8 +121,8 @@ def main(args):
                         for data in tqdm(test_loader):
                             # sample from the model
                             indices = data[0]
-                            x_ts = data[1].to(args.device).float()
-                            x_img = model.ts_to_img(x_ts)
+                            real_x_ts = data[1].to(args.device).float()
+                            x_img = model.ts_to_img(real_x_ts)
                             if args.dataset in ['synth_u_text_ldm']:
                                 text_embeds_batch = test_text_embeds["embeds_all"][indices]
                                 text_pad_mask_batch = test_text_embeds["masks_all"][indices]
@@ -142,11 +142,11 @@ def main(args):
                                 x_ts = torch.clamp(x_ts, 0, 1)
 
                             gen_sig.append(x_ts.detach().cpu().numpy())
-                            real_sig.append(data[0].detach().cpu().numpy())
+                            real_sig.append(real_x_ts.detach().cpu().numpy())
 
                 breakpoint()
-                gen_sig = np.vstack(gen_sig)
-                real_sig = np.vstack(real_sig)
+                gen_sig = np.concatenate(gen_sig)
+                real_sig = np.concatenate(real_sig)
                 print(f"gen_sig: {gen_sig.shape}, real_sig: {real_sig.shape}")
 
                 # scores = evaluate_model_uncond(real_sig, gen_sig, args)
