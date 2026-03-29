@@ -5,7 +5,7 @@ export WANDB_NAME="glucose_calorie"
 
 python run_prediction.py \
   --config ./configs/extrapolation/aireadi_glucose_calorie.yaml \
-  --logdir ./results_aireadi/glucose_calorie
+  --log_dir ./results_aireadi/glucose_calorie
 
 
 
