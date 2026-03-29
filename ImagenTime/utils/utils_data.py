@@ -375,9 +375,9 @@ def gen_dataloader(args):
             glucose_path="/playpen-shared/haochenz/AI-READI-Dataset/AI-READI-processed/glucose_train.parquet",
             window_size=512,
             predict_length=128,
-            stride=10,
+            stride=1,
         )
-        breakpoint()
+
         test_set = AIREADIDataset(
             calorie_path="/playpen-shared/haochenz/AI-READI-Dataset/AI-READI-processed/calorie_valid.parquet",
             glucose_path="/playpen-shared/haochenz/AI-READI-Dataset/AI-READI-processed/glucose_valid.parquet",
