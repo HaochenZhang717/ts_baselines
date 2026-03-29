@@ -144,6 +144,7 @@ def main(args):
                             gen_sig.append(x_ts.detach().cpu().numpy())
                             real_sig.append(data[0].detach().cpu().numpy())
 
+                breakpoint()
                 gen_sig = np.vstack(gen_sig)
                 real_sig = np.vstack(real_sig)
                 print(f"gen_sig: {gen_sig.shape}, real_sig: {real_sig.shape}")
