@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=5
+export CUDA_VISIBLE_DEVICES=7
 
 export WANDB_PROJECT="text_conditional_baselines"
 export WANDB_NAME="LDM_debug"
