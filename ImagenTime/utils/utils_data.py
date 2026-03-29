@@ -385,8 +385,8 @@ def gen_dataloader(args):
             stride=10,
         )
         train_datum = train_set[0][0]
-        args.seq_len = train_datum.shape[1]
-        args.input_channels = train_datum.shape[2]
+        args.seq_len = train_datum.shape[0]
+        args.input_channels = train_datum.shape[1]
         args.input_size = args.input_channels
 
         train_loader = Data.DataLoader(

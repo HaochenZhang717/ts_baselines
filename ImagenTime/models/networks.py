@@ -958,7 +958,7 @@ class MultimodalEDMPrecond(torch.nn.Module):
         c_out = sigma * self.sigma_data / (sigma ** 2 + self.sigma_data ** 2).sqrt()
         c_in = 1 / (self.sigma_data ** 2 + sigma ** 2).sqrt()
         c_noise = sigma.log() / 4
-
+        breakpoint()
         F_x = self.model((c_in * x).to(dtype), c_noise.flatten(), context=context, **model_kwargs)
         assert F_x.dtype == dtype
         D_x = c_skip * x + c_out * F_x.to(torch.float32)
