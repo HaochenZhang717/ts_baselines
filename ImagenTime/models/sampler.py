@@ -241,7 +241,7 @@ class DiffusionProcessLDM():
 
             # Apply 2nd order correction.
             if i < self.num_steps - 1:
-                denoised = self.net(x_next, t_next, context, pad_mask).to(torch.float64)
+                denoised = self.net(x_next.float(), t_next.float(), context, pad_mask).to(torch.float64)
                 d_prime = (x_next - denoised) / t_next
                 x_next = x_hat + (t_next - t_hat) * (0.5 * d_cur + 0.5 * d_prime)
 
