@@ -28,6 +28,7 @@ num_heads_channels: 64
 use_scale_shift_norm: True
 use_spatial_transformer: True
 
+diffusion_steps: 18
 
 ema: true
 ema_warmup: 100
