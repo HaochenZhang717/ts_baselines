@@ -122,13 +122,14 @@ def main(args):
                             # sample from the model
                             indices = data[0]
                             x_ts = data[1].to(args.device).float()
+                            x_img = model.ts_to_img(x_ts)
                             if args.dataset in ['synth_u_text_ldm']:
                                 text_embeds_batch = test_text_embeds["embeds_all"][indices]
                                 text_pad_mask_batch = test_text_embeds["masks_all"][indices]
                                 text_pad_mask_batch = (text_pad_mask_batch == 0)
 
                             x_img_sampled = process.sampling(
-                                xT=torch.randn_like(x_ts),
+                                xT=torch.randn_like(x_img),
                                 context=text_embeds_batch,
                                 context_pad_mask=text_pad_mask_batch
                             )
