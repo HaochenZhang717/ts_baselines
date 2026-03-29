@@ -144,7 +144,6 @@ def main(args):
                             gen_sig.append(x_ts.detach().cpu())
                             real_sig.append(real_x_ts.detach().cpu())
 
-                breakpoint()
                 gen_sig = torch.cat(gen_sig)
                 real_sig = torch.cat(real_sig)
                 print(f"gen_sig: {gen_sig.shape}, real_sig: {real_sig.shape}")
