@@ -375,7 +375,7 @@ def gen_dataloader(args):
             glucose_path="/playpen-shared/haochenz/AI-READI-Dataset/AI-READI-processed/glucose_train.parquet",
             window_size=512,
             predict_length=128,
-            stride=10,
+            stride=100,
         )
 
         test_set = AIREADIDataset(
@@ -383,7 +383,7 @@ def gen_dataloader(args):
             glucose_path="/playpen-shared/haochenz/AI-READI-Dataset/AI-READI-processed/glucose_valid.parquet",
             window_size=512,
             predict_length=128,
-            stride=10,
+            stride=100,
         )
         print(f"Train set size: {len(train_set)}")
         print(f"Test set size: {len(test_set)}")
