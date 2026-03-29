@@ -81,7 +81,7 @@ def main(args):
             train_loss_avg = 0.0
             for i, data in enumerate(train_loader, 1):
                 indices = data[0]
-                x_ts = data[1].to(args.device)
+                x_ts = data[1].to(args.device).float()
                 if args.dataset in ['synth_u_text_ldm']:
                     text_embeds_batch = train_text_embeds["embeds_all"][indices]
                     text_pad_mask_batch = train_text_embeds["masks_all"][indices]
@@ -121,7 +121,7 @@ def main(args):
                         for data in tqdm(test_loader):
                             # sample from the model
                             indices = data[0]
-                            x_ts = data[1].to(args.device)
+                            x_ts = data[1].to(args.device).float()
                             if args.dataset in ['synth_u_text_ldm']:
                                 text_embeds_batch = test_text_embeds["embeds_all"][indices]
                                 text_pad_mask_batch = test_text_embeds["masks_all"][indices]
