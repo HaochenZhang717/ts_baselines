@@ -424,7 +424,7 @@ class TextLDM(nn.Module):
         self.T = args.diffusion_steps
 
         self.device = device
-        net = EDMPrecondLDM(
+        self.net = EDMPrecondLDM(
             args.img_resolution,
             args.input_channels,
             args.label_dim,
@@ -438,10 +438,6 @@ class TextLDM(nn.Module):
             num_res_blocks=args.num_res_blocks,
             use_spatial_transformer=args.use_spatial_transformer
         )
-
-        net = torch.compile(net, mode="max-autotune")
-        # 最终赋值
-        self.net = net
 
         # delay embedding is used
         if not args.use_stft:
@@ -616,6 +612,5 @@ class TextLDM(nn.Module):
 
         """
         if self.use_ema:
-            # self.model_ema(self.net)
-            self.model_ema(self.net._orig_mod)
+            self.model_ema(self.net)
 
