@@ -385,6 +385,7 @@ def gen_dataloader(args):
             stride=10,
         )
         train_datum = train_set[0]
+        breakpoint()
         args.seq_len = train_datum.shape[1]
         args.input_channels = train_datum.shape[2]
         args.input_size = args.input_channels
