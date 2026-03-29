@@ -377,6 +377,7 @@ def gen_dataloader(args):
             predict_length=128,
             stride=10,
         )
+        breakpoint()
         test_set = AIREADIDataset(
             calorie_path="/playpen-shared/haochenz/AI-READI-Dataset/AI-READI-processed/calorie_valid.parquet",
             glucose_path="/playpen-shared/haochenz/AI-READI-Dataset/AI-READI-processed/glucose_valid.parquet",
@@ -580,6 +581,31 @@ class AIREADIDataset(torch.utils.data.Dataset):
                     "mask": mask[start:end],
                     "pid": pid
                 })
+
+        # ========= compute normalization stats =========
+        all_glu = []
+        all_cal = []
+
+        for s in self.samples:
+            all_glu.append(s["glucose"])
+            all_cal.append(s["calorie"])
+
+        all_glu = np.concatenate(all_glu)
+        all_cal = np.concatenate(all_cal)
+
+        self.glu_min = all_glu.min()
+        self.glu_max = all_glu.max()
+
+        self.cal_min = all_cal.min()
+        self.cal_max = all_cal.max()
+
+        print("Glucose min/max:", self.glu_min, self.glu_max)
+        print("Calorie min/max:", self.cal_min, self.cal_max)
+
+        def normalize(self, x, x_min, x_max):
+            return 2 * (x - x_min) / (x_max - x_min + 1e-8) - 1
+
+
 
     def __len__(self):
         return len(self.samples)
