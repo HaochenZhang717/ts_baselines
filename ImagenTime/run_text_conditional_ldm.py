@@ -81,7 +81,6 @@ def main(args):
             for i, data in enumerate(train_loader, 1):
                 indices = data[0]
                 x_ts = data[1].to(args.device)
-                breakpoint()
                 if args.dataset in ['synth_u_text_ldm']:
                     text_embeds_batch = train_text_embeds["embeds_all"][indices]
                     text_pad_mask_batch = train_text_embeds["masks_all"][indices]
