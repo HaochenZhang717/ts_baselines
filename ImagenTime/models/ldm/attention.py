@@ -206,7 +206,8 @@ class BasicTransformerBlock(nn.Module):
         self.checkpoint = checkpoint
 
     def forward(self, x, context=None, context_pad_mask=None):
-        return checkpoint(self._forward, (x, context, context_pad_mask), self.parameters(), self.checkpoint)
+        # return checkpoint(self._forward, (x, context, context_pad_mask), self.parameters(), self.checkpoint)
+        return self._forward(x, context, context_pad_mask)
 
     def _forward(self, x, context=None, context_pad_mask=None):
         x = self.attn1(self.norm1(x)) + x
