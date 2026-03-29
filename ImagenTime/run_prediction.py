@@ -10,7 +10,7 @@ import torch.nn.functional as F
 
 from utils.loggers import NeptuneLogger, PrintLogger, CompositeLogger
 from models.model import MultimodalImagenTime
-from models.sampler import DiffusionProcess
+from models.sampler import MultiModalDiffusionProcess
 from utils.utils import save_checkpoint, restore_state, create_model_name_and_dir, print_model_params, \
     log_config_and_tags, get_x_and_mask
 from utils.utils_data import gen_dataloader
@@ -64,6 +64,10 @@ def main(args):
 
             # --- train loop ---
             for i, (x_ts, mask_ts, context_ts) in enumerate(train_loader, 1):
+                x_ts = x_ts.to(args.device)
+                mask_ts = mask_ts.to(args.device)
+                context_ts = context_ts.to(args.device)
+
                 x_ts_img = model.ts_to_img(x_ts)
                 mask_ts_img = model.ts_to_img(mask_ts,pad_val=1)
                 optimizer.zero_grad()
@@ -85,10 +89,14 @@ def main(args):
                 model.eval()
                 with torch.no_grad():
                     with model.ema_scope():
-                        process = DiffusionProcess(args, model.net,
-                                                   (args.input_channels, args.img_resolution, args.img_resolution))
-                        for idx, data in enumerate(test_loader, 1):
-                            mask_ts, x_ts = get_x_and_mask(args, data)
+                        process = MultiModalDiffusionProcess(
+                            args, model.net,
+                            (args.input_channels, args.img_resolution, args.img_resolution)
+                        )
+                        for idx, (x_ts, mask_ts, context_ts) in enumerate(test_loader, 1):
+                            x_ts = x_ts.to(args.device)
+                            mask_ts = mask_ts.to(args.device)
+                            context_ts = context_ts.to(args.device)
 
                             # transform to image
                             x_ts_img = model.ts_to_img(x_ts)
@@ -96,7 +104,7 @@ def main(args):
 
                             # sample from the model
                             # and impute, both interpolation and extrapolation are similar just the mask is different
-                            x_img_sampled = process.interpolate(x_ts_img, mask_ts_img).to(x_ts_img.device)
+                            x_img_sampled = process.interpolate(x_ts_img, mask_ts_img, context_ts).to(x_ts_img.device)
                             x_ts_sampled = model.img_to_ts(x_img_sampled)
 
                             # task evaluation
