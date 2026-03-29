@@ -141,12 +141,12 @@ def main(args):
                             if args.dataset in ['temperature_rain']:
                                 x_ts = torch.clamp(x_ts, 0, 1)
 
-                            gen_sig.append(x_ts.detach().cpu().numpy())
-                            real_sig.append(real_x_ts.detach().cpu().numpy())
+                            gen_sig.append(x_ts.detach().cpu())
+                            real_sig.append(real_x_ts.detach().cpu())
 
                 breakpoint()
-                gen_sig = np.concatenate(gen_sig)
-                real_sig = np.concatenate(real_sig)
+                gen_sig = torch.cat(gen_sig)
+                real_sig = torch.cat(real_sig)
                 print(f"gen_sig: {gen_sig.shape}, real_sig: {real_sig.shape}")
 
                 # scores = evaluate_model_uncond(real_sig, gen_sig, args)
