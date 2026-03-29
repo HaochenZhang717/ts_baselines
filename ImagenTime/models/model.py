@@ -486,7 +486,7 @@ class TextLDM(nn.Module):
             data.append(data_batch[0])
         self.ts_img.cache_min_max_params(torch.cat(data, dim=0))
 
-    def loss_fn(self, x, text_embed):
+    def loss_fn(self, x, text_embed, text_pad_mask):
         '''
         x          : real data if idx==None else perturbation data
         idx        : if None (training phase), we perturbed random index.
@@ -494,7 +494,7 @@ class TextLDM(nn.Module):
 
         to_log = {}
 
-        output, weight = self.forward(x, text_embed)
+        output, weight = self.forward(x, text_embed, text_pad_mask)
 
         # denoising matching term
         # loss = weight * ((output - x) ** 2)
@@ -518,14 +518,14 @@ class TextLDM(nn.Module):
 
         return loss, to_log
 
-    def forward(self, x, text_embed, augment_pipe=None):
+    def forward(self, x, text_embed, text_pad_mask, augment_pipe=None):
 
         rnd_normal = torch.randn([x.shape[0], 1, 1, 1], device=x.device)
         sigma = (rnd_normal * self.P_std + self.P_mean).exp()
         weight = (sigma ** 2 + self.sigma_data ** 2) / (sigma * self.sigma_data) ** 2
         y, augment_labels = augment_pipe(x) if augment_pipe is not None else (x, None)
         n = torch.randn_like(y) * sigma
-        D_yn = self.net(y + n, sigma, text_embed, augment_labels=augment_labels)
+        D_yn = self.net(y + n, sigma, text_embed, text_pad_mask, augment_labels=augment_labels)
         return D_yn, weight
 
     def forward_impute(self, x, mask, labels=None, augment_pipe=None):

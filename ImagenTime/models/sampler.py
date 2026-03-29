@@ -211,7 +211,7 @@ class DiffusionProcessLDM():
         self.S_noise = 1
         self.num_steps = args.diffusion_steps
 
-    def sample(self, latents, context):
+    def sample(self, latents, context, pad_mask):
 
         # Adjust noise levels based on what's supported by the network.
         sigma_min = max(self.sigma_min, self.net.sigma_min)
@@ -233,14 +233,14 @@ class DiffusionProcessLDM():
             x_hat = x_cur + (t_hat ** 2 - t_cur ** 2).sqrt() * self.S_noise * torch.randn_like(x_cur)
 
             # Euler step.
-            denoised = self.net(x_hat, t_hat, context).to(torch.float64)
+            denoised = self.net(x_hat, t_hat, context, pad_mask).to(torch.float64)
 
             d_cur = (x_hat - denoised) / t_hat
             x_next = x_hat + (t_next - t_hat) * d_cur
 
             # Apply 2nd order correction.
             if i < self.num_steps - 1:
-                denoised = self.net(x_next, t_next, context).to(torch.float64)
+                denoised = self.net(x_next, t_next, context, pad_mask).to(torch.float64)
                 d_prime = (x_next - denoised) / t_next
                 x_next = x_hat + (t_next - t_hat) * (0.5 * d_cur + 0.5 * d_prime)
 
@@ -331,8 +331,8 @@ class DiffusionProcessLDM():
 
 
     @torch.no_grad()
-    def sampling(self, xT=None, context=None):
-        return self.sample(xT, context)
+    def sampling(self, xT, context, pad_mask):
+        return self.sample(xT, context, pad_mask)
 
     @torch.no_grad()
     def interpolate(self, x, mask, xT=None):

@@ -82,12 +82,14 @@ def main(args):
                 indices = data[0]
                 x_ts = data[1].to(args.device)
                 breakpoint()
-                if train_text_embeds is not None:
-                    text_embeds_batch = train_text_embeds[indices]
+                if args.dataset in ['synth_u_text_ldm']:
+                    text_embeds_batch = train_text_embeds["embeds_all"][indices]
+                    text_pad_mask_batch = train_text_embeds["masks_all"][indices]
+                    text_pad_mask_batch = (text_pad_mask_batch == 0)
                 x_img = model.ts_to_img(x_ts)
 
                 optimizer.zero_grad()
-                loss = model.loss_fn(x_img, text_embeds_batch)
+                loss = model.loss_fn(x_img, text_embeds_batch, text_pad_mask_batch)
 
                 if len(loss) == 2:
                     loss, to_log = loss
@@ -120,12 +122,15 @@ def main(args):
                             # sample from the model
                             indices = data[0]
                             x_ts = data[1].to(args.device)
-                            if test_text_embeds is not None:
-                                text_embeds_batch = test_text_embeds[indices]
+                            if args.dataset in ['synth_u_text_ldm']:
+                                text_embeds_batch = test_text_embeds["embeds_all"][indices]
+                                text_pad_mask_batch = test_text_embeds["masks_all"][indices]
+                                text_pad_mask_batch = (text_pad_mask_batch == 0)
 
                             x_img_sampled = process.sampling(
                                 xT=torch.randn_like(x_ts),
-                                context=text_embeds_batch
+                                context=text_embeds_batch,
+                                context_pad_mask=text_pad_mask_batch
                             )
 
                             # --- convert to time series --
