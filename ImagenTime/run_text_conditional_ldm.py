@@ -50,7 +50,7 @@ def main(args):
         logging.info(args.dataset + ' dataset is ready.')
 
         model = TextLDM(args=args, device=args.device).to(args.device)
-        model.net = torch.compile(model.net)
+
         total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
         print(f"Trainable parameters: {total_params}")
         if args.use_stft:
