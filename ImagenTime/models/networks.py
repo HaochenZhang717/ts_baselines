@@ -608,7 +608,7 @@ class MultimodalDhariwalUNet(torch.nn.Module):
         img_resolution,                     # Image resolution at input/output.
         in_channels,                        # Number of color channels at input.
         out_channels,                       # Number of color channels at output.
-        label_dim           = 0,            # Number of class labels, 0 = unconditional.
+        context_dim           = 0,            # Number of class labels, 0 = unconditional.
         augment_dim         = 0,            # Augmentation label dimensionality, 0 = no augmentation.
 
         model_channels      = 192,          # Base multiplier for the number of channels.
@@ -634,12 +634,12 @@ class MultimodalDhariwalUNet(torch.nn.Module):
 
         #
         self.map_context = ContextEncoder(
-            input_dim=label_dim,
+            input_dim=context_dim,
             hidden_size=64,
             num_layers=2,
             num_heads=4,
             latent_dim=emb_channels,
-        ) if label_dim else None
+        ) if context_dim else None
 
         # Encoder.
         self.enc = torch.nn.ModuleDict()
@@ -924,7 +924,7 @@ class MultimodalEDMPrecond(torch.nn.Module):
     def __init__(self,
         img_resolution,                     # Image resolution.
         img_channels,                       # Number of color channels.
-        label_dim       = 0,                # Number of class labels, 0 = unconditional.
+        context_dim       = 0,                # Number of class labels, 0 = unconditional.
         use_fp16        = False,            # Execute the underlying model at FP16 precision?
         sigma_min       = 0,                # Minimum supported noise level.
         sigma_max       = float('inf'),     # Maximum supported noise level.
@@ -935,7 +935,7 @@ class MultimodalEDMPrecond(torch.nn.Module):
         super().__init__()
         self.img_resolution = img_resolution
         self.img_channels = img_channels
-        self.label_dim = label_dim
+        self.context_dim = context_dim
         self.use_fp16 = use_fp16
         self.sigma_min = sigma_min
         self.sigma_max = sigma_max
@@ -944,14 +944,14 @@ class MultimodalEDMPrecond(torch.nn.Module):
             img_resolution=img_resolution,
             in_channels=img_channels,
             out_channels=img_channels,
-            label_dim=label_dim,
+            context_dim=context_dim,
             **model_kwargs
         )
 
     def forward(self, x, sigma, context, force_fp32=False, **model_kwargs):
         x = x.to(torch.float32)
         sigma = sigma.to(torch.float32).reshape(-1, 1, 1, 1)
-        context = None if self.label_dim == 0 else torch.zeros([1, self.label_dim], device=x.device) if context is None else context.to(torch.float32).reshape(-1, self.label_dim)
+        context = None if self.context_dim == 0 else torch.zeros([1, self.context_dim], device=x.device) if context is None else context.to(torch.float32).reshape(-1, self.label_dim)
         dtype = torch.float16 if (self.use_fp16 and not force_fp32 and x.device.type == 'cuda') else torch.float32
 
         c_skip = self.sigma_data ** 2 / (sigma ** 2 + self.sigma_data ** 2)

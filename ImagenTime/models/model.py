@@ -220,8 +220,15 @@ class MultimodalImagenTime(nn.Module):
         self.T = args.diffusion_steps
 
         self.device = device
-        self.net = MultimodalEDMPrecond(args.img_resolution, args.input_channels, channel_mult=args.ch_mult,
-                              model_channels=args.unet_channels, attn_resolutions=args.attn_resolution)
+        breakpoint()
+        self.net = MultimodalEDMPrecond(
+            args.img_resolution,
+            args.input_channels,
+            channel_mult=args.ch_mult,
+            model_channels=args.unet_channels,
+            attn_resolutions=args.attn_resolution,
+            label_dim=args.context_dim
+        )
 
         # delay embedding is used
         if not args.use_stft:

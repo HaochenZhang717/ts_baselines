@@ -24,6 +24,7 @@ embedding: 64
 # model:
 img_resolution: 64
 input_channels: 1
+context_dim: 1
 unet_channels: 128
 ch_mult: [1,2,4,4]
 attn_resolution: [32,16,8]
