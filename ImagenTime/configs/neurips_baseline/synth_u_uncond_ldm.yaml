@@ -14,7 +14,7 @@ delay: 4
 embedding: 32
 
 # model:
-label_dim: 0
+label_dim: None
 img_resolution: 32
 input_channels: 1
 
