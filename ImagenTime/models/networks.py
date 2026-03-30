@@ -970,7 +970,7 @@ class EDMPrecondLDM(torch.nn.Module):
     def __init__(self,
         img_resolution,                     # Image resolution.
         img_channels,                       # Number of color channels.
-        context_dim       = 0,                # Number of class labels, 0 = unconditional.
+        context_dim       = None,                # Number of class labels, 0 = unconditional.
         use_fp16        = False,            # Execute the underlying model at FP16 precision?
         sigma_min       = 0,                # Minimum supported noise level.
         sigma_max       = float('inf'),     # Maximum supported noise level.
