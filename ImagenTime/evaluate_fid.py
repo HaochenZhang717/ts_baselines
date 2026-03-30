@@ -39,8 +39,8 @@ epoch_list = np.arange(0, 2000, 100)
 plt.figure()
 
 plt.plot(epoch_list, uncond_fids, label="Unconditional")
-plt.plot(epoch_list, text_cond_fids, label="Text Conditional")
-plt.plot(epoch_list, cross_attn_cond_fids, label="Cross Attention Conditional")
+# plt.plot(epoch_list, text_cond_fids, label="Text Conditional")
+plt.plot(epoch_list, cross_attn_cond_fids, label="Cross Attention Text Conditional")
 
 plt.xlabel("Epoch")
 plt.ylabel("FID")
