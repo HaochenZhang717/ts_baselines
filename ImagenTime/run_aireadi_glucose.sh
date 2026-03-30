@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=5
+export CUDA_VISIBLE_DEVICES=2
 
 export WANDB_PROJECT="aireadi_prediction"
 export WANDB_NAME="glucose"
