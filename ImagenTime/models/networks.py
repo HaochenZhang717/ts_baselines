@@ -987,6 +987,7 @@ class EDMPrecondLDM(torch.nn.Module):
         self.sigma_max = sigma_max
         self.sigma_data = sigma_data
 
+        breakpoint()
         self.model = globals()[model_type](
             img_resolution=img_resolution,
             in_channels=img_channels,
