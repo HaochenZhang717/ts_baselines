@@ -27,7 +27,11 @@ def main(args):
 
     # log args
     logging.info(args)
-
+    wandb.init(
+        project=os.getenv("WANDB_PROJECT", "no_project_name"),  # 你可以改名字
+        name=os.getenv("WANDB_NAME", "no_run_name"),  # 自动用实验名
+        config=args
+    )
     # set-up neptune logger. switch to your desired logger
     with CompositeLogger([NeptuneLogger()]) if args.neptune \
             else PrintLogger() as logger:
