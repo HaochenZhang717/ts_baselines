@@ -26,7 +26,7 @@ dropout: 0.1
 ch_mult: [1, 2]
 num_heads_channels: 64
 use_scale_shift_norm: True
-use_spatial_transformer: False
+use_spatial_transformer: True
 
 diffusion_steps: 18
 
