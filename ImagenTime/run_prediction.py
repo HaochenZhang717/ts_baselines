@@ -118,10 +118,9 @@ def main(args):
 
                             # sample from the model
                             # and impute, both interpolation and extrapolation are similar just the mask is different
-                            x_img_sampled = process.interpolate(x_ts_img, mask_ts_img, context_ts).to(x_ts_img.device)
+                            x_img_sampled = process.interpolate(x_ts_img, mask_ts_img, torch.randn_like(x_ts_img), context_ts).to(x_ts_img.device)
                             x_ts_sampled = model.img_to_ts(x_img_sampled)
 
-                            breakpoint()
                             # task evaluation
                             mse_mean = F.mse_loss(x_ts[mask_ts == 0].to(x_ts.device), x_ts_sampled[mask_ts == 0])
                             mae_mean = F.l1_loss(x_ts[mask_ts == 0].to(x_ts.device), x_ts_sampled[mask_ts == 0])
