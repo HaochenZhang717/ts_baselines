@@ -1,0 +1,18 @@
+device: cuda:0
+cond_modal: text
+generator_pretrain_path: ""
+
+text:
+  text_projector: var_scale_diffstep_multi
+  pretrain_model_dim: 2048
+  vl_emb_hidden_dim: 256
+  vl_emb: 64
+  num_stages: 3
+
+vae_embed:
+#  n_latent_tokens: 32
+#  embed_dim: 64
+  n_latent_tokens: 16
+  embed_dim: 1024
+  text_projector: var_scale_diffstep_multi
+  num_stages: 3

@@ -1,0 +1,15 @@
+### Dataset ###
+data:
+  name: v7
+  folder: /playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_u
+  my_caps_path: /playpen-shared/haochenz/LitsDatasets/128_len_caps_one_per_channel_0323/synth_u
+
+### Evaluate ###
+eval:
+  n_samples: 10
+  model_path: ""
+  batch_size: 128
+  display_interval: 1
+  device: cuda:0
+
+  cache_folder: ./cache/synth-m_text

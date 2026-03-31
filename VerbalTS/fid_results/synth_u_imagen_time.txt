@@ -1,0 +1,222 @@
+FID Results
+==========================
+samples_epoch_0.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_0.pt
+FID:  $15.4599 \pm 0.0000$
+KID:  $0.436086 \pm 0.000000$
+CMMD: $0.000718 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_100.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_100.pt
+FID:  $0.5494 \pm 0.0000$
+KID:  $0.007053 \pm 0.000000$
+CMMD: $0.000710 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1000.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1000.pt
+FID:  $0.3246 \pm 0.0000$
+KID:  $0.001920 \pm 0.000000$
+CMMD: $0.000701 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1100.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1100.pt
+FID:  $0.3152 \pm 0.0000$
+KID:  $0.001930 \pm 0.000000$
+CMMD: $0.000701 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1200.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1200.pt
+FID:  $0.3177 \pm 0.0000$
+KID:  $0.001223 \pm 0.000000$
+CMMD: $0.000702 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1300.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1300.pt
+FID:  $0.3458 \pm 0.0000$
+KID:  $0.002635 \pm 0.000000$
+CMMD: $0.000701 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1400.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1400.pt
+FID:  $0.3900 \pm 0.0000$
+KID:  $0.003514 \pm 0.000000$
+CMMD: $0.000701 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1500.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+FID:  $0.3017 \pm 0.0000$
+KID:  $0.001823 \pm 0.000000$
+CMMD: $0.000703 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1600.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1600.pt
+FID:  $0.3847 \pm 0.0000$
+KID:  $0.005081 \pm 0.000000$
+CMMD: $0.000702 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1700.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1700.pt
+FID:  $0.3792 \pm 0.0000$
+KID:  $0.003597 \pm 0.000000$
+CMMD: $0.000702 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1800.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1800.pt
+FID:  $0.3146 \pm 0.0000$
+KID:  $0.001244 \pm 0.000000$
+CMMD: $0.000701 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_1900.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1900.pt
+FID:  $0.3093 \pm 0.0000$
+KID:  $0.001227 \pm 0.000000$
+CMMD: $0.000701 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_200.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_200.pt
+FID:  $0.5528 \pm 0.0000$
+KID:  $0.010019 \pm 0.000000$
+CMMD: $0.000704 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_300.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_300.pt
+FID:  $0.3807 \pm 0.0000$
+KID:  $0.004499 \pm 0.000000$
+CMMD: $0.000702 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_400.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_400.pt
+FID:  $0.3431 \pm 0.0000$
+KID:  $0.002411 \pm 0.000000$
+CMMD: $0.000702 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_500.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_500.pt
+FID:  $0.3044 \pm 0.0000$
+KID:  $0.001492 \pm 0.000000$
+CMMD: $0.000703 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_600.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_600.pt
+FID:  $0.4440 \pm 0.0000$
+KID:  $0.006312 \pm 0.000000$
+CMMD: $0.000701 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_700.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_700.pt
+FID:  $0.3755 \pm 0.0000$
+KID:  $0.003389 \pm 0.000000$
+CMMD: $0.000703 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_800.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_800.pt
+FID:  $0.3446 \pm 0.0000$
+KID:  $0.002339 \pm 0.000000$
+CMMD: $0.000702 \pm 0.000000$
+==========================
+--------------------------
+samples_epoch_900.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_1500.pt
+fake_path: /playpen-shared/haochenz/ts_baselines/ImagenTime/logs/synth_u/conditional-bs=128-lr=0.0001-ch_mult=1-2-attn_res=16-8-4-unet_ch=64-delay=4-32/samples_epoch_900.pt
+FID:  $0.3025 \pm 0.0000$
+KID:  $0.001158 \pm 0.000000$
+CMMD: $0.000702 \pm 0.000000$
+==========================
+--------------------------

@@ -1,0 +1,9 @@
+device: cuda:0
+cond_modal: text
+generator_pretrain_path: ""
+
+text:
+  model_id: Qwen/Qwen3-VL-Embedding-2B
+  pretrain_model_dim: 2048
+  vl_emb_hidden_dim: 256
+  vl_emb: 64

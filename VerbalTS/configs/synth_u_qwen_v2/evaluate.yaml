@@ -1,0 +1,24 @@
+### Dataset ###
+data:
+  name: mine
+  ts_path: /playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_u
+  caps_path: /playpen-shared/haochenz/LitsDatasets/128_len_caps_one_per_channel_0309/synth_u/
+  text_embed_path: /playpen-shared/haochenz/LitsDatasets/128_len_caps_one_per_channel_0309/synth_u/
+  vae_embed_path: ./vae_embeddings/synth_u
+#  ts_path: none
+#  caps_path: none
+#  text_embed_path: /playpen-shared/haochenz/outputs_diffusion_prior_0306/synth_u/samples_embeds.pt
+#  vae_embed_path: none
+  seq_len: 128
+  num_channels: 1
+  num_segments: 4
+
+### Evaluate ###
+eval:
+  n_samples: 10
+  model_path: ""
+  batch_size: 128
+  display_interval: 1
+  device: cuda:0
+
+  cache_folder: ./cache/synth-m_text

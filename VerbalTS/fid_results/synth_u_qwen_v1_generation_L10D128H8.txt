@@ -1,0 +1,277 @@
+FID Results
+==========================
+real_text_samples_model_epoch_1099.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1099.pt
+FID:  $0.7323 \pm 0.0441$
+KID:  $0.011204 \pm 0.001027$
+CMMD: $0.000709 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1199.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1199.pt
+FID:  $0.3207 \pm 0.0140$
+KID:  $0.001584 \pm 0.000709$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1299.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1299.pt
+FID:  $0.3228 \pm 0.0265$
+KID:  $0.001965 \pm 0.001018$
+CMMD: $0.000703 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_1399.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1399.pt
+FID:  $0.3152 \pm 0.0204$
+KID:  $0.001576 \pm 0.000780$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1499.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1499.pt
+FID:  $0.3015 \pm 0.0107$
+KID:  $0.000955 \pm 0.000266$
+CMMD: $0.000702 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_1599.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1599.pt
+FID:  $0.2940 \pm 0.0166$
+KID:  $0.000791 \pm 0.000520$
+CMMD: $0.000702 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_1699.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1699.pt
+FID:  $0.3051 \pm 0.0203$
+KID:  $0.001367 \pm 0.000664$
+CMMD: $0.000702 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_1799.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1799.pt
+FID:  $0.3081 \pm 0.0202$
+KID:  $0.001578 \pm 0.000751$
+CMMD: $0.000702 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_1899.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1899.pt
+FID:  $0.2977 \pm 0.0181$
+KID:  $0.001157 \pm 0.000648$
+CMMD: $0.000701 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_199.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_199.pt
+FID:  $0.3892 \pm 0.0259$
+KID:  $0.002075 \pm 0.000770$
+CMMD: $0.000703 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1999.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_1999.pt
+FID:  $0.2874 \pm 0.0137$
+KID:  $0.000815 \pm 0.000455$
+CMMD: $0.000701 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_2099.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2099.pt
+FID:  $0.3116 \pm 0.0172$
+KID:  $0.001623 \pm 0.000571$
+CMMD: $0.000703 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_2199.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2199.pt
+FID:  $0.3067 \pm 0.0163$
+KID:  $0.001492 \pm 0.000566$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_2299.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2299.pt
+FID:  $0.2898 \pm 0.0141$
+KID:  $0.001009 \pm 0.000441$
+CMMD: $0.000702 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_2399.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2399.pt
+FID:  $0.3122 \pm 0.0160$
+KID:  $0.001722 \pm 0.000498$
+CMMD: $0.000702 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_2499.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+FID:  $0.3103 \pm 0.0185$
+KID:  $0.001942 \pm 0.000673$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_299.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_299.pt
+FID:  $0.3623 \pm 0.0207$
+KID:  $0.002144 \pm 0.000757$
+CMMD: $0.000703 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_399.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_399.pt
+FID:  $0.3524 \pm 0.0254$
+KID:  $0.002189 \pm 0.000956$
+CMMD: $0.000702 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_499.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_499.pt
+FID:  $0.3207 \pm 0.0226$
+KID:  $0.001451 \pm 0.000867$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_599.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_599.pt
+FID:  $0.3041 \pm 0.0236$
+KID:  $0.000895 \pm 0.000689$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_699.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_699.pt
+FID:  $0.3054 \pm 0.0173$
+KID:  $0.000994 \pm 0.000562$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_799.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_799.pt
+FID:  $0.2933 \pm 0.0163$
+KID:  $0.000573 \pm 0.000571$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_899.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_899.pt
+FID:  $0.2968 \pm 0.0149$
+KID:  $0.000856 \pm 0.000571$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_99.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_99.pt
+FID:  $0.7290 \pm 0.0491$
+KID:  $0.010543 \pm 0.002060$
+CMMD: $0.000710 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_999.pt
+Loaded checkpoint from ./fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/VerbalTS_reimplement/sweep/synth_u_qwen_v1/lr_1e-3_bs_256/0/real_text_samples_model_epoch_999.pt
+FID:  $0.3237 \pm 0.0254$
+KID:  $0.001676 \pm 0.000947$
+CMMD: $0.000702 \pm 0.000002$
+==========================
+--------------------------

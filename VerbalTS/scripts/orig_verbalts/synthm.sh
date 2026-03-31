@@ -1,0 +1,33 @@
+LR_LIST=(1e-3)
+BS_LIST=(512)
+
+export SCHEDULER=MULTISTEP
+
+for LR in "${LR_LIST[@]}"
+do
+  for BS in "${BS_LIST[@]}"
+  do
+    echo "Running lr=$LR bs=$BS"
+
+    export WANDB_NAME="orig_verbalts_orig_cap-lr${LR}_bs${BS}_synthm"
+
+    CUDA_VISIBLE_DEVICES=5 python run.py \
+    --cond_modal text \
+    --training_stage finetune \
+    --save_folder ../sweep_text2ts/synth_m/orig_verbalts_orig_cap \
+    --model_diff_config_path configs/synth_m/diff/model_text2ts_dep.yaml \
+    --model_cond_config_path configs/synth_m/cond/text_msmdiffmv.yaml \
+    --train_config_path configs/synth_m/train.yaml \
+    --evaluate_config_path configs/synth_m/evaluate.yaml \
+    --data_folder /playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_m \
+    --clip_folder "" \
+    --multipatch_num 3 \
+    --L_patch_len 2 \
+    --base_patch 4 \
+    --epochs 700 \
+    --batch_size ${BS} \
+    --lr ${LR} \
+    --clip_cache_path "" \
+    --samples_name "samples.pt"
+done
+done

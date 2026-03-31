@@ -1,0 +1,20 @@
+### Dataset ###
+data:
+  name: mine
+  ts_path: none
+  caps_path: /playpen-shared/haochenz/outputs_diffusion_prior_0306/synth_m/DiTDH-S-samples.jsonl
+  text_embed_path: /playpen-shared/haochenz/outputs_diffusion_prior_0306/synth_m/samples_embeds.pt
+  vae_embed_path: none
+  seq_len: 128
+  num_channels: 2
+  num_segments: 4
+
+### Evaluate ###
+eval:
+  n_samples: 10
+  model_path: ""
+  batch_size: 128
+  display_interval: 1
+  device: cuda:0
+
+  cache_folder: ./cache/synth-m_text

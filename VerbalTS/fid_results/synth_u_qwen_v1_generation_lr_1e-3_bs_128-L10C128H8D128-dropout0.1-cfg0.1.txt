@@ -1,0 +1,277 @@
+FID Results
+==========================
+real_text_samples_model_epoch_1099.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1099.pt
+FID:  $1.3171 \pm 0.0419$
+KID:  $0.029124 \pm 0.001465$
+CMMD: $0.000710 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_1199.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1199.pt
+FID:  $1.2862 \pm 0.0384$
+KID:  $0.028416 \pm 0.001487$
+CMMD: $0.000710 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1299.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1299.pt
+FID:  $1.2278 \pm 0.0317$
+KID:  $0.026128 \pm 0.001222$
+CMMD: $0.000709 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1399.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1399.pt
+FID:  $1.2555 \pm 0.0401$
+KID:  $0.027589 \pm 0.001037$
+CMMD: $0.000710 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_1499.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1499.pt
+FID:  $1.2980 \pm 0.0348$
+KID:  $0.028844 \pm 0.001214$
+CMMD: $0.000711 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1599.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1599.pt
+FID:  $1.2426 \pm 0.0412$
+KID:  $0.027727 \pm 0.001703$
+CMMD: $0.000709 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1699.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1699.pt
+FID:  $1.1874 \pm 0.0543$
+KID:  $0.025530 \pm 0.001758$
+CMMD: $0.000710 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1799.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1799.pt
+FID:  $1.2743 \pm 0.0516$
+KID:  $0.028351 \pm 0.001636$
+CMMD: $0.000709 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_1899.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1899.pt
+FID:  $1.2401 \pm 0.0442$
+KID:  $0.027376 \pm 0.001368$
+CMMD: $0.000710 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_199.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_199.pt
+FID:  $1.4183 \pm 0.0449$
+KID:  $0.031641 \pm 0.001600$
+CMMD: $0.000709 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_1999.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_1999.pt
+FID:  $1.2277 \pm 0.0455$
+KID:  $0.027361 \pm 0.001384$
+CMMD: $0.000708 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_2099.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2099.pt
+FID:  $1.1824 \pm 0.0498$
+KID:  $0.025723 \pm 0.001250$
+CMMD: $0.000708 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_2199.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2199.pt
+FID:  $1.2616 \pm 0.0430$
+KID:  $0.028612 \pm 0.001549$
+CMMD: $0.000710 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_2299.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2299.pt
+FID:  $1.1949 \pm 0.0422$
+KID:  $0.026256 \pm 0.001508$
+CMMD: $0.000708 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_2399.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2399.pt
+FID:  $1.2566 \pm 0.0532$
+KID:  $0.028478 \pm 0.001694$
+CMMD: $0.000708 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_2499.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+FID:  $1.2316 \pm 0.0426$
+KID:  $0.027656 \pm 0.001338$
+CMMD: $0.000708 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_299.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_299.pt
+FID:  $1.3574 \pm 0.0285$
+KID:  $0.029525 \pm 0.001067$
+CMMD: $0.000709 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_399.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_399.pt
+FID:  $1.3554 \pm 0.0332$
+KID:  $0.029025 \pm 0.001101$
+CMMD: $0.000710 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_499.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_499.pt
+FID:  $1.3779 \pm 0.0392$
+KID:  $0.030474 \pm 0.001175$
+CMMD: $0.000709 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_599.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_599.pt
+FID:  $1.3548 \pm 0.0353$
+KID:  $0.029538 \pm 0.001260$
+CMMD: $0.000710 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_699.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_699.pt
+FID:  $1.3922 \pm 0.0310$
+KID:  $0.030614 \pm 0.001311$
+CMMD: $0.000711 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_799.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_799.pt
+FID:  $1.2629 \pm 0.0411$
+KID:  $0.026491 \pm 0.001491$
+CMMD: $0.000711 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_899.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_899.pt
+FID:  $1.3652 \pm 0.0451$
+KID:  $0.030220 \pm 0.001754$
+CMMD: $0.000711 \pm 0.000002$
+==========================
+--------------------------
+real_text_samples_model_epoch_99.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_99.pt
+FID:  $1.6553 \pm 0.0424$
+KID:  $0.039400 \pm 0.002021$
+CMMD: $0.000713 \pm 0.000001$
+==========================
+--------------------------
+real_text_samples_model_epoch_999.pt
+Loaded checkpoint from ../fid_vae_ckpts/vae_synth_u/best.pt
+
+==========================
+real_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_2499.pt
+fake_path: /playpen/haochenz/oldsweep/synth_u_qwen_v1/lr_1e-3_bs_128-L10C128H8D128-dropout0.1-cfg0.1/0/real_text_samples_model_epoch_999.pt
+FID:  $1.2511 \pm 0.0356$
+KID:  $0.026425 \pm 0.001125$
+CMMD: $0.000711 \pm 0.000001$
+==========================
+--------------------------

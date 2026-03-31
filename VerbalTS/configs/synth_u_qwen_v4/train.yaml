@@ -1,0 +1,21 @@
+### Dataset ###
+data:
+  name: qwen_v3
+  ts_path: /playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_u
+  caps_path: /playpen-shared/haochenz/LitsDatasets/128_len_caps_one_per_channel_0309/synth_u/
+  text_embed_path: /playpen-shared/haochenz/LitsDatasets/128_len_caps_one_per_channel_0309/synth_u/
+  vae_embed_path: ./vae_embeddings/synth_u
+  seq_len: 128
+  num_channels: 1
+  num_segments: 4
+
+### Pretrain ###
+train:
+  epochs: 200
+  batch_size: 256
+  lr: 1.0e-3
+  itr_per_epoch: 1.0e+8
+  model_path: ""
+  output_folder: pretrain
+  val_epoch_interval: 10
+  display_interval: 1

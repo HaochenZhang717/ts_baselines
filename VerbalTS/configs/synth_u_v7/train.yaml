@@ -1,0 +1,16 @@
+### Dataset ###
+data:
+  name: v7
+  folder: /playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_u
+  my_caps_path: /playpen-shared/haochenz/LitsDatasets/128_len_caps_one_per_channel_0323/synth_u
+
+### Pretrain ###
+train:
+  epochs: 200
+  batch_size: 256
+  lr: 1.0e-3
+  itr_per_epoch: 1.0e+8
+  model_path: ""
+  output_folder: pretrain
+  val_epoch_interval: 10
+  display_interval: 1
