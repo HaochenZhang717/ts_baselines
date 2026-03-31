@@ -136,13 +136,11 @@ class Trainer:
         _, samples = self.evaluator.evaluate(mode="cond_gen", sampler="ddim", save_pred=False)
         # path = os.path.join(fr"{self.output_folder}", f"samples_during_training_Epoch{epoch_no}.pt")
         # torch.save(samples, path)
-        breakpoint()
         fid = compute_fid(
-            x_real=samples["real_ts"].permute(0,2,1),
+            x_real=samples["real_ts"], # shape should be (batch_size, seq_len, dim)
             gens=samples["sampled_ts"][0].permute(0,2,1),
             ckpt_path=os.getenv("FID_VAE_CKPT_PATH"),
         )
-        breakpoint()
         wandb.log({"test/fid": fid, "test/epoch": epoch_no})
 
 
