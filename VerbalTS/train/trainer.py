@@ -138,8 +138,8 @@ class Trainer:
         # torch.save(samples, path)
         breakpoint()
         fid = compute_fid(
-            x_real=samples["real_ts"],
-            gens=samples["sampled_ts"][0],
+            x_real=samples["real_ts"].permute(0,2,1),
+            gens=samples["sampled_ts"][0].permute(0,2,1),
             ckpt_path=os.getenv("FID_VAE_CKPT_PATH"),
         )
         breakpoint()

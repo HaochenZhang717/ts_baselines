@@ -129,8 +129,8 @@ def main(args):
 
                 save_path = os.path.join(args.log_dir, f"samples_epoch_{epoch}.pt")
                 torch.save({
-                    "gen_ts": torch.from_numpy(gen_sig),  # (N, T, D)
-                    "real_ts": torch.from_numpy(real_sig)  # (N, T, D)
+                    "gen_ts": gen_sig,  # (N, T, D)
+                    "real_ts": real_sig  # (N, T, D)
                 }, save_path)
                 print(f"[Saved] samples to {save_path}")
                 ema_model = model.model_ema if args.ema else None
