@@ -23,6 +23,8 @@ do
     export CONFIG_NAME="etth1_v7"
     export EMBED_FOLDER="/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1"
     export EMBED_NAME="caps_embeds"
+    export FID_VAE_CKPT_PATH="/playpen-shared/haochenz/fid_vae_ckpts/vae_etth1/best.pt"
+
     CUDA_VISIBLE_DEVICES=7 python run_v7.py \
         --cond_modal text \
         --training_stage finetune \

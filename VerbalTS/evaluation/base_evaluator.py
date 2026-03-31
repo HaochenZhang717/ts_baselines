@@ -201,34 +201,35 @@ class BaseEvaluator:
             "tensorboard":{},
             "df":{},
         }
-        if "clip_config_path" in self.configs.keys():
-            res_dict["tensorboard"].update({"cttp": cttp})
-            res_dict["df"].update({"cttp": cttp})
-            fid = None
-            jftsd = None
-            tsgen_emb = []
-            joint_emb = []
-
-            all_tsgen_emb = torch.cat(all_tsgen_emb, dim=0).cpu().numpy()
-            tsgen_mean = np.mean(all_tsgen_emb, axis=0)
-            tsgen_var = np.cov(all_tsgen_emb, rowvar=False)
-            fid = calculate_frechet_distance(self.ts_mean, self.ts_cov, tsgen_mean, tsgen_var)
-            all_joint_emb = torch.cat(all_joint_emb, dim=0).cpu().numpy()
-            joint_mean = np.mean(all_joint_emb, axis=0)
-            joint_var = np.cov(all_joint_emb, rowvar=False)
-            jftsd = calculate_frechet_distance(self.joint_mean, self.joint_cov, joint_mean, joint_var)
-            
-            res_dict["tensorboard"].update({"fid":fid})
-            res_dict["df"].update({"fid":fid})
-            res_dict["tensorboard"].update({"jftsd":jftsd})
-            res_dict["df"].update({"jftsd":jftsd})
-            
-            print("FID: ", fid)
-            print("JFTSD: ", jftsd)
-            print("CTTP ", cttp)
+        # if "clip_config_path" in self.configs.keys():
+        #     res_dict["tensorboard"].update({"cttp": cttp})
+        #     res_dict["df"].update({"cttp": cttp})
+        #     fid = None
+        #     jftsd = None
+        #     tsgen_emb = []
+        #     joint_emb = []
+        #
+        #     all_tsgen_emb = torch.cat(all_tsgen_emb, dim=0).cpu().numpy()
+        #     tsgen_mean = np.mean(all_tsgen_emb, axis=0)
+        #     tsgen_var = np.cov(all_tsgen_emb, rowvar=False)
+        #     fid = calculate_frechet_distance(self.ts_mean, self.ts_cov, tsgen_mean, tsgen_var)
+        #     all_joint_emb = torch.cat(all_joint_emb, dim=0).cpu().numpy()
+        #     joint_mean = np.mean(all_joint_emb, axis=0)
+        #     joint_var = np.cov(all_joint_emb, rowvar=False)
+        #     jftsd = calculate_frechet_distance(self.joint_mean, self.joint_cov, joint_mean, joint_var)
+        #
+        #     res_dict["tensorboard"].update({"fid":fid})
+        #     res_dict["df"].update({"fid":fid})
+        #     res_dict["tensorboard"].update({"jftsd":jftsd})
+        #     res_dict["df"].update({"jftsd":jftsd})
+        #
+        #     print("FID: ", fid)
+        #     print("JFTSD: ", jftsd)
+        #     print("CTTP ", cttp)
 
 
         # 🔵 把 list 拼接成 tensor
+
         result_ts_dict["real_ts"] = torch.cat(result_ts_dict["real_ts"], dim=0)
         result_ts_dict["sampled_ts"] = torch.cat(result_ts_dict["sampled_ts"], dim=1)
 
