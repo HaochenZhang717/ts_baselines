@@ -59,26 +59,26 @@ if __name__ == "__main__":
     # -----------------------------
     # usage
     # -----------------------------
-    # jsonl_to_npy(
-    #     "../ETTh1/train_caps.jsonl",
-    #     "../ETTh1/train_caps.npy"
-    # )
-    #
-    # jsonl_to_npy(
-    #     "../ETTh1/valid_caps.jsonl",
-    #     "../ETTh1/valid_caps.npy"
-    # )
-    #
-    # jsonl_to_npy(
-    #     "../ETTh1/test_caps.jsonl",
-    #     "../ETTh1/test_caps.npy"
-    # )
+    jsonl_to_npy(
+        "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/train_caps.jsonl",
+        "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/train_caps.npy"
+    )
 
-    train_caps = np.load("../ETTh1/train_caps.npy", allow_pickle=True)
-    print("train_caps.shape =", train_caps.shape)
+    jsonl_to_npy(
+        "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/valid_caps.jsonl",
+        "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/valid_caps.npy"
+    )
 
-    test_caps = np.load("../ETTh1/test_caps.npy", allow_pickle=True)
-    print("test_caps.shape =", test_caps.shape)
+    jsonl_to_npy(
+        "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/test_caps.jsonl",
+        "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/test_caps.npy"
+    )
 
-    val_caps = np.load("../ETTh1/valid_caps.npy", allow_pickle=True)
-    print("val_caps.shape =", val_caps.shape)
+    # train_caps = np.load("/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/train_caps.npy", allow_pickle=True)
+    # print("train_caps.shape =", train_caps.shape)
+
+    # test_caps = np.load("/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/test_caps.npy", allow_pickle=True)
+    # print("test_caps.shape =", test_caps.shape)
+
+    # val_caps = np.load("/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1/valid_caps.npy", allow_pickle=True)
+    # print("val_caps.shape =", val_caps.shape)

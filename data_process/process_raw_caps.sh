@@ -1,6 +1,8 @@
 
-INPUT_PATH="../ETTh1"
-#OUT_PATH="../ETTh1/train_caps_ready.jsonl"
+#INPUT_PATH="../ETTh1"
+
+
+INPUT_PATH="/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1"
 
 python process_raw_caps.py \
  --folder ${INPUT_PATH} \
@@ -17,18 +19,3 @@ python process_raw_caps.py \
  --folder ${INPUT_PATH} \
  --name_format "test_caps_*.jsonl" \
  --output_file "${INPUT_PATH}/test_caps.jsonl"
-
-
-
-python merge_caps_all_channels.py \
-  --input "${INPUT_PATH}/train_caps.jsonl" \
-  --output "${INPUT_PATH}/train_caps_ready.jsonl"
-
-python merge_caps_all_channels.py \
-  --input "${INPUT_PATH}/valid_caps.jsonl" \
-  --output "${INPUT_PATH}/valid_caps_ready.jsonl"
-
-
-python merge_caps_all_channels.py \
-  --input "${INPUT_PATH}/test_caps.jsonl" \
-  --output "${INPUT_PATH}/test_caps_ready.jsonl"
