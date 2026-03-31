@@ -187,7 +187,6 @@ class TextProjectorMVarMScaleMStepV7(nn.Module):
         ) # (B*n_var, 1, dim_in)
         mvar_attr = mvar_attr.reshape(B, self.n_var, 1, self.dim_in)
         # mvar_attr = mvar_attr[:,:,None,:] # (B, n_var, 1, dim_in)
-        breakpoint()
 
         scale_emb = self.scale_emb.expand([B,-1,-1,-1]) # (B, n_var, scale, dim_in)
         mscale_attr = self.scale_cross_attn(
@@ -213,10 +212,10 @@ class TextProjectorMVarMScaleMStepV7(nn.Module):
             index=indices.expand(-1, self.n_var, 1, self.dim_in)
         )
 
-        print(f"mstep_attr.shape={mstep_attr.shape}")
-        print(f"mvar_attr.shape={mvar_attr.shape}")
-        print(f"mscale_attr.shape={mscale_attr.shape}")
-        breakpoint()
+        # print(f"mstep_attr.shape={mstep_attr.shape}")
+        # print(f"mvar_attr.shape={mvar_attr.shape}")
+        # print(f"mscale_attr.shape={mscale_attr.shape}")
+        # breakpoint()
         mix_attr = mvar_attr + mscale_attr + mstep_attr
         out = self.proj_out(mix_attr)
         return out
