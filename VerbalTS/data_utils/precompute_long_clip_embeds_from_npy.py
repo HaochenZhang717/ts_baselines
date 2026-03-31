@@ -173,7 +173,7 @@ def precompute_from_npy(
         # reshape
         embeds = embeds.view(B, C, embeds.shape[1], embeds.shape[2])
         attn_masks = attn_masks.view(B, C, attn_masks.shape[1])
-        longest_length_batch = max(attn_masks.sum(-1).to_list())
+        longest_length_batch = attn_masks.sum(-1).max().item()
         longest_length = max(longest_length_batch, longest_length)
         print(f"longest_length: {longest_length}")
         all_embeds.append(embeds.cpu())
