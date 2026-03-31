@@ -203,9 +203,6 @@ class Trainer:
                     valid_batch["my_cap_embed"] = self.long_clip_embeds_valid["embeddings"][valid_batch["indices"]]
                     valid_batch["my_cap_embed_mask"] = self.long_clip_embeds_valid["all_masks"][valid_batch["indices"]]
 
-                if hasattr(self, "qwen_embeds_train"):
-                    valid_batch["text_embedding_all_segments"] = self.qwen_embeds_train[valid_batch["indices"]]
-
 
                 loss_dict = self.ema_model(valid_batch, is_train=False)
                 avg_loss_valid += loss_dict["all"].item()

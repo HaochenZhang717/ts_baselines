@@ -5,6 +5,8 @@ from typing import Dict, Tuple
 from scipy.ndimage import gaussian_filter1d
 import torch
 import matplotlib.pyplot as plt
+from tqdm import tqdm
+import os
 
 
 # ----------------------------------------------------------------------
@@ -254,10 +256,10 @@ def process_ts(x_ts, save_name):
     structure_desc = build_structured_description(result)
     text_desc = generate_text_description(result)
 
-    plt.figure(figsize=(8, 6))
-    plt.plot(result.trend)
-    plt.yticks([])  # 🔥 removes y-ticks
-    plt.savefig(save_name)
+    # plt.figure(figsize=(8, 6))
+    # plt.plot(result.trend)
+    # plt.yticks([])  # 🔥 removes y-ticks
+    # plt.savefig(save_name)
     # plt.figure(figsize=(12, 6))
     #
     # plt.subplot(4, 1, 1)
@@ -283,21 +285,86 @@ def process_ts(x_ts, save_name):
 
 
 
+def main(data_name, split_name):
+    data_path = f"/playpen-shared/haochenz/LitsDatasets/128_len_ts/{data_name}/{split_name}_ts.npy"
+    save_path = f"/playpen-shared/haochenz/LitsDatasets/128_len_ts_decomposed/{data_name}/{split_name}"
+
+    os.makedirs(save_path, exist_ok=True)
+
+    print("Loading data...")
+    data = np.load(data_path, allow_pickle=True)
+
+    # ===== 假设数据是 (N, T, C) =====
+    if data.ndim != 3:
+        raise ValueError(f"Expected (N,T,C), got {data.shape}")
+
+    N, T, C = data.shape
+    print(f"Data shape: {data.shape}")
+
+    # ===== 初始化输出 =====
+    trend_all = np.zeros((N, T, C), dtype=np.float32)
+    seasonal_all = np.zeros((N, T, C), dtype=np.float32)
+    residual_all = np.zeros((N, T, C), dtype=np.float32)
+
+    text_desc_all = []
+
+    decomposer = TimeSeriesDecomposer(
+        trend_sigma=20.0,
+        fft_top_k=3,
+    )
+
+    # ===== 主循环 =====
+    for i in tqdm(range(N)):
+        desc_per_sample = []
+
+        for j in range(C):
+            x = data[i, :, j]
+
+            if isinstance(x, torch.Tensor):
+                x = x.detach().cpu().numpy()
+
+            result = decomposer.decompose(x)
+
+            trend_all[i, j] = result.trend
+            seasonal_all[i, j] = result.season
+            residual_all[i, j] = result.residual
+
+            text_desc = generate_text_description(result)
+            desc_per_sample.append(text_desc)
+
+        text_desc_all.append(desc_per_sample)
+
+    # ===== 保存 =====
+    print("Saving...")
+
+    np.save(os.path.join(save_path, "trend.npy"), trend_all)
+    np.save(os.path.join(save_path, "seasonal.npy"), seasonal_all)
+    np.save(os.path.join(save_path, "residual.npy"), residual_all)
+
+
+    print("Done!")
+    print("trend:", trend_all.shape)
+    print("seasonal:", seasonal_all.shape)
+    print("residual:", residual_all.shape)
+
+
 # ----------------------------------------------------------------------
 # Example
 # ----------------------------------------------------------------------
 if __name__ == "__main__":
     # data = np.load("/Users/zhc/Documents/LitsDatasets/128_len_ts/ETTh1/train_ts.npy", allow_pickle=True)
-    data = np.load("/playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1/train_ts.npy", allow_pickle=True)
-    save_path = "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_image/ETTh1/train"
-    import os
-    os.makedirs(save_path, exist_ok=True)
-    for i, datum in enumerate(data):
-        for j in datum.shape[-1]:
+    # data = np.load("/playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1/train_ts.npy", allow_pickle=True)
+    # save_path = "/playpen-shared/haochenz/LitsDatasets/128_len_ts_decomposed/ETTh1/train"
+    # import os
+    # os.makedirs(save_path, exist_ok=True)
+    # for i, datum in enumerate(data):
+    #     for j in datum.shape[-1]:
+    #
+    #         text_desc, trend, seasonal_pattern, residual = process_ts(
+    #             datum[:, j], save_name=f"ts{i}_ch{j}.png"
+    #         )
 
-            text_desc, trend, seasonal_pattern, residual = process_ts(
-                datum[:, j], save_name=f"ts{i}_ch{j}.png"
-            )
-
-
+    main(data_name="ETTh1", split_name="train")
+    main(data_name="ETTh1", split_name="valid")
+    main(data_name="ETTh1", split_name="test")
 
