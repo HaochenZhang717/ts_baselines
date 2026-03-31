@@ -156,12 +156,34 @@ def precompute_from_npy(
     # =========================
     # batch encode
     # =========================
+
     for i in tqdm(range(0, len(caps), batch_size)):
-        batch_text = [cap[0] for cap in caps[i:i + batch_size]]
-        # batch_text = caps[i:i + batch_size]
-        embeds, attn_masks = encoder(batch_text)  # (B, L, D)
+        batch_caps = caps[i:i + batch_size]  # (B, C)
+
+        B, C = batch_caps.shape
+
+        # flatten
+        flat_text = []
+        for b in range(B):
+            for c in range(C):
+                flat_text.append(batch_caps[b][c])
+
+        embeds, attn_masks = encoder(flat_text)  # (B*C, L, D)
+
+        # reshape
+        embeds = embeds.view(B, C, embeds.shape[1], embeds.shape[2])
+        attn_masks = attn_masks.view(B, C, attn_masks.shape[1])
+
         all_embeds.append(embeds.cpu())
         all_masks.append(attn_masks.cpu())
+
+
+    # for i in tqdm(range(0, len(caps), batch_size)):
+        # batch_text = [cap[0] for cap in caps[i:i + batch_size]]
+        # # batch_text = caps[i:i + batch_size]
+        # embeds, attn_masks = encoder(batch_text)  # (B, L, D)
+        # all_embeds.append(embeds.cpu())
+        # all_masks.append(attn_masks.cpu())
 
     # =========================
     # 拼成 (N, L, D)
