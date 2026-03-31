@@ -134,15 +134,15 @@ class Trainer:
         self.evaluator.model = self.ema_model
         self.evaluator.n_samples = 1
         _, samples = self.evaluator.evaluate(mode="cond_gen", sampler="ddim", save_pred=False)
-        path = os.path.join(fr"{self.output_folder}", f"samples_during_training_Epoch{epoch_no}.pt")
-        torch.save(samples, path)
-        breakpoint()
+        # path = os.path.join(fr"{self.output_folder}", f"samples_during_training_Epoch{epoch_no}.pt")
+        # torch.save(samples, path)
         fid = compute_fid(
             x_real=samples["real_ts"],
-            gens=samples["sampled_ts"],
+            gens=samples["sampled_ts"][0],
             ckpt_path=os.getenv("FID_VAE_CKPT_PATH"),
         )
-        wandb.log({"fid": fid, "epoch": epoch_no})
+        breakpoint()
+        wandb.log({"test/fid": fid, "test/epoch": epoch_no})
 
 
     def _train_epoch(self, epoch_no):
