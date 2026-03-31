@@ -15,7 +15,7 @@ model_name = "Qwen/Qwen3-VL-8B-Instruct"
 device = "cuda" if torch.cuda.is_available() else "cpu"
 max_new_tokens = 1024
 
-TIME_SERIES_CAPTION_PROMPT_SINGLE_CHANNEL = r"""Describe the trend of the time series.""".strip()
+TIME_SERIES_CAPTION_PROMPT_SINGLE_CHANNEL = r"""Describe the trend of the time series in one sentence.""".strip()
 
 # ==============================
 # Load model + processor
