@@ -8,7 +8,7 @@ import torch
 import numpy as np
 import random
 
-from data import GenerationDataset
+from data_utils import GenerationDataset
 from models.conditional_generator_v7 import ConditionalGeneratorV7
 from models.unconditional_generator import UnConditionalGenerator
 from train.trainer import Trainer
