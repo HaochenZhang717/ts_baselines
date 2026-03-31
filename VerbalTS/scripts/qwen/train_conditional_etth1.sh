@@ -30,7 +30,7 @@ do
         --model_diff_config_path configs/${CONFIG_NAME}/diff/model_text2ts_dep.yaml \
         --model_cond_config_path configs/${CONFIG_NAME}/cond/text_msmdiffmv.yaml \
         --train_config_path configs/${CONFIG_NAME}/train.yaml \
-        --evaluate_config_path configs/${CONFIG_NAME}/evaluate.yaml \
+        --evaluate_config_path configs/${CONFIG_NAME}/evaluate_real.yaml \
         --clip_folder "" \
         --multipatch_num 3 \
         --L_patch_len 2 \
