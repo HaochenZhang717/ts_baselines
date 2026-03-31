@@ -325,9 +325,9 @@ def main(data_name, split_name):
 
             result = decomposer.decompose(x)
 
-            trend_all[i, j] = result.trend
-            seasonal_all[i, j] = result.season
-            residual_all[i, j] = result.residual
+            trend_all[i, :, j] = result.trend
+            seasonal_all[i, :, j] = result.season
+            residual_all[i, :, j] = result.residual
 
             text_desc = generate_text_description(result)
             desc_per_sample.append(text_desc)
