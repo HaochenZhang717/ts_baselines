@@ -79,11 +79,11 @@ def save_simple(save_dir, ts_path):
 
 
 if __name__ == "__main__":
-    data_path = "/playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1"
-    save_path = "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs/ETTh1"
+    # data_path = "/playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1"
+    # save_path = "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs/ETTh1"
 
-    # data_path = "/Users/zhc/Documents/LitsDatasets/128_len_ts/ETTh1"
-    # save_path = "/Users/zhc/Documents/LitsDatasets/128_len_ts_trend_imgs/ETTh1"
+    data_path = "/Users/zhc/Documents/LitsDatasets/128_len_ts/ETTh1"
+    save_path = "/Users/zhc/Documents/LitsDatasets/128_len_ts_trend_imgs/ETTh1"
 
 
     os.makedirs(f"{save_path}/train", exist_ok=True)
