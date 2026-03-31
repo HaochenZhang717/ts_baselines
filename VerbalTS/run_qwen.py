@@ -8,7 +8,7 @@ import torch
 import numpy as np
 import random
 
-from data import GenerationDataset
+from data_utils import GenerationDataset
 from models.conditional_generator_qwen import ConditionalGeneratorQwen
 from train.trainer import Trainer
 from evaluation.base_evaluator import BaseEvaluator
