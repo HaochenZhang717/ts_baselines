@@ -156,7 +156,7 @@ def precompute_from_npy(
     # =========================
     # batch encode
     # =========================
-
+    longest_length = 0
     for i in tqdm(range(0, len(caps), batch_size)):
         batch_caps = caps[i:i + batch_size]  # (B, C)
 
@@ -173,7 +173,8 @@ def precompute_from_npy(
         # reshape
         embeds = embeds.view(B, C, embeds.shape[1], embeds.shape[2])
         attn_masks = attn_masks.view(B, C, attn_masks.shape[1])
-
+        longest_length_batch = max(attn_masks.sum(-1).to_list())
+        longest_length = max(longest_length_batch, longest_length)
         all_embeds.append(embeds.cpu())
         all_masks.append(attn_masks.cpu())
 
@@ -201,6 +202,7 @@ def precompute_from_npy(
     }, save_path)
     print(f"Saved to {save_path}")
     print("Shape:", all_embeds.shape)
+    print("Longest length:", longest_length)
 
 
 # =========================
