@@ -158,7 +158,7 @@ class TextProjectorMVarMScaleMStepV7(nn.Module):
 
 
         self.seg_size = n_steps // n_stages + 1
-        self.var_emb = nn.Parameter(torch.zeros((1, n_var, dim_in)))
+        self.var_emb = nn.Parameter(torch.zeros((1, n_var, 1, dim_in)))
         self.scale_emb = nn.Parameter(torch.zeros((1, n_var, n_scale, dim_in)))
         self.step_emb = nn.Parameter(torch.zeros((1, n_var, n_stages, dim_in)))
         var_cross_attn_layer = nn.TransformerDecoderLayer(d_model=dim_in, nhead=8, dim_feedforward=64, activation="gelu", batch_first=True)
@@ -179,7 +179,8 @@ class TextProjectorMVarMScaleMStepV7(nn.Module):
             memory_key_padding_mask = (attention_mask == 0)  # True means masked (batch_size, n_vars, seq_len)
             attr = attr * attention_mask.unsqueeze(-1)
 
-        var_emb = self.var_emb.repeat([B,1,1]) # (B, n_var, dim_in)
+        var_emb = self.var_emb.repeat([B,1,1,1]) # (B, n_var, 1, dim_in)
+        breakpoint()
         mvar_attr = self.var_cross_attn(
             tgt=var_emb.reshape(-1, 1, self.dim_in), # (B*n_var, 1, dim_in)
             memory=attr.reshape(-1, attr_len, attr_dim), #(B*n_var, attr_len, attr_dim)
