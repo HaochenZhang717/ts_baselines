@@ -173,7 +173,10 @@ class TextProjectorMVarMScaleMStepV7(nn.Module):
         # attr.shape == (batch_size, n_vars, seq_len, dim)
         # attention_mask == (batch_size, n_vars, seq_len)
         B, _, attr_len, attr_dim = attr.shape
-
+        print(
+            "attr shape",
+            attr.shape,
+        )
         memory_key_padding_mask = None
         if attention_mask is not None:
             memory_key_padding_mask = (attention_mask == 0)  # True means masked (batch_size, n_vars, seq_len)
