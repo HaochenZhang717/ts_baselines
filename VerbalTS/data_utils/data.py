@@ -490,7 +490,7 @@ class V7Dataset:
         super().__init__()
         self.folder = folder
         self.my_caps_path = my_caps_path
-        self._load_meta()
+        # self._load_meta()
 
     def _load_meta(self):
         self.meta = json.load(open(os.path.join(self.folder, "meta.json")))
