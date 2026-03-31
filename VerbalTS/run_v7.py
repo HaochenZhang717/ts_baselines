@@ -140,6 +140,13 @@ parser.add_argument("--guide_w", type=float, default=1.0)
 parser.add_argument("--only_evaluate", type=bool, default=False)
 parser.add_argument("--samples_name", type=str, required=True)
 
+# model parameters
+parser.add_argument("--layers", type=int, required=True)
+parser.add_argument("--channels", type=int, required=True)
+parser.add_argument("--nheads", type=int, required=True)
+parser.add_argument("--diffusion_embedding_dim", type=int, required=True)
+
+
 args = parser.parse_args()
 
 save_folder = args.save_folder
@@ -164,6 +171,15 @@ eval_configs["eval"]["batch_size"] = args.batch_size
 model_diff_configs["diffusion"]["multipatch_num"] = args.multipatch_num
 model_diff_configs["diffusion"]["L_patch_len"] = args.L_patch_len
 model_diff_configs["diffusion"]["base_patch"] = args.base_patch
+
+
+model_diff_configs["diffusion"]["layers"] = args.layers
+model_diff_configs["diffusion"]["channels"] = args.channels
+model_diff_configs["diffusion"]["nheads"] = args.nheads
+model_diff_configs["diffusion"]["diffusion_embedding_dim"] = args.diffusion_embedding_dim
+model_cond_configs["text"]["text_emb"] = args.channels
+
+
 if "text" in args.model_cond_config_path and args.training_stage in ["finetune", "finetune_debug"]:
     model_cond_configs["text"]["output_type"] = args.text_output_type
     model_cond_configs["text"]["num_stages"] = args.diff_stage_num
