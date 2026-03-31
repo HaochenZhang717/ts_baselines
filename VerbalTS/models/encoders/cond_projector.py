@@ -179,7 +179,7 @@ class TextProjectorMVarMScaleMStepV7(nn.Module):
             memory_key_padding_mask = (attention_mask == 0)  # True means masked (batch_size, n_vars, seq_len)
             attr = attr * attention_mask.unsqueeze(-1)
 
-        var_emb = self.var_emb.repeat([B,1,1,1]) # (B, n_var, 1, dim_in)
+        var_emb = self.var_emb.repeat([B,self.n_var,1,1]) # (B, n_var, 1, dim_in)
         breakpoint()
         mvar_attr = self.var_cross_attn(
             tgt=var_emb.reshape(-1, 1, self.dim_in), # (B*n_var, 1, dim_in)
