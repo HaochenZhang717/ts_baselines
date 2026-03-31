@@ -43,7 +43,6 @@ do
         --batch_size ${BS} \
         --lr ${LR} \
         --clip_cache_path "" \
-        --samples_name "real_text_samples.pt" \
-        --model_ckpt_name "model_best_loss.pth"
+        --samples_name "real_text_samples_best_loss_model.pt" \
 done
 done
