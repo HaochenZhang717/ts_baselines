@@ -7,12 +7,12 @@
 export CUDA_VISIBLE_DEVICES=0
 
 # 数据路径（改成你的）
-TRAIN_PATH="/playpen/haochenz/LitsDatasets/128_len_ts/ETTh1/train_ts.npy"
-VAL_PATH="/playpen/haochenz/LitsDatasets/128_len_ts/ETTh1/valid_ts.npy"
+TRAIN_PATH="/playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1/train_ts.npy"
+VAL_PATH="/playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1/valid_ts.npy"
 
 # 保存目录
 EXP_NAME="vae_etth1"
-SAVE_DIR="/playpen/haochenz/fid_vae_ckpts/${EXP_NAME}"
+SAVE_DIR="/playpen-shared/haochenz/fid_vae_ckpts/${EXP_NAME}"
 
 mkdir -p ${SAVE_DIR}
 
