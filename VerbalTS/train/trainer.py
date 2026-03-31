@@ -102,11 +102,7 @@ class Trainer:
             embed_name = os.getenv("EMBED_NAME", "embeds_long_clip_seq_0324")
             self.long_clip_embeds_train = torch.load(os.path.join(folder, f"train_{embed_name}.pt"), map_location="cuda")
             self.long_clip_embeds_valid = torch.load(os.path.join(folder, f"valid_{embed_name}.pt"), map_location="cuda")
-        # elif isinstance(self.dataset.dataset, data_utils.data.CustomDataset):
-        #     folder = os.getenv("EMBED_FOLDER")
-        #     embed_name = os.getenv("EMBED_NAME", "embeds_long_clip_seq_0324")
-        #     self.qwen_embeds_train = torch.load(os.path.join(folder, f"train_{embed_name}.pt"), map_location="cuda")
-        #     self.qwen_embeds_valid = torch.load(os.path.join(folder, f"valid_{embed_name}.pt"), map_location="cuda")
+
         else:
             raise NotImplementedError
 

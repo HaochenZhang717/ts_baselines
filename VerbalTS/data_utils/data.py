@@ -517,54 +517,12 @@ class V7Split(Dataset):
     def _load_data(self):
         # ===== load ts =====
         ts = np.load(os.path.join(self.folder, self.split + "_ts.npy"))  # [N, T]
-        # caps_embed = torch.load(os.path.join(self.folder, self.split + "_embeds_long_clip_seq.pt"), map_location="cpu")
-        # ===== load original caps =====
-        caps = np.load(
-            os.path.join(self.folder, self.split + "_text_caps.npy"),
-            allow_pickle=True
-        )
 
-        self.ts, self.caps = ts, caps
-        # self.caps_embed = caps_embed['embeddings']
+        self.ts = ts
         self.n_samples = self.ts.shape[0]
         self.n_steps = self.ts.shape[1]
         self.time_point = np.arange(self.n_steps)
 
-        # ===== load my_caps =====
-        self.my_caps = None
-        if self.my_caps_path != "none":
-            caps_dict = {}
-
-            # case 1: folder
-            if not self.my_caps_path.endswith(".jsonl"):
-                path = os.path.join(self.my_caps_path, f"{self.split}_caps_ready.jsonl")
-            else:
-                path = self.my_caps_path
-
-            with open(path, "r") as f:
-                for line in f:
-                    item = json.loads(line)
-                    caps_dict[item["id"]] = item["captions"]
-
-            self.my_caps = caps_dict
-
-    # ===== 核心函数：把 dict list → string =====
-    def _merge_caps(self, raw_caps):
-        """
-        raw_caps:
-        [
-            {'seg1_channel0': '...'},
-            {'seg2_channel0': '...'},
-            ...
-        ]
-        ↓
-        "seg1_channel0: ...\nseg2_channel0: ..."
-        """
-        merged = []
-        for d in raw_caps:
-            for k, v in d.items():
-                merged.append(f"{k}: {v}")
-        return "\n".join(merged)
 
     def __getitem__(self, idx):
         # ===== time series =====
@@ -572,23 +530,10 @@ class V7Split(Dataset):
         if len(tmp_ts.shape) == 1:
             tmp_ts = tmp_ts[..., np.newaxis]  # (T, 1)
 
-        # ===== original cap =====
-        cap_id = random.randint(0, len(self.caps[idx]) - 1)
-        cap = str(self.caps[idx][cap_id])  # 强制变 python str
-
         # ===== my_cap（处理成 string）=====
-        if self.my_caps is not None:
-            raw_caps = self.my_caps[f'image{idx}']
-            my_cap = self._merge_caps(raw_caps)
-        else:
-            my_cap = ""
-
         return {
             "ts": tmp_ts.astype(np.float32),
             "ts_len": tmp_ts.shape[0],
-            "cap": cap,
-            "my_cap": my_cap,
-            # "my_cap_embed": self.caps_embed[cap_id],
             "tp": self.time_point.astype(np.float32),
             "idx": idx
         }
@@ -610,8 +555,5 @@ class V7Split(Dataset):
         ])  # (B, T)
 
         # ===== string部分（保持list）=====
-        out["cap"] = [b["cap"] for b in batch]
-        out["my_caps"] = [b["my_cap"] for b in batch]
-        # out["my_cap_embed"] = torch.stack([b["my_cap_embed"] for b in batch])
         out["indices"] = [b["idx"] for b in batch]
         return out

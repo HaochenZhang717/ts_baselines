@@ -1,7 +1,8 @@
 ### Dataset ###
 data:
-  name: custom
-  folder: /playpen-shared/haochenz/LitsDatasets/128_len_ts/synthetic_u
+  name: v7
+  folder: /playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1
+  my_caps_path: /playpen-shared/haochenz/LitsDatasets/128_len_caps_one_per_channel_0323/synth_u
 
 ### Evaluate ###
 eval:
