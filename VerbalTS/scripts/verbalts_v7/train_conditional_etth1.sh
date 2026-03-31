@@ -19,7 +19,7 @@ do
     echo "Running lr=$LR bs=$BS"
 
     export WANDB_PROJECT="VerbalTS_Arch"
-    export WANDB_NAME="VerbalTS_Arch"
+    export WANDB_NAME="Trend_Text_Desc"
     export CONFIG_NAME="etth1_v7"
     export EMBED_FOLDER="/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1"
     export EMBED_NAME="caps_embeds"
@@ -36,6 +36,7 @@ do
         --L_patch_len 2 \
         --base_patch 4 \
         --epochs 2500 \
+        --data_folder "/playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1" \
         --layers ${LAYERS} \
         --channels ${CHANNELS} \
         --nheads ${NHEADS} \
