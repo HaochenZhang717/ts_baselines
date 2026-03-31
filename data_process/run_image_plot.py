@@ -29,8 +29,8 @@ def plot_one(task):
 
         ax.plot(t, segment, linewidth=1)
 
-        ax.set_xticks([])
-        # ax.set_yticks([])
+        # ax.set_xticks([])
+        ax.set_yticks([])
 
         # 黑色边框
         for spine in ax.spines.values():
@@ -38,18 +38,17 @@ def plot_one(task):
             spine.set_linewidth(1)
             spine.set_color("black")
 
-    plt.subplots_adjust(
-        left=0,
-        right=1,
-        top=1,
-        bottom=0,
-        wspace=0,
-        hspace=0
-    )
+    # plt.subplots_adjust(
+    #     left=0,
+    #     right=1,
+    #     top=1,
+    #     bottom=0,
+    #     wspace=0,
+    #     hspace=0
+    # )
 
     plt.savefig(
         f"{save_dir}/image{i}_ch{channel_i}.png",
-        bbox_inches="tight",
         pad_inches=0
     )
 
@@ -82,6 +81,11 @@ def save_simple(save_dir, ts_path):
 if __name__ == "__main__":
     data_path = "/playpen-shared/haochenz/LitsDatasets/128_len_ts/ETTh1"
     save_path = "/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs/ETTh1"
+
+    # data_path = "/Users/zhc/Documents/LitsDatasets/128_len_ts/ETTh1"
+    # save_path = "/Users/zhc/Documents/LitsDatasets/128_len_ts_trend_imgs/ETTh1"
+
+
     os.makedirs(f"{save_path}/train", exist_ok=True)
     os.makedirs(f"{save_path}/valid", exist_ok=True)
     os.makedirs(f"{save_path}/test", exist_ok=True)
