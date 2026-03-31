@@ -21,7 +21,9 @@ do
     export WANDB_PROJECT="Qwen_Embed_VerbalTS_Arch"
     export WANDB_NAME="Qwen_Embed_VerbalTS_Arch"
     export CONFIG_NAME="etth1_qwen"
-    CUDA_VISIBLE_DEVICES=7 python run_qwen.py \
+    export EMBED_FOLDER="/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1"
+
+    CUDA_VISIBLE_DEVICES=5 python run_qwen.py \
         --cond_modal text \
         --training_stage finetune \
         --save_folder ./${CONFIG_NAME}/${WANDB_NAME}/ \
