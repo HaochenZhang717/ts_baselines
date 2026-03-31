@@ -9,7 +9,7 @@ CAPS_PATH="/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh
 SAVE_ROOT="/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1"
 
 SCRIPT_PATH="precompute_long_clip_embeds_from_npy.py"
-NPY_NAME="caps_embeds"
+NPY_NAME="caps"
 
 BATCH_SIZE=32
 DEVICE="cuda"
