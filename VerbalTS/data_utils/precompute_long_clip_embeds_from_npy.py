@@ -37,7 +37,7 @@ class ClipTextEncoder(torch.nn.Module):
             text_list,
             padding="max_length",  # ✅ 关键！
             truncation=True,
-            max_length=self.max_length,
+            max_length=110,
             return_tensors="pt"
         )
         input_ids = inputs["input_ids"].to(self.device)
@@ -176,7 +176,7 @@ def precompute_from_npy(
         attn_masks = attn_masks.view(B, C, attn_masks.shape[1])
         longest_length_batch = attn_masks.sum(-1).max().item()
         longest_length = max(longest_length_batch, longest_length)
-        print(f"longest_length: {longest_length}")
+        # print(f"longest_length: {longest_length}")
         all_embeds.append(embeds.cpu())
         all_masks.append(attn_masks.cpu())
 
