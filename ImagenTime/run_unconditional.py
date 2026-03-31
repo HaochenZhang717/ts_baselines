@@ -112,11 +112,11 @@ def main(args):
                             if args.dataset in ['temperature_rain']:
                                 x_ts = torch.clamp(x_ts, 0, 1)
 
-                            gen_sig.append(x_ts.detach().cpu().numpy())
-                            real_sig.append(data[0].detach().cpu().numpy())
+                            gen_sig.append(x_ts.detach().cpu())
+                            real_sig.append(data[0].detach().cpu())
 
-                gen_sig = np.vstack(gen_sig)
-                real_sig = np.vstack(real_sig)
+                gen_sig = torch.cat(gen_sig)
+                real_sig = torch.cat(real_sig)
                 print(f"gen_sig: {gen_sig.shape}, real_sig: {real_sig.shape}")
                 scores = compute_fid(real_sig, gen_sig, ckpt_path=args.fid_vae_ckpt_path)
 
