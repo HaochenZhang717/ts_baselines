@@ -8,7 +8,7 @@ import tqdm
 import numpy as np
 from scipy import linalg
 import random
-import data_utils as data
+import data_utils
 
 
 def calculate_frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
@@ -117,8 +117,8 @@ class BaseEvaluator:
 
     def _init_data(self, dataset):
         self.dataset = dataset
-        if isinstance(self.dataset.dataset, data.data.V7Dataset):
-            folder = self.dataset.configs['folder']
+        if isinstance(self.dataset.dataset, data_utils.data.V7Dataset):
+            folder = os.getenv("EMBED_FOLDER")
             embed_name = os.getenv("EMBED_NAME", "embeds_long_clip_seq_0324")
             self.long_clip_embeds_test = torch.load(
                 os.path.join(folder, f"test_{embed_name}.pt"),map_location="cuda"
