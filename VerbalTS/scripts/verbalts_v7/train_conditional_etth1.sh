@@ -22,7 +22,7 @@ do
     export WANDB_NAME="VerbalTS_Arch"
     export CONFIG_NAME="etth1_v7"
     export EMBED_FOLDER="/playpen-shared/haochenz/LitsDatasets/128_len_ts_trend_imgs_caps/ETTh1/ETTh1"
-
+    export EMBED_NAME="caps_embeds"
     CUDA_VISIBLE_DEVICES=5 python run_v7.py \
         --cond_modal text \
         --training_stage finetune \
