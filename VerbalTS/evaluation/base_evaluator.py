@@ -8,7 +8,7 @@ import tqdm
 import numpy as np
 from scipy import linalg
 import random
-import data
+import data_utils as data
 
 
 def calculate_frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
