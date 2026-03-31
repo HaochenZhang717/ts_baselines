@@ -22,6 +22,6 @@ diffusion:
   var_dep_type: "DEP"
 
   side:
-    num_var: 1
+    num_var: 7
     var_emb: 16
     time_emb: 112
