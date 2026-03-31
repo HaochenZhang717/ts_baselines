@@ -180,14 +180,14 @@ class TextProjectorMVarMScaleMStepV7(nn.Module):
             attr = attr * attention_mask.unsqueeze(-1)
 
         var_emb = self.var_emb.repeat([B,self.n_var,1,1]) # (B, n_var, 1, dim_in)
-        breakpoint()
+
         mvar_attr = self.var_cross_attn(
             tgt=var_emb.reshape(-1, 1, self.dim_in), # (B*n_var, 1, dim_in)
             memory=attr.reshape(-1, attr_len, attr_dim), #(B*n_var, attr_len, attr_dim)
             memory_key_padding_mask=memory_key_padding_mask.reshape(-1, attr_len) if attention_mask is not None else None # (B*n_var, attr_len)
         ) # (B*n_var, 1, dim_in)
-        mvar_attr = mvar_attr.reshape(B, self.n_var, self.dim_in)
-        mvar_attr = mvar_attr[:,:,None,:] # (B, n_var, 1, dim_in)
+        mvar_attr = mvar_attr.reshape(B, self.n_var, 1, self.dim_in)
+        # mvar_attr = mvar_attr[:,:,None,:] # (B, n_var, 1, dim_in)
 
         scale_emb = self.scale_emb.expand([B,-1,-1,-1]) # (B, n_var, scale, dim_in)
         mscale_attr = self.scale_cross_attn(
