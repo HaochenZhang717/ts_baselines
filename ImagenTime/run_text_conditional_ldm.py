@@ -167,12 +167,6 @@ def main(args):
                 ema_model = model.model_ema if args.ema else None
                 save_checkpoint(args.log_dir, state, epoch, ema_model)
 
-                # --- save checkpoint ---
-                # curr_score = scores['marginal_score_mean'] if 'marginal_score_mean' in scores else scores['disc_mean']
-                # if curr_score < best_score:
-                #     best_score = curr_score
-                #     ema_model = model.model_ema if args.ema else None
-                #     save_checkpoint(args.log_dir, state, epoch , ema_model)
 
         logging.info("Training is complete")
 

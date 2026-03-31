@@ -4,7 +4,7 @@ import numpy as np
 import torch.multiprocessing
 import logging
 from tqdm import tqdm
-from metrics import evaluate_model_uncond
+from metrics import evaluate_model_uncond, compute_fid
 from utils.loggers import NeptuneLogger, PrintLogger, CompositeLogger
 from models.model import ImagenTime
 from models.sampler import DiffusionProcess
@@ -117,11 +117,15 @@ def main(args):
 
                 gen_sig = np.vstack(gen_sig)
                 real_sig = np.vstack(real_sig)
-                # print(f"gen_sig: {gen_sig.shape}, real_sig: {real_sig.shape}")
-                # breakpoint()
-                # scores = evaluate_model_uncond(real_sig, gen_sig, args)
-                # for key, value in scores.items():
-                #     logger.log(f'test/{key}', value, epoch)
+                print(f"gen_sig: {gen_sig.shape}, real_sig: {real_sig.shape}")
+                scores = compute_fid(real_sig, gen_sig, ckpt_path=args.fid_vae_ckpt_path)
+
+                log_to_wandb = {}
+                for key, value in scores.items():
+                    logger.log(f'test/{key}', value, epoch)
+                    log_to_wandb.update({key: value})
+                log_to_wandb.update({"epoch": epoch})
+                wandb.log(log_to_wandb)
 
                 save_path = os.path.join(args.log_dir, f"samples_epoch_{epoch}.pt")
                 torch.save({
@@ -132,12 +136,6 @@ def main(args):
                 ema_model = model.model_ema if args.ema else None
                 save_checkpoint(args.log_dir, state, epoch, ema_model)
 
-                # --- save checkpoint ---
-                # curr_score = scores['marginal_score_mean'] if 'marginal_score_mean' in scores else scores['disc_mean']
-                # if curr_score < best_score:
-                #     best_score = curr_score
-                #     ema_model = model.model_ema if args.ema else None
-                #     save_checkpoint(args.log_dir, state, epoch , ema_model)
 
         logging.info("Training is complete")
 

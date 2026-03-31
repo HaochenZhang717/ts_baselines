@@ -6,4 +6,6 @@ export WANDB_PROJECT="ETTh1"
 export WANDB_NAME="VerbalTS_uncond_EDM"
 python run_unconditional.py \
   --config ./configs/neurips_baseline/etth1.yaml \
-  --log_dir ../ETTh1_results/ImagenTime
+  --log_dir ../ETTh1_results/ImagenTime \
+  --fid_vae_ckpt_path "/playpen-shared/haochenz/fid_vae_ckpts/vae_etth1/best.pt"
+
