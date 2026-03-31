@@ -157,7 +157,8 @@ def precompute_from_npy(
     # batch encode
     # =========================
     longest_length = 0
-    for i in tqdm(range(0, len(caps), batch_size)):
+    # for i in tqdm(range(0, len(caps), batch_size)):
+    for i in range(0, len(caps), batch_size):
         batch_caps = caps[i:i + batch_size]  # (B, C)
 
         B, C = batch_caps.shape
