@@ -175,6 +175,7 @@ def precompute_from_npy(
         attn_masks = attn_masks.view(B, C, attn_masks.shape[1])
         longest_length_batch = max(attn_masks.sum(-1).to_list())
         longest_length = max(longest_length_batch, longest_length)
+        print(f"longest_length: {longest_length}")
         all_embeds.append(embeds.cpu())
         all_masks.append(attn_masks.cpu())
 
