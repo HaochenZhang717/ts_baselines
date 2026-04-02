@@ -367,4 +367,5 @@ if __name__ == "__main__":
     main(data_name="ETTh1", split_name="train")
     main(data_name="ETTh1", split_name="valid")
     main(data_name="ETTh1", split_name="test")
+#     /playpen-shared/haochenz/LitsDatasets/128_len_ts_decomposed/ETTh1/train
 
