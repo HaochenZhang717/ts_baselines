@@ -1,0 +1,30 @@
+# training:
+epochs: 1000
+batch_size: 32
+learning_rate: 0.0001
+weight_decay: 0.00001
+
+# data:
+dataset: ETTh1
+seq_len: 128
+use_stft: false
+
+# transform:
+delay: 4
+embedding: 32
+
+# model:
+img_resolution: 32
+input_channels: 7
+unet_channels: 128
+ch_mult: [1,2,2,2]
+attn_resolution: [32,16,8]
+diffusion_steps: 18
+#channel_mult_emb: 4
+#num_blocks: 2
+#dropout: 0.1
+ema: true
+ema_warmup: 100
+
+# logging:
+logging_iter: 100
