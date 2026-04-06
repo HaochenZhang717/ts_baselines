@@ -97,6 +97,7 @@ def restore_checkpoint(ckpt_dir, state, device='cuda:0', ema_model=None):
                         f"Returned the same state as input")
         return state
     else:
+        breakpoint()
         loaded_state = torch.load(ckpt_dir, map_location=device)
         state['epoch'] = loaded_state['epoch']
         state['model'].load_state_dict(loaded_state['model'], strict=False)
