@@ -16,5 +16,5 @@ python show_prediction.py \
 
 
 
-
+# scp -r haochenz@unites2.cs.unc.edu:/playpen-shared/haochenz/ts_baselines/ImagenTime/results_aireadi ../
 

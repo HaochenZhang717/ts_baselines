@@ -561,11 +561,17 @@ class AIREADIDataset(torch.utils.data.Dataset):
         self.calorie_df["pid"] = self.calorie_df["patient_id"].apply(extract_pid)
         self.glucose_df["pid"] = self.glucose_df["patient_id"].apply(extract_pid)
 
-        # 分别找到各自有效 pid
+        # 分别找到各自有效 pid。这里不能直接把交集转成 list，
+        # 因为 set 的迭代顺序不稳定，会导致样本构造顺序在不同进程间变化。
         cal_ids = set(self.calorie_df["pid"].dropna())
         glu_ids = set(self.glucose_df["pid"].dropna())
+        common_id_set = cal_ids & glu_ids
 
-        self.common_ids = list(cal_ids & glu_ids)
+        # 保留 glucose dataframe 中 pid 的首次出现顺序，保证样本顺序稳定且可复现。
+        self.common_ids = [
+            pid for pid in self.glucose_df["pid"].dropna().drop_duplicates().tolist()
+            if pid in common_id_set
+        ]
 
         # 过滤 dataframe
         self.calorie_df = self.calorie_df[
