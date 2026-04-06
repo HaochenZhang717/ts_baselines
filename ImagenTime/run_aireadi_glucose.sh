@@ -1,11 +1,18 @@
-export CUDA_VISIBLE_DEVICES=2
+export CUDA_VISIBLE_DEVICES=0
 
 export WANDB_PROJECT="aireadi_prediction"
 export WANDB_NAME="glucose"
 
-python run_prediction.py \
+#python run_prediction.py \
+#  --config ./configs/extrapolation/aireadi_glucose.yaml \
+#  --log_dir ./results_aireadi/glucose
+
+
+python show_prediction.py \
   --config ./configs/extrapolation/aireadi_glucose.yaml \
-  --log_dir ./results_aireadi/glucose
+  --log_dir ./results_aireadi/glucose \
+  --resume True
+
 
 
 

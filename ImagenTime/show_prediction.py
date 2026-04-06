@@ -87,9 +87,9 @@ def main(args):
                         'orig': x_ts.cpu(),
                         'predicted': x_ts_sampled.cpu(),
                     }
-                    breakpoint()
-                    torch.save(to_save, "")
 
+                    torch.save(to_save, f"{args.log_dir}/samples_epoch{state['epoch']}.pt")
+                    break
 
 
 if __name__ == '__main__':
